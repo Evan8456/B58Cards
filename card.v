@@ -36,3 +36,20 @@ module store_card(
 		.q(card)
 	);
 endmodule
+
+module remove_card(
+	input [9:0] card, // The address of the card to remove
+	input load_cards, // If the new address should be loaded
+	input clock, // The clocked of the circuit
+	output reg [9:0] last_card // The address of the last card
+	);
+
+	reg [9:0] current_card;
+
+	always @(posedge clock):
+		if(load_cards)
+			current_card <= card;
+		else:
+			last_card <= current_card + 8; // The value and suit of a card take 8 bits, 8 bits ahead is the value of the address of the next card
+	end
+endmodule

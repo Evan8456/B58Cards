@@ -81,7 +81,7 @@ Weekly Reports
 
 Week 1:
 
-We added a way to print pixels to a specified position onto the monitor. In addition, we created FSM's in order to draw the card suits (clubs, spades, hearts, diamonds) and also draw a card. We also added a way to store cards in memory, and to create a player's "hand" with a linked list of cards.
+We added a way to print pixels to a specified position onto the monitor. In addition, we created FSM's in order to draw the card suits (clubs, spades, hearts, diamonds) and also draw a card. We also added a way to store cards in memory, and to create a player's "hand" with a linked list of cards, with the ability for a player to play (remove) a card from their hand, and to draw (add) a card.
 
 References
 ----------
