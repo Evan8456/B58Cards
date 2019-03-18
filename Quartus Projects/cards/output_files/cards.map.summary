@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Mon Mar 18 18:50:53 2019
+Quartus Prime Version : 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+Revision Name : cards
+Top-level Entity Name : cards
+Family : Cyclone IV E
+Total logic elements : 22
+    Total combinational functions : 22
+    Dedicated logic registers : 0
+Total registers : 0
+Total pins : 62
+Total virtual pins : 0
+Total memory bits : 64
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
