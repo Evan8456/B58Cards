@@ -46,10 +46,55 @@ module remove_card(
 
 	reg [9:0] current_card;
 
-	always @(posedge clock):
+	always @(posedge clock)begin
 		if(load_cards)
 			current_card <= card;
-		else:
+		else
 			last_card <= current_card + 8; // The value and suit of a card take 8 bits, 8 bits ahead is the value of the address of the next card
 	end
 endmodule
+
+// removes and outputs the nth card in a linked list of cards
+module nth_card(
+	input [9:0] card, // The address of the head of the linked list
+	input load_cards, //If the next card should be removed
+	input [5:0] n, // The nth card is outputted
+	input clock,
+	output reg[5:0] out_card //data for the chosen cards
+	);
+	
+	reg [15:0] current_card;
+	reg [15:0] next_card;
+	reg remove_card;
+	
+	always@(posedge clock)begin
+		if(load_cards)
+			current_card[9:0] <= card;
+			remove_card <= 0;
+		else if(next_card != 16'b0)
+			current_card <= next_card;
+		else
+			out_card <= current_card[15:10];
+			remove_card <= 1;
+	end
+	
+	remove_card remover(
+		.card(current_card[9:0]),
+		.load_cards(remove_card),
+		.clock(clock),
+		.last_card()
+	);
+	
+	ram1024x32 ram(
+		.address(current_card),
+		.clock(clock),
+		.data({suit, value}),
+		.wren(load_cards),
+		.q(next_card)
+	);
+endmodule
+
+
+
+
+
