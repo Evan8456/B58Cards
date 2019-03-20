@@ -281,7 +281,7 @@ always @(posedge clock) begin
 	PLOT_0_12:  next_state=  PLOT_0_13; 
 	PLOT_0_13:  next_state=  PLOT_0_14; 
 	PLOT_0_14:  next_state=  PLOT_0_15; 
-	PLOT_0_15:  next_state=  PLOT_10; 
+	PLOT_0_15:  next_state=  PLOT_1_0; 
 	PLOT_1_0:  next_state=  PLOT_1_1; 
 	PLOT_1_1:  next_state=  PLOT_1_2; 
 	PLOT_1_2:  next_state=  PLOT_1_3; 
@@ -297,7 +297,7 @@ always @(posedge clock) begin
 	PLOT_1_12:  next_state=  PLOT_1_13; 
 	PLOT_1_13:  next_state=  PLOT_1_14; 
 	PLOT_1_14:  next_state=  PLOT_1_15; 
-	PLOT_1_15:  next_state=  PLOT_20; 
+	PLOT_1_15:  next_state=  PLOT_2_0; 
 	PLOT_2_0:  next_state=  PLOT_2_1; 
 	PLOT_2_1:  next_state=  PLOT_2_2; 
 	PLOT_2_2:  next_state=  PLOT_2_3; 
@@ -313,7 +313,7 @@ always @(posedge clock) begin
 	PLOT_2_12:  next_state=  PLOT_2_13; 
 	PLOT_2_13:  next_state=  PLOT_2_14; 
 	PLOT_2_14:  next_state=  PLOT_2_15; 
-	PLOT_2_15:  next_state=  PLOT_30; 
+	PLOT_2_15:  next_state=  PLOT_3_0; 
 	PLOT_3_0:  next_state=  PLOT_3_1; 
 	PLOT_3_1:  next_state=  PLOT_3_2; 
 	PLOT_3_2:  next_state=  PLOT_3_3; 
@@ -329,7 +329,7 @@ always @(posedge clock) begin
 	PLOT_3_12:  next_state=  PLOT_3_13; 
 	PLOT_3_13:  next_state=  PLOT_3_14; 
 	PLOT_3_14:  next_state=  PLOT_3_15; 
-	PLOT_3_15:  next_state=  PLOT_40; 
+	PLOT_3_15:  next_state=  PLOT_4_0; 
 	PLOT_4_0:  next_state=  PLOT_4_1; 
 	PLOT_4_1:  next_state=  PLOT_4_2; 
 	PLOT_4_2:  next_state=  PLOT_4_3; 
@@ -345,7 +345,7 @@ always @(posedge clock) begin
 	PLOT_4_12:  next_state=  PLOT_4_13; 
 	PLOT_4_13:  next_state=  PLOT_4_14; 
 	PLOT_4_14:  next_state=  PLOT_4_15; 
-	PLOT_4_15:  next_state=  PLOT_50; 
+	PLOT_4_15:  next_state=  PLOT_5_0; 
 	PLOT_5_0:  next_state=  PLOT_5_1; 
 	PLOT_5_1:  next_state=  PLOT_5_2; 
 	PLOT_5_2:  next_state=  PLOT_5_3; 
@@ -361,7 +361,7 @@ always @(posedge clock) begin
 	PLOT_5_12:  next_state=  PLOT_5_13; 
 	PLOT_5_13:  next_state=  PLOT_5_14; 
 	PLOT_5_14:  next_state=  PLOT_5_15; 
-	PLOT_5_15:  next_state=  PLOT_60; 
+	PLOT_5_15:  next_state=  PLOT_6_0; 
 	PLOT_6_0:  next_state=  PLOT_6_1; 
 	PLOT_6_1:  next_state=  PLOT_6_2; 
 	PLOT_6_2:  next_state=  PLOT_6_3; 
@@ -377,7 +377,7 @@ always @(posedge clock) begin
 	PLOT_6_12:  next_state=  PLOT_6_13; 
 	PLOT_6_13:  next_state=  PLOT_6_14; 
 	PLOT_6_14:  next_state=  PLOT_6_15; 
-	PLOT_6_15:  next_state=  PLOT_70; 
+	PLOT_6_15:  next_state=  PLOT_7_0; 
 	PLOT_7_0:  next_state=  PLOT_7_1; 
 	PLOT_7_1:  next_state=  PLOT_7_2; 
 	PLOT_7_2:  next_state=  PLOT_7_3; 
@@ -393,7 +393,7 @@ always @(posedge clock) begin
 	PLOT_7_12:  next_state=  PLOT_7_13; 
 	PLOT_7_13:  next_state=  PLOT_7_14; 
 	PLOT_7_14:  next_state=  PLOT_7_15; 
-	PLOT_7_15:  next_state=  PLOT_80; 
+	PLOT_7_15:  next_state=  PLOT_8_0; 
 	PLOT_8_0:  next_state=  PLOT_8_1; 
 	PLOT_8_1:  next_state=  PLOT_8_2; 
 	PLOT_8_2:  next_state=  PLOT_8_3; 
@@ -409,7 +409,7 @@ always @(posedge clock) begin
 	PLOT_8_12:  next_state=  PLOT_8_13; 
 	PLOT_8_13:  next_state=  PLOT_8_14; 
 	PLOT_8_14:  next_state=  PLOT_8_15; 
-	PLOT_8_15:  next_state=  PLOT_90; 
+	PLOT_8_15:  next_state=  PLOT_9_0; 
 	PLOT_9_0:  next_state=  PLOT_9_1; 
 	PLOT_9_1:  next_state=  PLOT_9_2; 
 	PLOT_9_2:  next_state=  PLOT_9_3; 
@@ -425,7 +425,7 @@ always @(posedge clock) begin
 	PLOT_9_12:  next_state=  PLOT_9_13; 
 	PLOT_9_13:  next_state=  PLOT_9_14; 
 	PLOT_9_14:  next_state=  PLOT_9_15; 
-	PLOT_9_15:  next_state=  PLOT_100; 
+	PLOT_9_15:  next_state=  PLOT_10_0; 
 	PLOT_10_0:  next_state=  PLOT_10_1; 
 	PLOT_10_1:  next_state=  PLOT_10_2; 
 	PLOT_10_2:  next_state=  PLOT_10_3; 
@@ -441,7 +441,7 @@ always @(posedge clock) begin
 	PLOT_10_12:  next_state=  PLOT_10_13; 
 	PLOT_10_13:  next_state=  PLOT_10_14; 
 	PLOT_10_14:  next_state=  PLOT_10_15; 
-	PLOT_10_15:  next_state=  PLOT_110; 
+	PLOT_10_15:  next_state=  PLOT_11_0; 
 	PLOT_11_0:  next_state=  PLOT_11_1; 
 	PLOT_11_1:  next_state=  PLOT_11_2; 
 	PLOT_11_2:  next_state=  PLOT_11_3; 
@@ -457,7 +457,7 @@ always @(posedge clock) begin
 	PLOT_11_12:  next_state=  PLOT_11_13; 
 	PLOT_11_13:  next_state=  PLOT_11_14; 
 	PLOT_11_14:  next_state=  PLOT_11_15; 
-	PLOT_11_15:  next_state=  PLOT_120; 
+	PLOT_11_15:  next_state=  PLOT_12_0; 
 	PLOT_12_0:  next_state=  PLOT_12_1; 
 	PLOT_12_1:  next_state=  PLOT_12_2; 
 	PLOT_12_2:  next_state=  PLOT_12_3; 
@@ -473,7 +473,7 @@ always @(posedge clock) begin
 	PLOT_12_12:  next_state=  PLOT_12_13; 
 	PLOT_12_13:  next_state=  PLOT_12_14; 
 	PLOT_12_14:  next_state=  PLOT_12_15; 
-	PLOT_12_15:  next_state=  PLOT_130; 
+	PLOT_12_15:  next_state=  PLOT_13_0; 
 	PLOT_13_0:  next_state=  PLOT_13_1; 
 	PLOT_13_1:  next_state=  PLOT_13_2; 
 	PLOT_13_2:  next_state=  PLOT_13_3; 
@@ -489,7 +489,7 @@ always @(posedge clock) begin
 	PLOT_13_12:  next_state=  PLOT_13_13; 
 	PLOT_13_13:  next_state=  PLOT_13_14; 
 	PLOT_13_14:  next_state=  PLOT_13_15; 
-	PLOT_13_15:  next_state=  PLOT_140; 
+	PLOT_13_15:  next_state=  PLOT_14_0; 
 	PLOT_14_0:  next_state=  PLOT_14_1; 
 	PLOT_14_1:  next_state=  PLOT_14_2; 
 	PLOT_14_2:  next_state=  PLOT_14_3; 
@@ -505,7 +505,7 @@ always @(posedge clock) begin
 	PLOT_14_12:  next_state=  PLOT_14_13; 
 	PLOT_14_13:  next_state=  PLOT_14_14; 
 	PLOT_14_14:  next_state=  PLOT_14_15; 
-	PLOT_14_15:  next_state=  PLOT_150; 
+	PLOT_14_15:  next_state=  PLOT_15_0; 
 	PLOT_15_0:  next_state=  PLOT_15_1; 
 	PLOT_15_1:  next_state=  PLOT_15_2; 
 	PLOT_15_2:  next_state=  PLOT_15_3; 
