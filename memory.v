@@ -3,7 +3,6 @@ module allocate_memory(clock, enable, addr_found, address, data);
     input enable; // Finds a new memory address
     output adr_found; // If the current address was free the last time enable was run
     output reg [9:0] address; // The first free memory address found
-    output [31:0] data, // The data at the current memory address
 
     reg addr_found;
     reg ram_write;
