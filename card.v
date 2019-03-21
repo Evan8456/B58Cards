@@ -4,36 +4,52 @@ module store_card(
 	input [1:0] suit, // The card suit
 	input [9:0] next_card, // The memory address of the next card
 	input clock, // Stores to memory on this clock tick
-	input enable, // If the module should store,
-	input load_val, // If the module should load the value and suit (takes priority over storing)
-	input load_addr, // If the module should load the memory address of the last and next card
-	output reg [9:0] last_card, // The memory address of the last card's next
-	output [7:0] card // The card at the current address of the module
+	input enable, // If the module should store
+	input load, // If the module should load the address, value and suit
+	output [31:0] card_data, // The data at the current address of the module
 	);
 
 	reg [3:0] current_value; // The current value of the module
 	reg [1:0] current_suit; // The current suit of the module
-	reg [9:0] current_next; // The next card
+	reg [9:0] current_addr; // The current address of the module
+	reg wren; // If the ram module should write
 
-	always @(posedge clock) begin
-		if(load_val) begin
+	wire next_addr_found; // If memory for the next card has been allocated
+	wire [9:0] next_card_addr; // Allocates memory for a new card
+	wire [31:0] card_info; // The information to be written to ram
+
+	assign card_info = {1, 9'b0, suit, value, 6'b0, next_card_addr}; // Fill the remaining positions with 0's
+
+	always @(posedge next_addr_found) begin
+		wren <= 1;
+	end
+
+	always @(posedge enable) begin
+		wren <= 0;
+	end
+
+	always @(posedge load) begin
+		if(load_val && enable == 0) begin
 			current_value <= value;
 			current_suit <= suit;
-		end
-		else if(load_addr) begin
-			current_next <= next_card;
-		end
-		else if(enable) begin
-			last_card <= address;
+			current_addr <= address;
+			wren <= 0;
 		end
 	end
+
+	allocate_memory alloc(
+		.clock(clock),
+		.enable(alloc_enable),
+		.adr_found(next_addr_found),
+		.address(next_card_addr)
+	);
 
 	ram1024x32 ram(
 		.address(address),
 		.clock(clock),
-		.data({suit, value}),
-		.wren(enable),
-		.q(card)
+		.data(card_info),
+		.wren(wren),
+		.q(card_data)
 	);
 endmodule
 
@@ -93,8 +109,4 @@ module nth_card(
 		.q(next_card)
 	);
 endmodule
-
-
-
-
 
