@@ -1,32 +1,28 @@
 // Part 2 skeleton
 
-module vga
-	(
-		CLOCK_50,				//	On Board 50 MHz
-		// Your inputs and outputs here
-        	KEY,
-        	SW,
-		// The ports below are for the VGA output.  Do not change.
-		VGA_CLK,   				//	VGA Clock
-		VGA_HS,					//	VGA H_SYNC
-		VGA_VS,					//	VGA V_SYNC
-		VGA_BLANK_N,			//	VGA BLANK
-		VGA_SYNC_N,				//	VGA SYNC
-		VGA_R,   				//	VGA Red[9:0]
-		VGA_G,	 				//	VGA Green[9:0]
-		VGA_B,   				//	VGA Blue[9:0]
-
-		HEX7,
-		HEX6,
-		HEX5,
-		HEX4,
-		HEX3,
-		
-		LEDR
-		
+module vga(
+    CLOCK_50,				//	On Board 50 MHz
+    // Your inputs and outputs here
+    KEY,
+    SW,
+    // The ports below are for the VGA output.  Do not change.
+    VGA_CLK,   				//	VGA Clock
+    VGA_HS,					//	VGA H_SYNC
+    VGA_VS,					//	VGA V_SYNC
+    VGA_BLANK_N,			//	VGA BLANK
+    VGA_SYNC_N,				//	VGA SYNC
+    VGA_R,   				//	VGA Red[9:0]
+    VGA_G,	 				//	VGA Green[9:0]
+    VGA_B,   				//	VGA Blue[9:0]
+    HEX7,
+    HEX6,
+    HEX5,
+    HEX4,
+    HEX3,
+    LEDR
 	);
 
-	input	CLOCK_50;				//	50 MHz
+	input	CLOCK_50;		//	50 MHz
 	input   [11:0]   SW;
 	input   [3:0]   KEY;
 	output  [17:0] LEDR;
@@ -60,8 +56,6 @@ module vga
 	wire [7:0] x;
 	wire [6:0] y;
 
-	wire writeEn;
-
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
@@ -71,7 +65,7 @@ module vga
 			.colour(colour[2:0]),
 			.x(x[7:0]),
 			.y(y[6:0]),
-			.plot(writeEn),
+			.plot(plot),
 			/* Signals for the DAC to drive the monitor. */
 			.VGA_R(VGA_R),
 			.VGA_G(VGA_G),
@@ -91,47 +85,46 @@ module vga
 	// for the VGA controller, in addition to any other functionality your design may require.
 	
 	
-	wire LdX, LdY, LdC, LdR;
+	wire LdX, LdY, LdC, plot;
 	wire CtrEN, CtrReset;
 	wire [3:0] CtrOut;
 
     // Instansiate datapath
 	datapath d0(.data_in(SW[9:0]),
-	            .LdX(LdX),
-	            .LdY(LdY),
-	            .LdC(LdC),
-					
-					.LdR(LdR),
-					
-	            .Ctr(CtrOut[3:0]),
-					
-	            .resetN(resetn),
-	            .clock(CLOCK_50),
-					
-	            .X_out(x[7:0]),
-	            .Y_out(y[6:0]),
-	            .C_out(colour[2:0])
+        .LdX(LdX),
+        .LdY(LdY),
+        .LdC(LdC),
+
+        .plot(plot),
+
+        .Ctr(CtrOut[3:0]),
+
+        .resetN(resetn),
+        .clock(CLOCK_50),
+
+        .X_out(x[7:0]),
+        .Y_out(y[6:0]),
+        .C_out(colour[2:0])
 	);
 
     // Instansiate FSM control
 	control c0(.go(go),
-					.resetN(resetn),
-               .LoadX(load_x),
-               .clock(CLOCK_50),
-               .Ctr(CtrOut[3:0]),
+        .resetN(resetn),
+        .LoadX(load_x),
+        .clock(CLOCK_50),
+        .Ctr(CtrOut[3:0]),
 					
-               .CtrEN(CtrEN),
-               .CtrReset(CtrReset),
+        .CtrEN(CtrEN),
+        .CtrReset(CtrReset),
 					
-               .LdX(LdX),
-               .LdY(LdY),
-               .LdC(LdC),
-					.LdR(LdR),
-					
-               .plot(writeEn),
-					
-					.current_state(LEDR[7:4]),
-					.next_state(LEDR[3:0])
+        .LdX(LdX),
+        .LdY(LdY),
+        .LdC(LdC),
+
+        .plot(plot),
+
+        .current_state(LEDR[7:4]),
+        .next_state(LEDR[3:0])
    );
 
 	Counter ctr(.enable(CtrEN),
@@ -161,15 +154,11 @@ module vga
 	);
 endmodule
 
-module datapath(data_in,
-					 LdX, LdY, LdC, LdR,
-					 Ctr,
-                resetN, clock,
-					 X_out, Y_out, C_out);
+module datapath(data_in, LdX, LdY, LdC, plot, Ctr, resetN, clock, X_out, Y_out, C_out);
 
 	input [9:0] data_in;
 	input LdX, LdY, LdC; // Signal to load X, Y, C, into RegX, RegY, RegC
-	input LdR;		// Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
+	input plot;		// Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
 
 	input [3:0] Ctr;
 
@@ -204,7 +193,7 @@ module datapath(data_in,
 			X_out <= 8'b0;
 			Y_out <= 7'b0;
 			C_out <= 3'b0;
-		end else if(LdR) begin
+		end else if(plot) begin
 			X_out <= RegX + Ctr[1:0];
 			Y_out <= RegY + Ctr[3:2];
 			C_out <= RegC;
@@ -212,10 +201,7 @@ module datapath(data_in,
 	end
 endmodule
 
-module control(go, resetN, LoadX, clock,
-					Ctr, CtrEN, CtrReset,
-					LdX, LdY, LdC, LdR, plot
-					, current_state, next_state);
+module control(go, resetN, LoadX, clock, Ctr, CtrEN, CtrReset, LdX, LdY, LdC, LdR, plot, current_state, next_state);
     input go;
     input resetN;
     input LoadX;
@@ -224,52 +210,52 @@ module control(go, resetN, LoadX, clock,
 
     output reg CtrEN, CtrReset;
     output reg LdX, LdY, LdC;
-	 output reg LdR;
     output reg plot;
 	 
 	 
 	 output reg [4:0] current_state, next_state;
 
-    localparam NO_DRAW      = 4'd0,
-               LOAD_X       = 4'd1,
-					LOAD_X_WAIT  = 4'd2,
-               LOAD_Y       = 4'd3,
-					LOAD_Y_WAIT  = 4'd4,
-               LOAD_C       = 4'd5,
-					LOAD_C_WAIT	 = 4'd6,
-               DRAW         = 4'd7,
-               CTREN        = 4'd8,
-               CTRRESET     = 4'd9;
+    localparam
+        NO_DRAW      = 4'd0,
+        LOAD_X       = 4'd1,
+        LOAD_X_WAIT  = 4'd2,
+        LOAD_Y       = 4'd3,
+        LOAD_Y_WAIT  = 4'd4,
+        LOAD_C       = 4'd5,
+        LOAD_C_WAIT	 = 4'd6,
+        DRAW         = 4'd7,
+        CTREN        = 4'd8,
+        CTRRESET     = 4'd9;
 
     always @(*)
     begin
         case (current_state)
             NO_DRAW: begin
-					if (go == 1'b1)			// Load Y then C, then draw
-						next_state = LOAD_Y;
-					else if (LoadX == 1'b1) // Load X then back to no draw
-						next_state = LOAD_X;
-					else
-						next_state = NO_DRAW;// Stay in no draw
-					end
-				LOAD_X:			next_state = LoadX ? LOAD_X_WAIT : LOAD_X;
-				LOAD_X_WAIT:	next_state = LoadX ? LOAD_X_WAIT : NO_DRAW;
+                if (go == 1'b1)			// Load Y then C, then draw
+                    next_state = LOAD_Y;
+                else if (LoadX == 1'b1) // Load X then back to no draw
+                    next_state = LOAD_X;
+                else
+                    next_state = NO_DRAW;// Stay in no draw
+            end
+            LOAD_X:			next_state = LoadX ? LOAD_X_WAIT : LOAD_X;
+            LOAD_X_WAIT:	next_state = LoadX ? LOAD_X_WAIT : NO_DRAW;
 
-				LOAD_Y:			next_state = go ? LOAD_Y_WAIT : LOAD_Y;
-				LOAD_Y_WAIT:	next_state = go ? LOAD_C : LOAD_Y_WAIT;
+            LOAD_Y:			next_state = go ? LOAD_Y_WAIT : LOAD_Y;
+            LOAD_Y_WAIT:	next_state = go ? LOAD_C : LOAD_Y_WAIT;
 
-				LOAD_C:			next_state = go ? LOAD_C_WAIT : LOAD_C;
-				LOAD_C_WAIT:	next_state = go ? LOAD_C_WAIT : DRAW;
+            LOAD_C:			next_state = go ? LOAD_C_WAIT : LOAD_C;
+            LOAD_C_WAIT:	next_state = go ? LOAD_C_WAIT : DRAW;
 				
-				DRAW:	begin
-					if (Ctr[3:0] == 4'b1111)
-						next_state = CTRRESET;
-					else
-						next_state = CTREN;
-					end
-				CTREN: 			next_state = DRAW;
-				CTRRESET:		next_state = NO_DRAW;
-				default:       next_state = NO_DRAW;
+            DRAW:	begin
+                if (Ctr[3:0] == 4'b1111)
+                    next_state = CTRRESET;
+                else
+                    next_state = CTREN;
+            end
+            CTREN: 			next_state = DRAW;
+            CTRRESET:		next_state = NO_DRAW;
+            default:        next_state = NO_DRAW;
        endcase
     end
 
@@ -280,24 +266,21 @@ module control(go, resetN, LoadX, clock,
         LdX = 1'b0;
         LdY = 1'b0;
         LdC = 1'b0;
-		  LdR = 1'b0;
         plot = 1'b0;
 
         case (current_state)
-            LOAD_X: 	LdX = 1'b1;
+            LOAD_X: LdX = 1'b1;
             LOAD_Y:	LdY = 1'b1;
-				LOAD_C: 	LdC = 1'b1;
-				DRAW: begin
-					LdR = 1'b1;
-					plot = 1'b1;
-					end
-				CTREN: 	 CtrEN = 1'b1;
-				CTRRESET: begin
-								LdR = 1'b1;
-								plot = 1'b1;
-								CtrReset = 1'b0;
-							 end
-			endcase
+            LOAD_C: LdC = 1'b1;
+            DRAW: begin
+                plot = 1'b1;
+            end
+            CTREN: 	 CtrEN = 1'b1;
+            CTRRESET: begin
+                plot = 1'b1;
+                CtrReset = 1'b0;
+            end
+        endcase
     end
 
     // current_state registers
@@ -307,7 +290,7 @@ module control(go, resetN, LoadX, clock,
 		else
 			current_state <= next_state;
 		end
-endmodule
+endmodule : control
 
 module Counter(enable, clock, clear_b, Q);
 	input enable;
