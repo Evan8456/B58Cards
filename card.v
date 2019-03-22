@@ -70,7 +70,7 @@ module remove_card(
  	reg [2:0] current_state;
 
  	initial begin
- 		empty_card = {1, 31'b0};
+ 		empty_card = 32'b0;
  	end
 
 	localparam LOAD_ADDRESS = 3'd0, // First load the address
