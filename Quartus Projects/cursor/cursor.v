@@ -1,42 +1,42 @@
 // Part 2 skeleton
 
-module cursor
+module cursor2
 	(
-		CLOCK_50,						//	On Board 50 MHz
-		// Your inputs and outputs here
-        KEY,
-        SW,
-		// The ports below are for the VGA output.  Do not change.
-		VGA_CLK,   						//	VGA Clock
-		VGA_HS,							//	VGA H_SYNC
-		VGA_VS,							//	VGA V_SYNC
-		VGA_BLANK_N,						//	VGA BLANK
-		VGA_SYNC_N,						//	VGA SYNC
-		VGA_R,   						//	VGA Red[9:0]
-		VGA_G,	 						//	VGA Green[9:0]
-		VGA_B,   						//	VGA Blue[9:0]
+	CLOCK_50,						//	On Board 50 MHz
+	// Your inputs and outputs here
+   KEY,
+	SW,
+	// The ports below are for the VGA output.  Do not change.
+	VGA_CLK,   						//	VGA Clock
+	VGA_HS,							//	VGA H_SYNC
+	VGA_VS,							//	VGA V_SYNC
+	VGA_BLANK_N,					//	VGA BLANK
+	VGA_SYNC_N,						//	VGA SYNC
+	VGA_R,   						//	VGA Red[9:0]
+	VGA_G,	 						//	VGA Green[9:0]
+	VGA_B,   						//	VGA Blue[9:0]
 
-        PS2_CLK,                        // PS2 Clock
-        PS2_DAT                         // PS2 Data Lines
+   PS2_CLK,                   // PS2 Clock
+   PS2_DAT                    // PS2 Data Lines
 	);
 
-	input			CLOCK_50;			//	50 MHz
-	input   [9:0]   SW;
-	input   [3:0]   KEY;
+	input	CLOCK_50;				//	50 MHz
+	input [9:0] SW;
+	input [3:0] KEY;
 
 	// Declare your inputs and outputs here
 	// Do not change the following outputs
-    inout           PS2_CLK;
-    inout           PS2_DAT;
+   inout PS2_CLK;
+   inout PS2_DAT;
 
-	output			VGA_CLK;   				//	VGA Clock
-	output			VGA_HS;					//	VGA H_SYNC
-	output			VGA_VS;					//	VGA V_SYNC
-	output			VGA_BLANK_N;				//	VGA BLANK
-	output			VGA_SYNC_N;				//	VGA SYNC
-	output	[9:0]	VGA_R;   				//	VGA Red[9:0]
-	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
-	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
+	output VGA_CLK;   			//	VGA Clock
+	output VGA_HS;					//	VGA H_SYNC
+	output VGA_VS;					//	VGA V_SYNC
+	output VGA_BLANK_N;			//	VGA BLANK
+	output VGA_SYNC_N;			//	VGA SYNC
+	output [9:0]	VGA_R;   	//	VGA Red[9:0]
+	output [9:0]	VGA_G;	 	//	VGA Green[9:0]
+	output [9:0]	VGA_B;   	//	VGA Blue[9:0]
 
     wire resetn;
     assign resetn = KEY[0];
@@ -90,6 +90,7 @@ module cursor
     wire LdC;
     wire LdR;
 
+	 
     control Control(
         .resetn(resetn),                    // Active low reset
         .clock(CLOCK_50),                   // Clock
@@ -109,14 +110,14 @@ module cursor
         .colour(SW[2:0]),                   // Colour data
         .LdData(received_data[7:0]),        // Control signals
         .UpdateX(UpdateX),
-        .UpdataY(UpdateY),
+        .UpdateY(UpdateY),
         .LdC(LdC),
         .LdR(LdR),
         .X_out(x[7:0]),                     // VGA outputs
         .Y_out(y[6:0]),
         .C_out(colour[2:0])
     );
-endmodule : part2
+endmodule
 
 module datapath(
     resetn, clock,
@@ -173,24 +174,24 @@ module datapath(
             C_out <= RegC;
         end
     end
-endmodule : datapath
+endmodule
 
 module control(
     resetn, clock,
-    recieved_data_en,
+    received_data_en,
     LdData, UpdateX, UpdateY, LdC, LdR, plot);
 
     input resetn;
     input clock;
 
-    input recieved_data_en;
+    input received_data_en;
 
     output reg LdData;
     output reg UpdateX, UpdateY, LdC;
     output reg LdR;
     output reg plot;
 
-    output reg [3:0] current_state, next_state;
+    reg [3:0] current_state, next_state;
 
     localparam NO_MOUSE     = 3'd0,
                MOUSE_IN1    = 3'd1,
@@ -204,7 +205,7 @@ module control(
     always @(*)
         begin
             case (current_state)
-                NO_MOUSE: next_state = recieved_data_en ? MOUSE_IN1 : NO_MOUSE; // Stay in NO_MOUSE until mouse movement
+                NO_MOUSE: next_state = received_data_en ? MOUSE_IN1 : NO_MOUSE; // Stay in NO_MOUSE until mouse movement
                 MOUSE_IN1: next_state = MOUSE_IN2;
                 MOUSE_IN2: next_state = MOUSE_IN3;
                 MOUSE_IN3: next_state = UPDATE_X;
@@ -243,7 +244,7 @@ module control(
         else
             current_state <= next_state;
     end
-endmodule : control
+endmodule
 
 module Counter(enable, clock, clear_b, Q);
     input enable;
@@ -298,7 +299,7 @@ module HexDecoder(IN, OUT);
     input [3:0] IN;
     output reg [6:0] OUT;
 
-    always @(*)
+    always @(*) begin
         case (IN)
             4'h0: OUT = 7'b100_0000;
             4'h1: OUT = 7'b111_1001;
@@ -318,4 +319,5 @@ module HexDecoder(IN, OUT);
             4'hF: OUT = 7'b000_1110;
             default: OUT = 7'h7f;
         endcase
+	end
 endmodule
