@@ -84,7 +84,7 @@ Week 1:
 We added a way to print pixels to a specified position onto the monitor. In addition, we created FSM's in order to draw the card suits (clubs, spades, hearts, diamonds) and also draw a card. We also added a way to store cards in memory, and to create a player's "hand" with a linked list of cards, with the ability for a player to play (remove) a card from their hand, and to draw (add) a card. And we created a module that generates random values and a module that outputs a random value between two input values which will be used for dealing.
 
 Week 2:
-We created more FSM's in order to draw card numbers (2-10). The ram management was also cleaned up, it is now easiser to access cards. We also created a way to find unused blocks of memory. Combining this with the linked lists from last week, we can dynamically create a players hand without having to handpick memory address to store the cards. Outputting to VGA was also fixed, so now we can reliable output the images we want.
+We created more FSM's in order to draw card numbers (2-10). The ram management was also cleaned up, it is now easiser to access cards. We also created a way to find unused blocks of memory. Combining this with the linked lists from last week, we can dynamically create a players hand without having to handpick memory address to store the cards. Outputting to VGA was also fixed, so now we can reliable output the images we want. We also updated the random number generator to be faster and easier to use.
 
 References
 ----------
