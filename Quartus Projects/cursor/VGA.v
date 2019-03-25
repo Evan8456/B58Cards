@@ -36,11 +36,11 @@ module vga(
 	
 	// Declare your inputs and outputs here
 	// Do not change the following outputs
-	output	VGA_CLK;   				//	VGA Clock
-	output	VGA_HS;					//	VGA H_SYNC
-	output	VGA_VS;					//	VGA V_SYNC
+	output	VGA_CLK;   				    //	VGA Clock
+	output	VGA_HS;					    //	VGA H_SYNC
+	output	VGA_VS;					    //	VGA V_SYNC
 	output	VGA_BLANK_N;				//	VGA BLANK
-	output	VGA_SYNC_N;				//	VGA SYNC
+	output	VGA_SYNC_N;				    //	VGA SYNC
 	output	[9:0]	VGA_R;   			//	VGA Red[9:0]
 	output	[9:0]	VGA_G;	 			//	VGA Green[9:0]
 	output	[9:0]	VGA_B;  			//	VGA Blue[9:0]
@@ -65,7 +65,7 @@ module vga(
 			.colour(colour[2:0]),
 			.x(x[7:0]),
 			.y(y[6:0]),
-			.plot(plot),
+			.plot(Plot),
 			/* Signals for the DAC to drive the monitor. */
 			.VGA_R(VGA_R),
 			.VGA_G(VGA_G),
@@ -85,52 +85,54 @@ module vga(
 	// for the VGA controller, in addition to any other functionality your design may require.
 	
 	
-	wire LdX, LdY, LdC, plot;
-	wire CtrEN, CtrReset;
-	wire [3:0] CtrOut;
+	wire LdX, LdY, LdImg, ReadC, Plot;
+	wire CtrEN, CtrRE, CtrMAX, CtrOF;
+	wire [7:0] CtrOut;
 
     // Instansiate datapath
-	datapath d0(.data_in(SW[9:0]),
-        .LdX(LdX),
-        .LdY(LdY),
-        .LdC(LdC),
-
-        .plot(plot),
-
-        .Ctr(CtrOut[3:0]),
-
+	datapath d0(
         .resetN(resetn),
         .clock(CLOCK_50),
 
-        .X_out(x[7:0]),
-        .Y_out(y[6:0]),
-        .C_out(colour[2:0])
-	);
+        .dataIn(SW[9:0]),       // Data reg that stores 3 colors bits [9:7] and 7 location bits [6:0]
+        .imageIn(),             // Load in image by rows
+        .ctr(CtrOut[7:0]),      // 8 bit counter
+        .ldX(LdX),
+        .ldY(LdY),
+        .ldImg(LdImg),          // Signal to load X, Y into RegX, RegY
+        .readC(ReadC),          // Read color from the current pixel of the image into RegC
+        .plot(Plot),		    // Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
+        .xToVGA(x[7:0]),
+        .yToVGA(y[6:0]),
+        .cToVGA(c[2:0]),
+        );
 
     // Instansiate FSM control
-	control c0(.go(go),
-        .resetN(resetn),
-        .LoadX(load_x),
-        .clock(CLOCK_50),
-        .Ctr(CtrOut[3:0]),
-					
-        .CtrEN(CtrEN),
-        .CtrReset(CtrReset),
-					
-        .LdX(LdX),
-        .LdY(LdY),
-        .LdC(LdC),
+	control c0(
 
-        .plot(plot),
+        .resetN(resetn),        // Resets the states
+        .clock(CLOCK_50),       // FSM clock
+        .ctrOF(CtrOF),          // Signal that the counter has overflowed
+        .go(go),                // Begins FSM cycle
 
-        .current_state(LEDR[7:4]),
-        .next_state(LEDR[3:0])
+        .ldX(LdX),
+        .ldY(LdY),              // Signal to load x and y into registers
+        .ldImg(LdImg),          // Signal to load the current image into the register
+        .readC(ReadC),          // Signal to read the color from the image for the current image
+        .ctrEN(CtrEN),
+        .ctrRE(CtrRE),          // Signal to increment the counter and reset
+        .ctrMAX(CtrMAX),        // Signal for ctr to load in a max value
+        .plot(Plot)             // Signal to output the current pixel and draw on the VGA monitor
    );
 
-	Counter ctr(.enable(CtrEN),
-					.clock(CLOCK_50),
-					.clear_b(CtrReset),
-					.Q(CtrOut[3:0])
+	Counter ctr(
+        .enable(CtrEN),
+        .clock(CLOCK_50),
+        .resetN(CtrRE),
+        .inputMax(),
+        .ctrMAX(CtrMAX),
+        .Q(CtrOut[7:0]),
+        .ctrOF(CtrOF)
 	);
 
 	HexDecoder hexX1(.IN(x[7:4]),
@@ -154,131 +156,131 @@ module vga(
 	);
 endmodule
 
-module datapath(data_in, LdX, LdY, LdC, plot, Ctr, resetN, clock, X_out, Y_out, C_out);
+module datapath(
+    input resetN,
+    input clock,
 
-	input [9:0] data_in;
-	input LdX, LdY, LdC; // Signal to load X, Y, C, into RegX, RegY, RegC
-	input plot;		// Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
+	input [9:0] dataIn,            // Data reg that stores 3 colors bits [9:7] and 7 location bits [6:0]
+    input [159:0] imageIn[2:0],   // Load in image by rows
+    input [7:0] rowSize,            // Size of the row
+    input [7:0] ctr,                // 8 bit counter
+	input ldX, ldY, ldImg,          // Signal to load X, Y into RegX, RegY
+    input readC,                    // Read color from the current pixel of the image into RegC
+	input plot,		                // Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
 
-	input [3:0] Ctr;
+	output reg [7:0] xToVGA,
+	output reg [6:0] yToVGA,
+	output reg [2:0] cToVGA
+    );
 
-	input resetN;
-	input clock;
+    reg [6:0] RegX, RegY;           // Stores the location of the top left pixel of the image
+    reg [2:0] RegC;                 // Stores the curent color of the pixel
+    reg [7:0] RegImg [2:0];         // Stores the current image (may be a row of the image or full image)
+    reg [7:0] RegSize;
 
-	output reg [7:0] X_out;
-	output reg [6:0] Y_out;
-	output reg [2:0] C_out;
 
-	reg [6:0] RegX, RegY;
-	reg [2:0] RegC;
-	
 	always @ (posedge clock) begin
 		if (!resetN) begin
 			RegX <= 8'b0;
 			RegY <= 8'b0;
 			RegC <= 8'b0;
+            RegImg <= 8'b0;
 		end else begin
-			if (LdX == 1'b1)
-				RegX <= data_in[6:0];
-			if (LdY == 1'b1)
-				RegY <= data_in[6:0];
-			if (LdC == 1'b1)
-				RegC <= data_in[9:7];
+			if (ldX == 1'b1)        // Load in the x location of the top left pixel
+				RegX <= dataIn[6:0];
+			if (ldY == 1'b1)        // Load in the y location of the top left pixel
+				RegY <= dataIn[6:0];
+			if (LdC == 1'b1)        // Load in the current color to draw
+				RegC <= RegImg[ctr][2:0];
+            if (ldImg == 1'b1)      // Load in the image row
+                RegImg <= imageIn;
+                RegSize <= rowSize[7:0];
 		end
 	end
 	
 	// Output to out register
    always@(posedge clock) begin
 		if(!resetN) begin
-			X_out <= 8'b0;
-			Y_out <= 7'b0;
-			C_out <= 3'b0;
+			xToVGA <= 8'b0;
+			yToVGA <= 7'b0;
+			cToVGA <= 3'b0;
 		end else if(plot) begin
-			X_out <= RegX + Ctr[1:0];
-			Y_out <= RegY + Ctr[3:2];
-			C_out <= RegC;
+			xToVGA <= RegX + ctr[7:0];
+			yToVGA <= RegY;
+			cToVGA <= RegC;
 		end
 	end
 endmodule
 
-module control(go, resetN, LoadX, clock, Ctr, CtrEN, CtrReset, LdX, LdY, LdC, LdR, plot, current_state, next_state);
-    input go;
-    input resetN;
-    input LoadX;
-    input clock;
-    input [3:0] Ctr;
+module control(
+    input resetN,               // Resets the states
+    input clock,                // FSM clock
+    input ctrOF,                // Signal that the counter has overflowed
+    input go,                   // Begins FSM cycle
 
-    output reg CtrEN, CtrReset;
-    output reg LdX, LdY, LdC;
-    output reg plot;
-	 
-	 
-	 output reg [4:0] current_state, next_state;
+    output reg ldX, ldY,        // Signal to load x and y into registers
+    output reg ldImg,           // Signal to load the current image into the register
+    output reg readC,           // Signal to read the color from the image for the current image
+    output reg ctrEN, ctrRE,    // Signal to increment the counter and reset
+    output reg ctrMAX,          // Signal for ctr to load in a max value
+    output reg plot             // Signal to output the current pixel and draw on the VGA monitor
+    );
+
+    reg [4:0] current_state, next_state;
 
     localparam
-        NO_DRAW      = 4'd0,
-        LOAD_X       = 4'd1,
-        LOAD_X_WAIT  = 4'd2,
-        LOAD_Y       = 4'd3,
-        LOAD_Y_WAIT  = 4'd4,
-        LOAD_C       = 4'd5,
-        LOAD_C_WAIT	 = 4'd6,
-        DRAW         = 4'd7,
-        CTREN        = 4'd8,
-        CTRRESET     = 4'd9;
+        NO_DRAW     = 4'd0,
+        LOAD_X      = 4'd1,
+        LOAD_Y      = 4'd2,
+        LOAD_IMG    = 4'd3,
+        READ_C      = 4'd4,
+        DRAW        = 4'd5,
+        CTREN       = 4'd6,
+        CTRRESET    = 4'd7;
 
     always @(*)
     begin
         case (current_state)
-            NO_DRAW: begin
-                if (go == 1'b1)			// Load Y then C, then draw
-                    next_state = LOAD_Y;
-                else if (LoadX == 1'b1) // Load X then back to no draw
+            NO_DRAW: begin  // Loop in NO_DRAW until signal to start
+                if (go == 1'b1)
                     next_state = LOAD_X;
                 else
-                    next_state = NO_DRAW;// Stay in no draw
-            end
-            LOAD_X:			next_state = LoadX ? LOAD_X_WAIT : LOAD_X;
-            LOAD_X_WAIT:	next_state = LoadX ? LOAD_X_WAIT : NO_DRAW;
-
-            LOAD_Y:			next_state = go ? LOAD_Y_WAIT : LOAD_Y;
-            LOAD_Y_WAIT:	next_state = go ? LOAD_C : LOAD_Y_WAIT;
-
-            LOAD_C:			next_state = go ? LOAD_C_WAIT : LOAD_C;
-            LOAD_C_WAIT:	next_state = go ? LOAD_C_WAIT : DRAW;
-				
-            DRAW:	begin
-                if (Ctr[3:0] == 4'b1111)
-                    next_state = CTRRESET;
-                else
-                    next_state = CTREN;
-            end
-            CTREN: 			next_state = DRAW;
-            CTRRESET:		next_state = NO_DRAW;
-            default:        next_state = NO_DRAW;
+                    next_state = NO_DRAW;
+                end
+            LOAD_X: next_state = LOAD_Y;                    // Load in the left x coordinate of the image
+            LOAD_Y: next_state = LOAD_IMG;                  // Load in the top y coordinate of the image
+            LOAD_IMG: next_state = READ_C;                  // Load in the image row into registers
+            READ_C: next_state = DRAW;                      // Read the color for the current pixel
+            DRAW: next_state = CTREN;                       // Draw the pixel on the VGA
+            CTREN: next_state = ctrOF ? CTRRESET : READ_C;  // Increment the counter
+            CTRRESET: next_state = NO_DRAW;                 // Reset the counter and finish drawing
+            default: next_state = NO_DRAW;
        endcase
     end
 
     always @(*)
     begin
-        CtrEN = 1'b0;
-        CtrReset = 1'b1;
-        LdX = 1'b0;
-        LdY = 1'b0;
-        LdC = 1'b0;
+        ldX = 1'b0;
+        ldY = 1'b0;
+        ldImg = 1'b0;
+        readC = 1'b0;
+        ctrEN = 1'b0;
+        ctrRE = 1'b1;
+        ctrMAX = 1'b0;
         plot = 1'b0;
 
         case (current_state)
-            LOAD_X: LdX = 1'b1;
-            LOAD_Y:	LdY = 1'b1;
-            LOAD_C: LdC = 1'b1;
-            DRAW: begin
-                plot = 1'b1;
+            LOAD_X:     ldX = 1'b1;
+            LOAD_Y: 	ldY = 1'b1;
+            LOAD_IMG: begin
+                LdIMG = 1'b1;
+                ctrMAX = 1'b1;
             end
-            CTREN: 	 CtrEN = 1'b1;
+            READ_C:     readC = 1'b1;
+            DRAW:       plot = 1'b1;
+            CTREN: 	    ctrEN = 1'b1;
             CTRRESET: begin
-                plot = 1'b1;
-                CtrReset = 1'b0;
+                ctrRE = 1'b0;
             end
         endcase
     end
@@ -290,41 +292,48 @@ module control(go, resetN, LoadX, clock, Ctr, CtrEN, CtrReset, LdX, LdY, LdC, Ld
 		else
 			current_state <= next_state;
 		end
-endmodule : control
+endmodule
 
-module Counter(enable, clock, clear_b, Q);
-	input enable;
-	input clock;
-	input clear_b;
-	output [3:0] Q;
+module Counter(
+    input enable,
+    input clock,
+    input resetN,
+    input [7:0] inputMax,
+    input ctrMAX,
+    output reg [7:0] Q,
+    output ctrOF
+    );
 
-	TFlipFlop FF0(
-		.t(enable),
-		.q(Q[0]),
-		.clock(clock),
-		.resetN(clear_b)
-	);
+    reg [7:0] max, ctr;
 
-	TFlipFlop FF1(
-		.t(Q[0] & enable),
-		.q(Q[1]),
-		.clock(clock),
-		.resetN(clear_b)
-	);
-	
-	TFlipFlop FF2(
-		.t(Q[1] & Q[0] & enable),
-		.q(Q[2]),
-		.clock(clock),
-		.resetN(clear_b)
-	);
-	
-	TFlipFlop FF3(
-		.t(Q[2] & Q[1] & Q[0] & enable),
-		.q(Q[3]),
-		.clock(clock),
-		.resetN(clear_b)
-	);
+    always@(*) begin
+        if (ctrMAX) begin
+            ctr <= 8'b0;
+            max <= inputMax[7:0];
+        end
+        if (ctr < max)
+            ctr <= enable ? ctr + 1 : ctr;
+        else begin
+            ctr <= 8'b0;
+            ctrOF <= 1'b0;
+        end
+    end
+
+    always @(posedge clock) begin
+        overflow <= 1'b0;
+        if (!resetN)
+            counter <= 8'b0;
+        else
+            counter <= enable ? counter + 1 : counter;
+    end
+
+    always @(posedge clock) begin
+        if (!resetN)
+            Q <= 8'b0;
+        else
+            Q <= counter;
+
+    end
 endmodule
 
 module TFlipFlop(t, q, clock, resetN);
@@ -332,8 +341,7 @@ module TFlipFlop(t, q, clock, resetN);
 	input clock;
 	input resetN;
 	output reg q;
-	always @ (posedge clock, negedge resetN)
-	begin
+	always @ (posedge clock, negedge resetN) begin
 		if (resetN == 1'b0)
 			q <= 0;
 		else if (t == 1'b1)
