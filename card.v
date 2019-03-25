@@ -4,22 +4,22 @@ module store_card(
 	input [1:0] suit, // The card suit
 	input [9:0] next_card, // The memory address of the next card
 	input clock, // Stores to memory on this clock tick
-<<<<<<< HEAD
+
 	input enable, // If the module should store,
 	input load_val, // If the module should load the value and suit (takes priority over storing)
 	input load_addr, // If the module should load the memory address of the last and next card
 	output reg [9:0] last_card, // The memory address of the last card's next
 	output [7:0] card // The card at the current address of the module
-=======
+
 	input enable, // If the module should store
 	input load, // If the module should load the address, value and suit
 	output [31:0] card_data, // The data at the current address of the module
->>>>>>> dbc3583b2ffd26dee08bc12dd2121d0e7289dbf2
+
 	);
 
 	reg [3:0] current_value; // The current value of the module
 	reg [1:0] current_suit; // The current suit of the module
-<<<<<<< HEAD
+
 	reg [9:0] current_next; // The next card
 
 	always @(posedge clock) begin
@@ -43,7 +43,6 @@ module store_card(
 		.q(card)
 	);
 endmodule
-=======
 	reg [9:0] current_addr; // The current address of the module
 	reg wren; // If the ram module should write
 
@@ -201,5 +200,3 @@ module nth_card(
 		.q(next_card)
 	);
 endmodule
-
->>>>>>> dbc3583b2ffd26dee08bc12dd2121d0e7289dbf2
