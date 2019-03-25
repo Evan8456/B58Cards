@@ -6,7 +6,7 @@ module store_card(
 	input clock, // Stores to memory on this clock tick
 	input enable, // If the module should store
 	input load, // If the module should load the address, value and suit
-	output [31:0] card_data, // The data at the current address of the module
+	output [31:0] card_data // The data at the current address of the module
 	);
 
 	reg [3:0] current_value; // The current value of the module
@@ -29,7 +29,7 @@ module store_card(
 	end
 
 	always @(posedge load) begin
-		if(load_val && enable == 0) begin
+		if(load && enable == 0) begin
 			current_value <= value;
 			current_suit <= suit;
 			current_addr <= address;
@@ -81,7 +81,7 @@ module remove_card(
  			   SET_RAM_ADDR = 3'd5, // Set the address to the given one
  			   COPY_DATA = 3'd6; // Copy the next card's data to this one, effectively removing it
 
- 	always @(posedge clock)
+ 	always @(posedge clock) begin
  		case (current_state)
  			LOAD_ADDRESS:   begin
  							    wren <= 0;
@@ -143,9 +143,10 @@ module nth_card(
 	reg remove_card;
 	
 	always@(posedge clock)begin
-		if(load_cards)
+		if(load_cards) begin
 			current_card[9:0] <= card;
 			remove_card <= 0;
+		end
 		else if(next_card != 16'b0)
 			current_card <= next_card;
 		else
