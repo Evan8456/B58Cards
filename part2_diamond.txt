@@ -1,150 +1,4 @@
-// Part 2 skeleton
-
-module part2
-	(
-		CLOCK_50,						//	On Board 50 MHz
-		// Your inputs and outputs here
-        KEY,
-        SW,
-		// The ports below are for the VGA output.  Do not change.
-		VGA_CLK,   						//	VGA Clock
-		VGA_HS,							//	VGA H_SYNC
-		VGA_VS,							//	VGA V_SYNC
-		VGA_BLANK_N,						//	VGA BLANK
-		VGA_SYNC_N,						//	VGA SYNC
-		VGA_R,   						//	VGA Red[9:0]
-		VGA_G,	 						//	VGA Green[9:0]
-		VGA_B   						//	VGA Blue[9:0]
-	);
-
-	input			CLOCK_50;				//	50 MHz
-	input   [9:0]   SW;
-	input   [3:0]   KEY;
-
-	// Declare your inputs and outputs here
-	// Do not change the following outputs
-	output			VGA_CLK;   				//	VGA Clock
-	output			VGA_HS;					//	VGA H_SYNC
-	output			VGA_VS;					//	VGA V_SYNC
-	output			VGA_BLANK_N;				//	VGA BLANK
-	output			VGA_SYNC_N;				//	VGA SYNC
-	output	[9:0]	VGA_R;   				//	VGA Red[9:0]
-	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
-	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
-	
-	wire resetn;
-	assign resetn = KEY[0];
-	
-	// Create the colour, x, y and writeEn wires that are inputs to the controller.
-	wire [2:0] colour;
-	wire [7:0] x;
-	wire [6:0] y;
-	wire writeEn;
-	wire ld_x;
-	wire ld_y;
-	wire x_offset;
-	wire y_offest;
-
-	// Create an Instance of a VGA controller - there can be only one!
-	// Define the number of colours as well as the initial background
-	// image file (.MIF) for the controller.
-	vga_adapter VGA(
-			.resetn(resetn),
-			.clock(CLOCK_50),
-			.colour(colour),
-			.x(x),
-			.y(y),
-			.plot(writeEn),
-			/* Signals for the DAC to drive the monitor. */
-			.VGA_R(VGA_R),
-			.VGA_G(VGA_G),
-			.VGA_B(VGA_B),
-			.VGA_HS(VGA_HS),
-			.VGA_VS(VGA_VS),
-			.VGA_BLANK(VGA_BLANK_N),
-			.VGA_SYNC(VGA_SYNC_N),
-			.VGA_CLK(VGA_CLK));
-		defparam VGA.RESOLUTION = "160x120";
-		defparam VGA.MONOCHROME = "FALSE";
-		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
-		defparam VGA.BACKGROUND_IMAGE = "black.mif";
-			
-	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
-	// for the VGA controller, in addition to any other functionality your design may require.
-    
-    // Instansiate datapath
-	datapath d0(
-			.clock(CLOCK_50),
-			.resetn(resetn),
-			.colour_in(SW[9:7]),
-			.pos_in(SW[6:0]),
-			.ld_x(ld_x),
-			.ld_y(ld_y),
-			.x_offest(x_offest),
-			.y_offest(y_offest),
-			.colour_out(colour),
-			.x_out(x),
-			.y_out(y));
-
-    // Instansiate FSM control
-    control c0(
-			.clock(CLOCK_50),
-			.resetn(resetn),
-			.go(KEY[3]),
-			.plot(writeEn),
-			.ld_x(ld_x),
-			.ld_y(ld_y),
-			.x_offest(x_offest),
-			.y_offest(y_offest));
-endmodule
-
-module datapath(
-	input clock,
-	input resetn,
-	input [2:0] colour_in,
-	input [6:0] pos_in,
-	input ld_x,
-	input ld_y,
-	input [1:0] x_offset,
-	input [1:0] y_offset,
-	
-	output reg colour_out,
-	output reg x_out,
-	output reg y_out
-	);
-	
-	always @(posedge clock) begin
-		if(!resetn) begin
-			colour_out <= 3'b0;
-			x_out <= 7'b0;
-			y_out <= 7'b0;
-		end
-		else begin
-			colour_out <= colour_in;
-			if(ld_x)
-				x_out <= (pos_in + x_offest);
-			if(ld_y)
-				y_out <= (pos_in + y_offset);
-		end
-	end
-endmodule
-
-module control(
-	input clock,
-	input resetn, 
-	input go,
-	
-	output reg plot,
-	output reg ld_x,
-	output reg ld_y,
-	output reg [1:0] x_offest,
-	output reg [1:0] y_offest
-	);
-//[16:0] ? or [4:0]
-    reg [16:0] current_state, next_state; 
-    
-    
-	localparam
+localparam
 	LOAD_X  = 5'd0
 	LOAD_X_WAIT  = 5'd1,
 	LOAD_Y  = 5'd2,
@@ -427,7 +281,7 @@ always @(posedge clock) begin
 	PLOT_0_12:  next_state=  PLOT_0_13; 
 	PLOT_0_13:  next_state=  PLOT_0_14; 
 	PLOT_0_14:  next_state=  PLOT_0_15; 
-	PLOT_0_15:  next_state=  PLOT_10; 
+	PLOT_0_15:  next_state=  PLOT_1_0; 
 	PLOT_1_0:  next_state=  PLOT_1_1; 
 	PLOT_1_1:  next_state=  PLOT_1_2; 
 	PLOT_1_2:  next_state=  PLOT_1_3; 
@@ -443,7 +297,7 @@ always @(posedge clock) begin
 	PLOT_1_12:  next_state=  PLOT_1_13; 
 	PLOT_1_13:  next_state=  PLOT_1_14; 
 	PLOT_1_14:  next_state=  PLOT_1_15; 
-	PLOT_1_15:  next_state=  PLOT_20; 
+	PLOT_1_15:  next_state=  PLOT_2_0; 
 	PLOT_2_0:  next_state=  PLOT_2_1; 
 	PLOT_2_1:  next_state=  PLOT_2_2; 
 	PLOT_2_2:  next_state=  PLOT_2_3; 
@@ -459,7 +313,7 @@ always @(posedge clock) begin
 	PLOT_2_12:  next_state=  PLOT_2_13; 
 	PLOT_2_13:  next_state=  PLOT_2_14; 
 	PLOT_2_14:  next_state=  PLOT_2_15; 
-	PLOT_2_15:  next_state=  PLOT_30; 
+	PLOT_2_15:  next_state=  PLOT_3_0; 
 	PLOT_3_0:  next_state=  PLOT_3_1; 
 	PLOT_3_1:  next_state=  PLOT_3_2; 
 	PLOT_3_2:  next_state=  PLOT_3_3; 
@@ -475,7 +329,7 @@ always @(posedge clock) begin
 	PLOT_3_12:  next_state=  PLOT_3_13; 
 	PLOT_3_13:  next_state=  PLOT_3_14; 
 	PLOT_3_14:  next_state=  PLOT_3_15; 
-	PLOT_3_15:  next_state=  PLOT_40; 
+	PLOT_3_15:  next_state=  PLOT_4_0; 
 	PLOT_4_0:  next_state=  PLOT_4_1; 
 	PLOT_4_1:  next_state=  PLOT_4_2; 
 	PLOT_4_2:  next_state=  PLOT_4_3; 
@@ -491,7 +345,7 @@ always @(posedge clock) begin
 	PLOT_4_12:  next_state=  PLOT_4_13; 
 	PLOT_4_13:  next_state=  PLOT_4_14; 
 	PLOT_4_14:  next_state=  PLOT_4_15; 
-	PLOT_4_15:  next_state=  PLOT_50; 
+	PLOT_4_15:  next_state=  PLOT_5_0; 
 	PLOT_5_0:  next_state=  PLOT_5_1; 
 	PLOT_5_1:  next_state=  PLOT_5_2; 
 	PLOT_5_2:  next_state=  PLOT_5_3; 
@@ -507,7 +361,7 @@ always @(posedge clock) begin
 	PLOT_5_12:  next_state=  PLOT_5_13; 
 	PLOT_5_13:  next_state=  PLOT_5_14; 
 	PLOT_5_14:  next_state=  PLOT_5_15; 
-	PLOT_5_15:  next_state=  PLOT_60; 
+	PLOT_5_15:  next_state=  PLOT_6_0; 
 	PLOT_6_0:  next_state=  PLOT_6_1; 
 	PLOT_6_1:  next_state=  PLOT_6_2; 
 	PLOT_6_2:  next_state=  PLOT_6_3; 
@@ -523,7 +377,7 @@ always @(posedge clock) begin
 	PLOT_6_12:  next_state=  PLOT_6_13; 
 	PLOT_6_13:  next_state=  PLOT_6_14; 
 	PLOT_6_14:  next_state=  PLOT_6_15; 
-	PLOT_6_15:  next_state=  PLOT_70; 
+	PLOT_6_15:  next_state=  PLOT_7_0; 
 	PLOT_7_0:  next_state=  PLOT_7_1; 
 	PLOT_7_1:  next_state=  PLOT_7_2; 
 	PLOT_7_2:  next_state=  PLOT_7_3; 
@@ -539,7 +393,7 @@ always @(posedge clock) begin
 	PLOT_7_12:  next_state=  PLOT_7_13; 
 	PLOT_7_13:  next_state=  PLOT_7_14; 
 	PLOT_7_14:  next_state=  PLOT_7_15; 
-	PLOT_7_15:  next_state=  PLOT_80; 
+	PLOT_7_15:  next_state=  PLOT_8_0; 
 	PLOT_8_0:  next_state=  PLOT_8_1; 
 	PLOT_8_1:  next_state=  PLOT_8_2; 
 	PLOT_8_2:  next_state=  PLOT_8_3; 
@@ -555,7 +409,7 @@ always @(posedge clock) begin
 	PLOT_8_12:  next_state=  PLOT_8_13; 
 	PLOT_8_13:  next_state=  PLOT_8_14; 
 	PLOT_8_14:  next_state=  PLOT_8_15; 
-	PLOT_8_15:  next_state=  PLOT_90; 
+	PLOT_8_15:  next_state=  PLOT_9_0; 
 	PLOT_9_0:  next_state=  PLOT_9_1; 
 	PLOT_9_1:  next_state=  PLOT_9_2; 
 	PLOT_9_2:  next_state=  PLOT_9_3; 
@@ -571,7 +425,7 @@ always @(posedge clock) begin
 	PLOT_9_12:  next_state=  PLOT_9_13; 
 	PLOT_9_13:  next_state=  PLOT_9_14; 
 	PLOT_9_14:  next_state=  PLOT_9_15; 
-	PLOT_9_15:  next_state=  PLOT_100; 
+	PLOT_9_15:  next_state=  PLOT_10_0; 
 	PLOT_10_0:  next_state=  PLOT_10_1; 
 	PLOT_10_1:  next_state=  PLOT_10_2; 
 	PLOT_10_2:  next_state=  PLOT_10_3; 
@@ -587,7 +441,7 @@ always @(posedge clock) begin
 	PLOT_10_12:  next_state=  PLOT_10_13; 
 	PLOT_10_13:  next_state=  PLOT_10_14; 
 	PLOT_10_14:  next_state=  PLOT_10_15; 
-	PLOT_10_15:  next_state=  PLOT_110; 
+	PLOT_10_15:  next_state=  PLOT_11_0; 
 	PLOT_11_0:  next_state=  PLOT_11_1; 
 	PLOT_11_1:  next_state=  PLOT_11_2; 
 	PLOT_11_2:  next_state=  PLOT_11_3; 
@@ -603,7 +457,7 @@ always @(posedge clock) begin
 	PLOT_11_12:  next_state=  PLOT_11_13; 
 	PLOT_11_13:  next_state=  PLOT_11_14; 
 	PLOT_11_14:  next_state=  PLOT_11_15; 
-	PLOT_11_15:  next_state=  PLOT_120; 
+	PLOT_11_15:  next_state=  PLOT_12_0; 
 	PLOT_12_0:  next_state=  PLOT_12_1; 
 	PLOT_12_1:  next_state=  PLOT_12_2; 
 	PLOT_12_2:  next_state=  PLOT_12_3; 
@@ -619,7 +473,7 @@ always @(posedge clock) begin
 	PLOT_12_12:  next_state=  PLOT_12_13; 
 	PLOT_12_13:  next_state=  PLOT_12_14; 
 	PLOT_12_14:  next_state=  PLOT_12_15; 
-	PLOT_12_15:  next_state=  PLOT_130; 
+	PLOT_12_15:  next_state=  PLOT_13_0; 
 	PLOT_13_0:  next_state=  PLOT_13_1; 
 	PLOT_13_1:  next_state=  PLOT_13_2; 
 	PLOT_13_2:  next_state=  PLOT_13_3; 
@@ -635,7 +489,7 @@ always @(posedge clock) begin
 	PLOT_13_12:  next_state=  PLOT_13_13; 
 	PLOT_13_13:  next_state=  PLOT_13_14; 
 	PLOT_13_14:  next_state=  PLOT_13_15; 
-	PLOT_13_15:  next_state=  PLOT_140; 
+	PLOT_13_15:  next_state=  PLOT_14_0; 
 	PLOT_14_0:  next_state=  PLOT_14_1; 
 	PLOT_14_1:  next_state=  PLOT_14_2; 
 	PLOT_14_2:  next_state=  PLOT_14_3; 
@@ -651,7 +505,7 @@ always @(posedge clock) begin
 	PLOT_14_12:  next_state=  PLOT_14_13; 
 	PLOT_14_13:  next_state=  PLOT_14_14; 
 	PLOT_14_14:  next_state=  PLOT_14_15; 
-	PLOT_14_15:  next_state=  PLOT_150; 
+	PLOT_14_15:  next_state=  PLOT_15_0; 
 	PLOT_15_0:  next_state=  PLOT_15_1; 
 	PLOT_15_1:  next_state=  PLOT_15_2; 
 	PLOT_15_2:  next_state=  PLOT_15_3; 
@@ -881,12 +735,12 @@ case(current_state)
 	x_offset = 2'd2;
 	y_offset = 2'd6;
      PLOT_2_7: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd2;
 	y_offset = 2'd7;
      PLOT_2_8: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd2;
 	y_offset = 2'd8;
@@ -941,52 +795,52 @@ case(current_state)
 	x_offset = 2'd3;
 	y_offset = 2'd2;
      PLOT_3_3: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd3;
      PLOT_3_4: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd4;
      PLOT_3_5: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd5;
      PLOT_3_6: begin
-	 colour = 3'b100;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd6;
      PLOT_3_7: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd7;
      PLOT_3_8: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd8;
      PLOT_3_9: begin
-	 colour = 3'b100;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd9;
      PLOT_3_10: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd10;
      PLOT_3_11: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd11;
      PLOT_3_12: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd3;
 	y_offset = 2'd12;
@@ -1021,12 +875,12 @@ case(current_state)
 	x_offset = 2'd4;
 	y_offset = 2'd2;
      PLOT_4_3: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd4;
 	y_offset = 2'd3;
      PLOT_4_4: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd4;
 	y_offset = 2'd4;
@@ -1041,7 +895,7 @@ case(current_state)
 	x_offset = 2'd4;
 	y_offset = 2'd6;
      PLOT_4_7: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd4;
 	y_offset = 2'd7;
@@ -1056,17 +910,17 @@ case(current_state)
 	x_offset = 2'd4;
 	y_offset = 2'd9;
      PLOT_4_10: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd4;
 	y_offset = 2'd10;
      PLOT_4_11: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd4;
 	y_offset = 2'd11;
      PLOT_4_12: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd4;
 	y_offset = 2'd12;
@@ -1101,12 +955,12 @@ case(current_state)
 	x_offset = 2'd5;
 	y_offset = 2'd2;
      PLOT_5_3: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd5;
 	y_offset = 2'd3;
      PLOT_5_4: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd5;
 	y_offset = 2'd4;
@@ -1141,12 +995,12 @@ case(current_state)
 	x_offset = 2'd5;
 	y_offset = 2'd10;
      PLOT_5_11: begin
-	 colour = 3'b100;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd5;
 	y_offset = 2'd11;
      PLOT_5_12: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd5;
 	y_offset = 2'd12;
@@ -1181,7 +1035,7 @@ case(current_state)
 	x_offset = 2'd6;
 	y_offset = 2'd2;
      PLOT_6_3: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd6;
 	y_offset = 2'd3;
@@ -1191,7 +1045,7 @@ case(current_state)
 	x_offset = 2'd6;
 	y_offset = 2'd4;
      PLOT_6_5: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd6;
 	y_offset = 2'd5;
@@ -1226,7 +1080,7 @@ case(current_state)
 	x_offset = 2'd6;
 	y_offset = 2'd11;
      PLOT_6_12: begin
-	 colour = 3'b100;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd6;
 	y_offset = 2'd12;
@@ -1256,12 +1110,12 @@ case(current_state)
 	x_offset = 2'd7;
 	y_offset = 2'd1;
      PLOT_7_2: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd7;
 	y_offset = 2'd2;
      PLOT_7_3: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd7;
 	y_offset = 2'd3;
@@ -1306,12 +1160,12 @@ case(current_state)
 	x_offset = 2'd7;
 	y_offset = 2'd11;
      PLOT_7_12: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd7;
 	y_offset = 2'd12;
      PLOT_7_13: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd7;
 	y_offset = 2'd13;
@@ -1336,17 +1190,17 @@ case(current_state)
 	x_offset = 2'd8;
 	y_offset = 2'd1;
      PLOT_8_2: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd8;
 	y_offset = 2'd2;
      PLOT_8_3: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd8;
 	y_offset = 2'd3;
      PLOT_8_4: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd8;
 	y_offset = 2'd4;
@@ -1381,17 +1235,17 @@ case(current_state)
 	x_offset = 2'd8;
 	y_offset = 2'd10;
      PLOT_8_11: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd8;
 	y_offset = 2'd11;
      PLOT_8_12: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd8;
 	y_offset = 2'd12;
      PLOT_8_13: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd8;
 	y_offset = 2'd13;
@@ -1426,12 +1280,12 @@ case(current_state)
 	x_offset = 2'd9;
 	y_offset = 2'd3;
      PLOT_9_4: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd9;
 	y_offset = 2'd4;
      PLOT_9_5: begin
-	 colour = 3'b101;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd9;
 	y_offset = 2'd5;
@@ -1456,12 +1310,12 @@ case(current_state)
 	x_offset = 2'd9;
 	y_offset = 2'd9;
      PLOT_9_10: begin
-	 colour = 3'b101;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd9;
 	y_offset = 2'd10;
      PLOT_9_11: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd9;
 	y_offset = 2'd11;
@@ -1506,17 +1360,17 @@ case(current_state)
 	x_offset = 2'd10;
 	y_offset = 2'd3;
      PLOT_10_4: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd10;
 	y_offset = 2'd4;
      PLOT_10_5: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd10;
 	y_offset = 2'd5;
      PLOT_10_6: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd10;
 	y_offset = 2'd6;
@@ -1531,17 +1385,17 @@ case(current_state)
 	x_offset = 2'd10;
 	y_offset = 2'd8;
      PLOT_10_9: begin
-	 colour = 3'b000;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd10;
 	y_offset = 2'd9;
      PLOT_10_10: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd10;
 	y_offset = 2'd10;
      PLOT_10_11: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd10;
 	y_offset = 2'd11;
@@ -1596,22 +1450,22 @@ case(current_state)
 	x_offset = 2'd11;
 	y_offset = 2'd5;
      PLOT_11_6: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd11;
 	y_offset = 2'd6;
      PLOT_11_7: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd11;
 	y_offset = 2'd7;
      PLOT_11_8: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd11;
 	y_offset = 2'd8;
      PLOT_11_9: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd11;
 	y_offset = 2'd9;
@@ -1676,22 +1530,22 @@ case(current_state)
 	x_offset = 2'd12;
 	y_offset = 2'd5;
      PLOT_12_6: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd12;
 	y_offset = 2'd6;
      PLOT_12_7: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd12;
 	y_offset = 2'd7;
      PLOT_12_8: begin
-	 colour = 3'b111;
+	 colour = 3'b100;
  	 plot = 1'b1;
 	x_offset = 2'd12;
 	y_offset = 2'd8;
      PLOT_12_9: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd12;
 	y_offset = 2'd9;
@@ -1761,12 +1615,12 @@ case(current_state)
 	x_offset = 2'd13;
 	y_offset = 2'd6;
      PLOT_13_7: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd13;
 	y_offset = 2'd7;
      PLOT_13_8: begin
-	 colour = 3'b111;
+	 colour = 3'b000;
  	 plot = 1'b1;
 	x_offset = 2'd13;
 	y_offset = 2'd8;
@@ -1886,7 +1740,7 @@ case(current_state)
 	x_offset = 2'd14;
 	y_offset = 2'd15;
      PLOT_15_0: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd0;
@@ -1896,67 +1750,67 @@ case(current_state)
 	x_offset = 2'd15;
 	y_offset = 2'd1;
      PLOT_15_2: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd2;
      PLOT_15_3: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd3;
      PLOT_15_4: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd4;
      PLOT_15_5: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd5;
      PLOT_15_6: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd6;
      PLOT_15_7: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd7;
      PLOT_15_8: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd8;
      PLOT_15_9: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd9;
      PLOT_15_10: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd10;
      PLOT_15_11: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd11;
      PLOT_15_12: begin
-	 colour = 3'b001;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd12;
      PLOT_15_13: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd13;
      PLOT_15_14: begin
-	 colour = 3'b000;
+	 colour = 3'b111;
  	 plot = 1'b1;
 	x_offset = 2'd15;
 	y_offset = 2'd14;
@@ -1974,30 +1828,3 @@ end
    	 current_state <= next_state;
 end 
  endmodule
-
-
-module hex_decoder(hex_digit, segments);
-    input [3:0] hex_digit;
-    output reg [6:0] segments;
-   
-    always @(*)
-        case (hex_digit)
-            4'h0: segments = 7'b100_0000;
-            4'h1: segments = 7'b111_1001;
-            4'h2: segments = 7'b010_0100;
-            4'h3: segments = 7'b011_0000;
-            4'h4: segments = 7'b001_1001;
-            4'h5: segments = 7'b001_0010;
-            4'h6: segments = 7'b000_0010;
-            4'h7: segments = 7'b111_1000;
-            4'h8: segments = 7'b000_0000;
-            4'h9: segments = 7'b001_1000;
-            4'hA: segments = 7'b000_1000;
-            4'hB: segments = 7'b000_0011;
-            4'hC: segments = 7'b100_0110;
-            4'hD: segments = 7'b010_0001;
-            4'hE: segments = 7'b000_0110;
-            4'hF: segments = 7'b000_1110;   
-            default: segments = 7'h7f;
-        endcase
-endmodule
