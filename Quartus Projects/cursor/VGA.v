@@ -27,8 +27,6 @@ module vga(
 	input   [3:0]   KEY;
 	output  [17:0] LEDR;
 
-	wire resetn, load_x, go;
-	wire [9:0] data_in;
 	/**assign resetn = SW[10];
 	assign load_x = ~KEY[3];
 	assign go = ~KEY[2];
@@ -60,12 +58,12 @@ module vga(
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
 	vga_adapter VGA(
-			.resetn(resetn),
+			.resetn(resetN),
 			.clock(CLOCK_50),
 			.colour(colour[2:0]),
 			.x(x[7:0]),
 			.y(y[6:0]),
-			.plot(Plot),
+			.plot(plot),
 			/* Signals for the DAC to drive the monitor. */
 			.VGA_R(VGA_R),
 			.VGA_G(VGA_G),
@@ -83,57 +81,39 @@ module vga(
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
-	
-	
-	wire LdX, LdY, LdImg, ReadC, Plot;
-	wire CtrEN, CtrRE, CtrMAX, CtrOF;
-	wire [7:0] CtrOut;
+
+    wire [7:0] xIn;
+    wire [6:0] yIn;
+    wire [2:0] cIn;
+    wire resetN, go;
+	wire ldP, plot;
 
     // Instansiate datapath
 	datapath d0(
-        .resetN(resetn),
+        .resetN(resetN),
         .clock(CLOCK_50),
 
-        .dataIn(SW[9:0]),       // Data reg that stores 3 colors bits [9:7] and 7 location bits [6:0]
-        .imageIn(),             // Load in image by rows
-        .ctr(CtrOut[7:0]),      // 8 bit counter
-        .ldX(LdX),
-        .ldY(LdY),
-        .ldImg(LdImg),          // Signal to load X, Y into RegX, RegY
-        .readC(ReadC),          // Read color from the current pixel of the image into RegC
-        .plot(Plot),		    // Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
-        .xToVGA(x[7:0]),
-        .yToVGA(y[6:0]),
-        .cToVGA(c[2:0]),
+        .xIn(xIn),              // 8 bit x location data
+        .yIn(yIn),              // 7 bit y location data
+        .cIn(cIn),              // 3 bit colour data
+
+        .ldP(ldP),              // FSM Signal to load in the pixel data
+        .plot(plot),		    // FSM Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
+
+        .xOut(x[7:0]),          // x output to VGA
+        .yOut(y[6:0]),          // y output to VGA
+        .cOut(colour[2:0])      // colour output to VGA
         );
 
     // Instansiate FSM control
 	control c0(
-
-        .resetN(resetn),        // Resets the states
+        .resetN(resetN),        // Resets the states
         .clock(CLOCK_50),       // FSM clock
-        .ctrOF(CtrOF),          // Signal that the counter has overflowed
         .go(go),                // Begins FSM cycle
 
-        .ldX(LdX),
-        .ldY(LdY),              // Signal to load x and y into registers
-        .ldImg(LdImg),          // Signal to load the current image into the register
-        .readC(ReadC),          // Signal to read the color from the image for the current image
-        .ctrEN(CtrEN),
-        .ctrRE(CtrRE),          // Signal to increment the counter and reset
-        .ctrMAX(CtrMAX),        // Signal for ctr to load in a max value
-        .plot(Plot)             // Signal to output the current pixel and draw on the VGA monitor
+        .ldP(ldP),              // Signal to load in pixel data
+        .plot(plot)             // Signal to output the current pixel and draw on the VGA monitor
    );
-
-	Counter ctr(
-        .enable(CtrEN),
-        .clock(CLOCK_50),
-        .resetN(CtrRE),
-        .inputMax(),
-        .ctrMAX(CtrMAX),
-        .Q(CtrOut[7:0]),
-        .ctrOF(CtrOF)
-	);
 
 	HexDecoder hexX1(.IN(x[7:4]),
 					.OUT(HEX7[6:0])
@@ -160,54 +140,43 @@ module datapath(
     input resetN,
     input clock,
 
-	input [9:0] dataIn,            // Data reg that stores 3 colors bits [9:7] and 7 location bits [6:0]
-    input [159:0] imageIn[2:0],   // Load in image by rows
-    input [7:0] rowSize,            // Size of the row
-    input [7:0] ctr,                // 8 bit counter
-	input ldX, ldY, ldImg,          // Signal to load X, Y into RegX, RegY
-    input readC,                    // Read color from the current pixel of the image into RegC
-	input plot,		                // Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
+    input [7:0] xIn,                // 8 bit x location input
+    input [6:0] yIn,                // 7 bit y location input
+	input [2:0] cIn,                // 3 bit colour input
+	input ldP,                      // Signal to load in data input from xIn, yIn, cIn
+	input plot,		                // Signal to output from RegX, RegY, RegC
 
-	output reg [7:0] xToVGA,
-	output reg [6:0] yToVGA,
-	output reg [2:0] cToVGA
+	output reg [7:0] xOut,
+	output reg [6:0] yOut,
+	output reg [2:0] cOut
     );
 
     reg [6:0] RegX, RegY;           // Stores the location of the top left pixel of the image
     reg [2:0] RegC;                 // Stores the curent color of the pixel
-    reg [7:0] RegImg [2:0];         // Stores the current image (may be a row of the image or full image)
-    reg [7:0] RegSize;
-
 
 	always @ (posedge clock) begin
 		if (!resetN) begin
 			RegX <= 8'b0;
 			RegY <= 8'b0;
 			RegC <= 8'b0;
-            RegImg <= 8'b0;
 		end else begin
-			if (ldX == 1'b1)        // Load in the x location of the top left pixel
-				RegX <= dataIn[6:0];
-			if (ldY == 1'b1)        // Load in the y location of the top left pixel
-				RegY <= dataIn[6:0];
-			if (LdC == 1'b1)        // Load in the current color to draw
-				RegC <= RegImg[ctr][2:0];
-            if (ldImg == 1'b1)      // Load in the image row
-                RegImg <= imageIn;
-                RegSize <= rowSize[7:0];
+			if (ldP == 1'b1)        // Load in the current pixel data
+				RegX <= xIn[7:0];
+				RegY <= yIn[6:0];
+				RegC <= cIn[2:0];
 		end
 	end
 	
 	// Output to out register
    always@(posedge clock) begin
 		if(!resetN) begin
-			xToVGA <= 8'b0;
-			yToVGA <= 7'b0;
-			cToVGA <= 3'b0;
-		end else if(plot) begin
-			xToVGA <= RegX + ctr[7:0];
-			yToVGA <= RegY;
-			cToVGA <= RegC;
+			xOut <= 8'b0;
+			yOut <= 7'b0;
+			cOut <= 3'b0;
+		end else if(plot) begin     // Output the pixel data to VGA
+			xOut <= RegX;
+			yOut <= RegY;
+			cOut <= RegC;
 		end
 	end
 endmodule
@@ -215,14 +184,9 @@ endmodule
 module control(
     input resetN,               // Resets the states
     input clock,                // FSM clock
-    input ctrOF,                // Signal that the counter has overflowed
     input go,                   // Begins FSM cycle
 
-    output reg ldX, ldY,        // Signal to load x and y into registers
-    output reg ldImg,           // Signal to load the current image into the register
-    output reg readC,           // Signal to read the color from the image for the current image
-    output reg ctrEN, ctrRE,    // Signal to increment the counter and reset
-    output reg ctrMAX,          // Signal for ctr to load in a max value
+    output reg ldP,             // Signal to load pixel data into registers
     output reg plot             // Signal to output the current pixel and draw on the VGA monitor
     );
 
@@ -230,58 +194,32 @@ module control(
 
     localparam
         NO_DRAW     = 4'd0,
-        LOAD_X      = 4'd1,
-        LOAD_Y      = 4'd2,
-        LOAD_IMG    = 4'd3,
-        READ_C      = 4'd4,
-        DRAW        = 4'd5,
-        CTREN       = 4'd6,
-        CTRRESET    = 4'd7;
+        LOAD_PIXEL  = 4'd1,
+        DRAW        = 4'd2;
 
     always @(*)
     begin
         case (current_state)
-            NO_DRAW: begin  // Loop in NO_DRAW until signal to start
+            NO_DRAW: begin      // Loop in NO_DRAW until signal to start
                 if (go == 1'b1)
-                    next_state = LOAD_X;
+                    LOAD_PIXEL;
                 else
                     next_state = NO_DRAW;
                 end
-            LOAD_X: next_state = LOAD_Y;                    // Load in the left x coordinate of the image
-            LOAD_Y: next_state = LOAD_IMG;                  // Load in the top y coordinate of the image
-            LOAD_IMG: next_state = READ_C;                  // Load in the image row into registers
-            READ_C: next_state = DRAW;                      // Read the color for the current pixel
-            DRAW: next_state = CTREN;                       // Draw the pixel on the VGA
-            CTREN: next_state = ctrOF ? CTRRESET : READ_C;  // Increment the counter
-            CTRRESET: next_state = NO_DRAW;                 // Reset the counter and finish drawing
+            LOAD_PIXEL: next_state = DRAW;
+            DRAW: next_state = NO_DRAW;
             default: next_state = NO_DRAW;
        endcase
     end
 
     always @(*)
     begin
-        ldX = 1'b0;
-        ldY = 1'b0;
-        ldImg = 1'b0;
-        readC = 1'b0;
-        ctrEN = 1'b0;
-        ctrRE = 1'b1;
-        ctrMAX = 1'b0;
+        ldP = 1'b0;
         plot = 1'b0;
 
         case (current_state)
-            LOAD_X:     ldX = 1'b1;
-            LOAD_Y: 	ldY = 1'b1;
-            LOAD_IMG: begin
-                LdIMG = 1'b1;
-                ctrMAX = 1'b1;
-            end
-            READ_C:     readC = 1'b1;
-            DRAW:       plot = 1'b1;
-            CTREN: 	    ctrEN = 1'b1;
-            CTRRESET: begin
-                ctrRE = 1'b0;
-            end
+            LOAD_PIXEL: ldP = 1'b1;
+            DRAW: plot = 1'b1;
         endcase
     end
 
@@ -298,41 +236,17 @@ module Counter(
     input enable,
     input clock,
     input resetN,
-    input [7:0] inputMax,
-    input ctrMAX,
-    output reg [7:0] Q,
-    output ctrOF
+    input [7:0] max,
+    output reg [7:0] Q
     );
-
-    reg [7:0] max, ctr;
-
-    always@(*) begin
-        if (ctrMAX) begin
-            ctr <= 8'b0;
-            max <= inputMax[7:0];
-        end
-        if (ctr < max)
-            ctr <= enable ? ctr + 1 : ctr;
-        else begin
-            ctr <= 8'b0;
-            ctrOF <= 1'b0;
-        end
-    end
-
-    always @(posedge clock) begin
-        overflow <= 1'b0;
-        if (!resetN)
-            counter <= 8'b0;
-        else
-            counter <= enable ? counter + 1 : counter;
-    end
 
     always @(posedge clock) begin
         if (!resetN)
             Q <= 8'b0;
+        else if (counter < max)
+            Q <= enable ? counter + 1 : counter;
         else
-            Q <= counter;
-
+            Q <= 8'b0;
     end
 endmodule
 
@@ -373,4 +287,41 @@ module HexDecoder(IN, OUT);
             4'hF: OUT = 7'b000_1110;
             default: OUT = 7'h7f;
         endcase
+endmodule : HexDecoder
+
+module drawCard(
+    input [7:0]x,
+    input [6:0]y,
+    input clock,
+    input resetN
+    );
+
+    parameter XSize = 1;
+    parameter YSize = 1;
+
+    wire xCtr, yCtr;
+
+    Counter xCtr(
+        .enable(),
+        .clock(clock),
+        .resetN(resetN),
+        .max(XSize),
+        .Q(xCtr)
+    );
+
+    Counter yCtr(
+        .enable(),
+        .clock(clock),
+        .resetN(resetN),
+        .max(YSize),
+        .Q(yCtr)
+    );
+endmodule
+
+module drawSuit();
+
+endmodule
+
+module drawNumber();
+
 endmodule
