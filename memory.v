@@ -37,3 +37,13 @@ module allocate_memory(clock, enable, addr_found, address, data);
 		.q(mem_info)
 	);
 endmodule
+
+module ram_controller(address);
+	ram1024x32 ram(
+		.address(address),
+		.clock(clock),
+		.data({1, 31'b0}),
+		.wren(ram_write),
+		.q(mem_info)
+	);
+endmodule

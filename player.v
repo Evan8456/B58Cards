@@ -1,4 +1,4 @@
-module player(clock, hand, first_card)
+module player(clock, hand, first_card);
 	input clock;
 	output reg [9:0] hand; // The memory address of the hand
 	output [31:0] first_card;
