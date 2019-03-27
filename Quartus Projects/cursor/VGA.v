@@ -129,7 +129,10 @@ module cursor(
 		.drawBlank(drawBlank),
 		.drawNum(drawNum),
 		.drawSuit(drawSuit),
-		.plot(plot)
+		.plot(plot),
+		
+		.current_state(LEDR[17:13]),
+		.next_state(LEDR[12:8])
 	);
 	
 	HexDecoder hexX1(.IN(x[7:4]),
@@ -317,10 +320,11 @@ module control(
 	 output reg drawNum,
 	 output reg drawSuit,
 	 output reg loadNumSuit,
-    output reg plot            // Signal to output the current pixel and draw on the VGA monitor
+    output reg plot,            // Signal to output the current pixel and draw on the VGA monitor
+	 output reg [4:0] current_state, next_state
     );
 
-    reg [4:0] current_state, next_state;
+    //reg [4:0] current_state, next_state;
 
     localparam
         NO_DRAW      = 4'd0,
@@ -335,13 +339,8 @@ module control(
     always @(*)
     begin
         case (current_state)
-            NO_DRAW: begin      // Loop in NO_DRAW until signal to start
-                if (go == 1'b1)
-                    next_state = DRAW_BLANK;
-                else
-                    next_state = LOAD_NUM_SUIT;
-                end
-				LOAD_NUM_SUIT : next_state = DRAW_BLANK;
+            NO_DRAW: next_state = go ? LOAD_NUM_SUIT : NO_DRAW;
+				LOAD_NUM_SUIT : next_state = DRAW_NUM;
             DRAW_BLANK : next_state = WAIT_BLANK;
 				WAIT_BLANK : next_state = blankDone ? DRAW_NUM : WAIT_BLANK;
 				DRAW_NUM : next_state = WAIT_NUM;
@@ -352,7 +351,7 @@ module control(
        endcase
     end
 
-    always @(*)
+    always @(posedge clock)
     begin
 		  loadNumSuit = 1'b0;
 		  drawBlank = 1'b0;
