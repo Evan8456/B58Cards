@@ -1,6 +1,6 @@
 // Part 2 skeleton
 
-module vga(
+module cursor(
     CLOCK_50,				//	On Board 50 MHz
     // Your inputs and outputs here
     KEY,
@@ -23,9 +23,10 @@ module vga(
 	);
 
 	input	CLOCK_50;		//	50 MHz
-	input   [11:0]   SW;
+	input   [17:0]   SW;
 	input   [3:0]   KEY;
 	output  [17:0] LEDR;
+	
 
 	/**assign resetn = SW[10];
 	assign load_x = ~KEY[3];
@@ -53,6 +54,9 @@ module vga(
 	wire [2:0] colour;
 	wire [7:0] x;
 	wire [6:0] y;
+	wire plot;
+   wire resetN;
+	assign resetN = SW[16];
 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
@@ -74,7 +78,7 @@ module vga(
 			.VGA_BLANK(VGA_BLANK_N),
 			.VGA_SYNC(VGA_SYNC_N),
 			.VGA_CLK(VGA_CLK));
-	defparam VGA.RESOLUTION = "160x120";
+	defparam VGA.RESOLUTION = "320x240";
 	defparam VGA.MONOCHROME = "FALSE";
 	defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
 	defparam VGA.BACKGROUND_IMAGE = "black.mif";
@@ -82,39 +86,52 @@ module vga(
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
 
-    wire [7:0] xIn;
-    wire [6:0] yIn;
-    wire [2:0] cIn;
-    wire resetN, go;
-	wire ldP, plot;
+	
+	
+	wire loadNumSuit, drawBlank, drawNum, drawSuit;
+	wire blankDone, numDone, suitDone;
+	
+	drawCard DC(
+		.resetN(resetN),
+		.clock(CLOCK_50),
 
-    // Instansiate datapath
-	datapath d0(
-        .resetN(resetN),
-        .clock(CLOCK_50),
+		.xIn(8'd30),                // 8 bit x location input
+		.yIn(7'd10),                // 7 bit y location input
+	
+		.loadNumSuit(loadNumSuit),
+		.drawBlank(drawBlank),
+		.drawNum(drawNum),
+		.drawSuit(drawSuit),
+	
+		.cardNum(4'd2),
+		.cardSuit(2'd4),
 
-        .xIn(xIn),              // 8 bit x location data
-        .yIn(yIn),              // 7 bit y location data
-        .cIn(cIn),              // 3 bit colour data
+		.xOut(x[7:0]),
+		.yOut(y[6:0]),
+		.cOut(colour[2:0]),
+	
+		.blankDone(blankDone),
+		.numDone(numDone),
+		.suitDone(suitDone)
+	);
+		
+	
+	control FSM(
+		.resetN(resetN),               // Resets the states
+		.clock(CLOCK_50),                // FSM clock
+		.go(SW[17]),                   // Begins FSM cycle
+	 
+		.blankDone(blankDone),
+		.numDone(numDone),
+		.suitDone(suitDone),
 
-        .ldP(ldP),              // FSM Signal to load in the pixel data
-        .plot(plot),		    // FSM Signal to output to X_out, Y_out, C_out from RegX, RegY, RegC
-
-        .xOut(x[7:0]),          // x output to VGA
-        .yOut(y[6:0]),          // y output to VGA
-        .cOut(colour[2:0])      // colour output to VGA
-        );
-
-    // Instansiate FSM control
-	control c0(
-        .resetN(resetN),        // Resets the states
-        .clock(CLOCK_50),       // FSM clock
-        .go(go),                // Begins FSM cycle
-
-        .ldP(ldP),              // Signal to load in pixel data
-        .plot(plot)             // Signal to output the current pixel and draw on the VGA monitor
-   );
-
+		.loadNumSuit(loadNumSuit),
+		.drawBlank(drawBlank),
+		.drawNum(drawNum),
+		.drawSuit(drawSuit),
+		.plot(plot)
+	);
+	
 	HexDecoder hexX1(.IN(x[7:4]),
 					.OUT(HEX7[6:0])
 	);
@@ -136,36 +153,134 @@ module vga(
 	);
 endmodule
 
-module datapath(
-    input resetN,
-    input clock,
+module drawCard(
+   input resetN,
+   input clock,
 
-    input [7:0] xIn,                // 8 bit x location input
-    input [6:0] yIn,                // 7 bit y location input
-	input [2:0] cIn,                // 3 bit colour input
-	input ldP,                      // Signal to load in data input from xIn, yIn, cIn
-	input plot,		                // Signal to output from RegX, RegY, RegC
+   input [7:0] xIn,                // 8 bit x location input
+   input [6:0] yIn,                // 7 bit y location input
+	
+	input loadNumSuit,
+	input drawBlank,
+	input drawNum,
+	input drawSuit,
+	
+	input [3:0] cardNum,
+	input [1:0] cardSuit,
 
 	output reg [7:0] xOut,
 	output reg [6:0] yOut,
-	output reg [2:0] cOut
-    );
-
-    reg [6:0] RegX, RegY;           // Stores the location of the top left pixel of the image
-    reg [2:0] RegC;                 // Stores the curent color of the pixel
-
-	always @ (posedge clock) begin
+	output reg [2:0] cOut,
+	
+	output blankDone,
+	output numDone,
+	output suitDone
+	);
+	 
+	wire [767:0] ace;
+	wire [767:0] two;
+	wire [767:0] three;
+	wire [767:0] four;
+	wire [767:0] five;
+	wire [767:0] six;
+	wire [767:0] seven;
+	wire [767:0] eight;
+	wire [767:0] nine;
+	wire [767:0] ten;
+	wire [767:0] jack;
+	wire [767:0] queen;
+	wire [767:0] king;
+	
+	wire [767:0] spade;
+	wire [767:0] diamond;
+	wire [767:0] club;
+	wire [767:0] heart;
+	assign two = 768'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFFFFFFFE071FFFFFFFFE3F1FFFFFFFFFF8FFFFFFFFFE00FFFFFFFFFE3FFFFFFFFFFE001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+	assign heart = 768'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF03003FFFFFF8000007FFFFF8000007FFFFF8000007FFFFF8000007FFFFFF00003FFFFFFFE001FFFFFFFFFC7FFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+	
+	reg [767:0] numDataReg, suitDataReg;
+	reg [3:0] numReg;
+	reg [1:0] suitReg;
+	reg [7:0] xReg;
+	reg [6:0] yReg;
+	
+	always@(posedge clock) begin
 		if (!resetN) begin
-			RegX <= 8'b0;
-			RegY <= 8'b0;
-			RegC <= 8'b0;
-		end else begin
-			if (ldP == 1'b1)        // Load in the current pixel data
-				RegX <= xIn[7:0];
-				RegY <= yIn[6:0];
-				RegC <= cIn[2:0];
+			numReg <= 4'b0;
+			suitReg <= 2'b0;
+		end if(loadNumSuit) begin
+			numReg <= cardNum;
+			suitReg <= cardSuit;
 		end
 	end
+	
+	always@(posedge clock) begin
+		case (numReg) 
+			4'd1: numDataReg <= ace;
+			4'd2: numDataReg <= two;
+			4'd3: numDataReg <= three;
+			4'd4: numDataReg <= four;
+			4'd5: numDataReg <= five;
+			4'd6: numDataReg <= six;
+			4'd7: numDataReg <= seven;
+			4'd8: numDataReg <= eight;
+			4'd9: numDataReg <= nine;
+			4'd10: numDataReg <= ten;
+			4'd11: numDataReg <= jack;
+			4'd12: numDataReg <= queen;
+			4'd13: numDataReg <= king;
+			default: numDataReg <= ace;
+		endcase
+		
+		case (suitReg)
+			2'd0: suitDataReg <= spade;
+			2'd1: suitDataReg <= diamond;
+			2'd2: suitDataReg <= club;
+			2'd3: suitDataReg <= heart;
+			default: suitDataReg <= spade;
+		endcase
+	end
+	
+	wire [7:0] blankOutX, numOutX, suitOutX;
+	wire [6:0] blankOutY, numOutY, suitOutY;
+	wire [2:0] blankOutC, numOutC, suitOutC;
+
+	drawBlankCard blank(
+		.resetN(resetN),
+		.clock(clock),
+		.x(xIn),
+		.y(yIn),
+		.xOut(blankOutX),
+		.yOut(blankOutY),
+		.cOut(blankOutC),
+		.done(blankDone)
+	
+	);
+	
+	drawNum num(
+		.resetN(resetN),
+		.clock(clock),
+		.x(xIn),
+		.y(yIn),
+		.in_data(numReg),
+		.xOut(numOutX),
+		.yOut(numOutY),
+		.cOut(numOutC),
+		.done(numDone)
+	);
+	
+	
+	drawNum suit(
+		.resetN(resetN),
+		.clock(clock),
+		.x(xIn),
+		.y(yIn+5'd16),
+		.in_data(suitReg),
+		.xOut(suitOutX),
+		.yOut(suitOutY),
+		.cOut(suitOutC),
+		.done(suitDone)
+	);
 	
 	// Output to out register
    always@(posedge clock) begin
@@ -173,10 +288,18 @@ module datapath(
 			xOut <= 8'b0;
 			yOut <= 7'b0;
 			cOut <= 3'b0;
-		end else if(plot) begin     // Output the pixel data to VGA
-			xOut <= RegX;
-			yOut <= RegY;
-			cOut <= RegC;
+		end else if(drawBlank) begin
+			xOut <= blankOutX;
+			yOut <= blankOutY;
+			cOut <= blankOutC;
+		end else if(drawNum) begin
+			xOut <= numOutX;
+			yOut <= numOutY;
+			cOut <= numOutC;
+		end else if(drawSuit) begin
+			xOut <= suitOutX;
+			yOut <= suitOutY;
+			cOut <= suitOutC;
 		end
 	end
 endmodule
@@ -185,41 +308,84 @@ module control(
     input resetN,               // Resets the states
     input clock,                // FSM clock
     input go,                   // Begins FSM cycle
+	 
+	 input blankDone,
+	 input numDone,
+	 input suitDone,
 
-    output reg ldP,             // Signal to load pixel data into registers
-    output reg plot             // Signal to output the current pixel and draw on the VGA monitor
+	 output reg drawBlank,
+	 output reg drawNum,
+	 output reg drawSuit,
+	 output reg loadNumSuit,
+    output reg plot            // Signal to output the current pixel and draw on the VGA monitor
     );
 
     reg [4:0] current_state, next_state;
 
     localparam
-        NO_DRAW     = 4'd0,
-        LOAD_PIXEL  = 4'd1,
-        DRAW        = 4'd2;
-
+        NO_DRAW      = 4'd0,
+		  LOAD_NUM_SUIT= 4'd1,
+        DRAW_BLANK  	= 4'd2,
+		  WAIT_BLANK  	= 4'd3,
+		  DRAW_NUM	  	= 4'd4,
+		  WAIT_NUM	  	= 4'd5,
+		  DRAW_SUIT   	= 4'd6,
+		  WAIT_SUIT	  	= 4'd7;
+		  
     always @(*)
     begin
         case (current_state)
             NO_DRAW: begin      // Loop in NO_DRAW until signal to start
                 if (go == 1'b1)
-                    LOAD_PIXEL;
+                    next_state = DRAW_BLANK;
                 else
-                    next_state = NO_DRAW;
+                    next_state = LOAD_NUM_SUIT;
                 end
-            LOAD_PIXEL: next_state = DRAW;
-            DRAW: next_state = NO_DRAW;
+				LOAD_NUM_SUIT : next_state = DRAW_BLANK;
+            DRAW_BLANK : next_state = WAIT_BLANK;
+				WAIT_BLANK : next_state = blankDone ? DRAW_NUM : WAIT_BLANK;
+				DRAW_NUM : next_state = WAIT_NUM;
+				WAIT_NUM : next_state = numDone ? DRAW_SUIT : WAIT_NUM;
+				DRAW_SUIT : next_state = WAIT_SUIT;
+				WAIT_SUIT : next_state = suitDone ? NO_DRAW : WAIT_SUIT;
             default: next_state = NO_DRAW;
        endcase
     end
 
     always @(*)
     begin
-        ldP = 1'b0;
+		  loadNumSuit = 1'b0;
+		  drawBlank = 1'b0;
+		  drawNum = 1'b0;
+		  drawSuit = 1'b0;
         plot = 1'b0;
 
         case (current_state)
-            LOAD_PIXEL: ldP = 1'b1;
-            DRAW: plot = 1'b1;
+				LOAD_NUM_SUIT: loadNumSuit = 1'b1;
+            DRAW_BLANK: begin
+					drawBlank = 1'b1;
+					plot = 1'b1;
+				end
+				WAIT_BLANK: begin
+					drawBlank = 1'b1;
+					plot = 1'b1;
+				end
+				DRAW_NUM: begin
+					drawNum = 1'b1;
+					plot = 1'b1;
+				end
+				WAIT_NUM: begin
+					drawNum = 1'b1;
+					plot = 1'b1;
+				end
+				DRAW_SUIT: begin
+					drawSuit = 1'b1;
+					plot = 1'b1;
+				end
+				WAIT_SUIT: begin
+					drawSuit = 1'b1;
+					plot = 1'b1;
+				end
         endcase
     end
 
@@ -243,8 +409,8 @@ module Counter(
     always @(posedge clock) begin
         if (!resetN)
             Q <= 8'b0;
-        else if (counter < max)
-            Q <= enable ? counter + 1 : counter;
+        else if (Q < max)
+            Q <= enable ? Q + 1 : Q;
         else
             Q <= 8'b0;
     end
@@ -287,41 +453,182 @@ module HexDecoder(IN, OUT);
             4'hF: OUT = 7'b000_1110;
             default: OUT = 7'h7f;
         endcase
-endmodule : HexDecoder
-
-module drawCard(
-    input [7:0]x,
-    input [6:0]y,
-    input clock,
-    input resetN
-    );
-
-    parameter XSize = 1;
-    parameter YSize = 1;
-
-    wire xCtr, yCtr;
-
-    Counter xCtr(
-        .enable(),
-        .clock(clock),
-        .resetN(resetN),
-        .max(XSize),
-        .Q(xCtr)
-    );
-
-    Counter yCtr(
-        .enable(),
-        .clock(clock),
-        .resetN(resetN),
-        .max(YSize),
-        .Q(yCtr)
-    );
 endmodule
 
-module drawSuit();
-
+module drawBlankCard(
+	input resetN,
+	input clock,
+	input [7:0] x,
+	input [6:0] y,
+	output reg [7:0] xOut,
+	output reg [6:0] yOut,
+	output reg [2:0] cOut,
+	output reg done
+	);
+	reg [7:0] xOffset;
+	reg [6:0] yOffset;
+	
+	always@(posedge clock) begin
+		if (!resetN) begin
+			xOffset <= 8'b0;
+			yOffset <= 7'b0;
+			xOut <= 8'b0;
+			yOut <= 7'b0;
+			cOut <= 3'b0;
+			done <= 1'b0;
+		end else if (xOffset < 8'd23)
+			xOffset <= xOffset + 1'b1;
+		else if (yOffset < 8'd39) begin
+			yOffset <= yOffset + 1'b1;
+			xOffset <= 8'b0;
+		end else
+			done <= 1'b1;
+		
+		xOut <= x + xOffset;
+		yOut <= y + yOffset;
+		cOut <= 3'b111;
+	end
 endmodule
 
-module drawNumber();
-
+module drawNum(
+	input resetN,
+	input clock,
+	input [7:0] x,
+	input [6:0] y,
+	input [767:0] in_data,
+	output reg [7:0] xOut,
+	output reg [6:0] yOut,
+	output reg [2:0] cOut,
+	output reg done,
+	output reg [767:0] data
+	);
+	reg [7:0] xOffset;
+	reg [6:0] yOffset;
+	
+	always@(posedge clock) begin
+		if (!resetN) begin
+			xOffset <= 8'b0;
+			yOffset <= 7'b0;
+			xOut <= 8'b0;
+			yOut <= 7'b0;
+			data <= in_data;
+			done <= 1'b0;
+		end else if (xOffset < 8'd15) begin
+			xOffset <= xOffset + 1'b1;
+			data <= data << 3;
+		end else if (yOffset < 8'd15) begin
+			yOffset <= yOffset + 1'b1;
+			xOffset <= 8'b0;
+			data <= data << 3;
+		end else
+			done <= 1'b1;
+		
+		xOut <= x + xOffset;
+		yOut <= y + yOffset;
+		cOut <= data[767:765];
+	end
 endmodule
+
+/**module drawCard2(
+	input resetN,
+	input clock,
+	input [7:0] x,
+	input [6:0] y,
+	input [3:0] cardNum,
+	input [1:0] cardSuit,
+	output reg [7:0] xOut,
+	output reg [6:0] yOut,
+	output reg [2:0] cOut,
+	output done
+	);	
+	wire [767:0] ace;
+	wire [767:0] two;
+	assign two = 768'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFFFFFFFE071FFFFFFFFE3F1FFFFFFFFFF8FFFFFFFFFE00FFFFFFFFFE3FFFFFFFFFFE001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+	wire [767:0] three;
+	wire [767:0] four;
+	wire [767:0] five;
+	wire [767:0] six;
+	wire [767:0] seven;
+	wire [767:0] eight;
+	wire [767:0] nine;
+	wire [767:0] ten;
+	wire [767:0] jack;
+	wire [767:0] queen;
+	wire [767:0] king;
+	
+	wire [767:0] spade;
+	wire [767:0] diamond;
+	wire [767:0] club;
+	wire [767:0] heart;
+	assign heart = 768'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF03003FFFFFF8000007FFFFF8000007FFFFF8000007FFFFF8000007FFFFFF00003FFFFFFFE001FFFFFFFFFC7FFFFFFFFFFFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+
+	reg [767:0] num;
+	reg [767:0] suit;
+	reg [767:0] in_data;
+	
+	reg [7:0] x_loc;
+	reg [6:0] y_loc;
+	reg resetBG_n;
+	reg resetNum_n;
+	reg [1:0] current_state;
+	
+	wire mini_done;
+	
+	always@(posedge clock) begin
+		case (cardNum)
+			4'd1: num <= ace;
+			4'd2: num <= two;
+			4'd3: num <= three;
+			4'd4: num <= four;
+			4'd5: num <= five;
+			4'd6: num <= six;
+			4'd7: num <= seven;
+			4'd8: num <= eight;
+			4'd9: num <= nine;
+			4'd10: num <= ten;
+			4'd11: num <= jack;
+			4'd12: num <= queen;
+			4'd13: num <= king;
+			default: num <= ace;
+		endcase
+		
+		case (cardSuit)
+			2'd0: suit <= spade;
+			2'd1: suit <= diamond;
+			2'd2: suit <= club;
+			2'd3: suit <= heart;
+			default: suit <= spade;
+		endcase
+		
+		if(!resetN) begin
+			resetBG_n <= 1;
+			resetNum_n <= 1;
+			current_state <= 0;
+		end
+	end
+	
+	drawNum dc(
+		.resetN(resetNum_n),
+		.clock(clock),
+		.x(x),
+		.y(7'd10),
+		.in_data(in_data),
+		.xOut(x[7:0]),
+		.yOut(y[6:0]),
+		.cOut(colour[2:0]),
+		.done(mini_done),
+		.data(data)
+	);
+		
+	drawBlankCard bc(
+		.resetN(resetBG_n),
+		.clock(clock),
+		.x(x),
+		.y(y),
+		.xOut(x[7:0]),
+		.yOut(y[6:0]),
+		.cOut(colour[2:0]),
+		.done(mini_done),
+		.data(data)
+	);
+endmodule**/
