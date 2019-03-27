@@ -3,10 +3,10 @@ module warControl(
 	input resetn,
 	input go, // HIGH indicates that a process has finished (player choosing a card, a card drawing, etc)
 	
-	input [7:0] player_head, // head of the player's deck - starts empty
-	input [7:0] com_head, // head of the com's deck - starts empty
+	input [9:0] player_head, // head of the player's deck - starts empty
+	input [9:0] com_head, // head of the com's deck - starts empty
 	
-	input [7:0] deck_head, // head of original deck - starts with 52 cards
+	input [9:0] deck_head, // head of original deck - starts with 52 cards
 	
 	output reg plot
 	);
@@ -38,18 +38,22 @@ module warControl(
 	reg [15:0] card_out;
 	reg [7:0] x_loc; // x position to draw next card
 	reg [7:0] y_loc; // y position to draw next card
+	
+	reg store_done;
     
 	localparam  
-				DEAL_TO_PLAYER		= 3'd0,
-				DEAL_TO_COM			= 3'd1,
-				PLAYER_WAIT			= 3'd2,
-				PLAYER_PLAY			= 3'd3,
-				PLAYER_DRAW			= 3'd4,
-				COM_PLAY			= 3'd5,
-				COM_DRAW			= 3'd6,
-				CALCULATE			= 3'd7, // calculate who wins
-				PLAYER_WINS			= 3'd8,
-				COM_WINS			= 3'd9;
+				DEAL_TO_PLAYER			= 4'd0,
+				DEAL_TO_COM				= 4'd1,
+				PLAYER_WAIT				= 4'd2,
+				PLAYER_PLAY				= 4'd3,
+				PLAYER_DRAW				= 4'd4,
+				COM_PLAY				= 4'd5,
+				COM_DRAW				= 4'd6,
+				CALCULATE				= 4'd7, // calculate who wins
+				PLAYER_CARD_TO_PLAYER	= 4'd8,
+				COM_CARD_TO_PLAYER		= 4'd9,
+				PLAYER_CARD_TO_COM		= 4'd10,
+				COM_CARD_TO_COM			= 4'd11;
 	
 	// Next state logic
 	always @(posedge clock) begin
@@ -66,19 +70,20 @@ module warControl(
 					else
 						next_state = DEAL_TO_COM;
 				end
-				PLAYER_WAIT: 		next_state = go ? PLAYER_PLAY : PLAYER_WAIT;
-				PLAYER_PLAY: 		next_state = PLAYER_DRAW;
-				PLAYER_DRAW:		next_state = go ? COM_PLAY : PLAYER_DRAW;
-				COM_PLAY: 			next_state = COM_DRAW;
-				COM_DRAW:			next_state = go ? CALCULATE : COM_DRAW;
+				PLAYER_WAIT: 				next_state = go ? PLAYER_PLAY : PLAYER_WAIT;
+				PLAYER_PLAY: 				next_state = PLAYER_DRAW;
+				PLAYER_DRAW:				next_state = go ? COM_PLAY : PLAYER_DRAW;
+				COM_PLAY: 					next_state = COM_DRAW;
+				COM_DRAW:					next_state = go ? CALCULATE : COM_DRAW;
 				CALCULATE: begin
 					if(winner == 0):
 						next_state = CALCULATE;
 					else if(winner == 1):
-						next_state = PLAYER_WINS;
+						next_state = PLAYER_CARD_TO_PLAYER;
 					else
-						next_state = COM_WINS;
+						next_state = PLAYER_CARD_TO_COM;
 				end
+				PLAYER_CARD_TO_PLAYER:		next_state = 
 				PLAYER_WINS:		next_state = go ? DEAL : PLAYER_WINS;
 				COM_WINS:		next_state = go ? DEAL : COM_WINS;
             default: next_state = DEAL;
@@ -153,21 +158,39 @@ module warControl(
 	end
 	
 	Deal dealer(
+		.clock(clock),
 		.enable(dealEn),
 		.card_head(card_head),
 		.card_out(card_out)
 	);
 	
 	StoreCard card_adder(
+		.clock(clock),
 		.enable(storeEn),
 		.head(store_to_head),
 		.card_in(card_to_store)
 	);
 	
 	DrawCard drawer(
-		.enable(drawEn)
+		.clock(clock),
+		.enable(drawEn),
 		.card_data(card_out[7:0]),
 		.x_loc(x_loc),
 		.y_loc(y_loc)
+	);
+	
+	ram_controller rc(		//pop n		//add
+		.enable(),			
+		.clock(),			
+		.load_op(),			
+		.select_op(),		
+		.load_arg(),		
+		.select_arg(),		
+		.arg(),				
+		.finished_op(),		
+		.out1(),			
+		.out2(),			
+		.out3(),			
+		.out4()				
 	);
 endmodule
