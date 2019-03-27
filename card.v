@@ -30,7 +30,7 @@ module store_card(
     assign card_info = {1, 9'b0, current_suit, current_value, 6'b0, next_card_addr}; // Fill the remaining positions with 0's
 
     reg [2:0] current_state;
- 
+
     localparam DO_NOTHING = 3'd0, // Wait until enable is triggered
     		   LOAD = 3'd1, // Load the address, value and suit
                STORE_CARD = 3'd2, // Store the value and suit of the card
@@ -50,8 +50,8 @@ module store_card(
             STORE_NEXT: current_state = DO_NOTHING;
             default: current_state = DO_NOTHING;
         endcase
-    end 
-  
+    end
+
     always @(posedge clock) begin
         case(current_state) begin
             DO_NOTHING: begin
@@ -182,7 +182,7 @@ module add_card(
         endcase
     end
 
-    
+
     store_card sc(
         .enable(store_enable),
         .clock(clock),
@@ -355,8 +355,8 @@ endmodule
 
 // removes and outputs the nth card in a linked list of cards
 module remove_nth_card(
-	input enable,
-	input clock,
+  	input enable,
+  	input clock,
     input [9:0] card, // The address of the head of the linked list
     input [5:0] n, // The nth card is outputted
     output reg [5:0] out_card, //data for the chosen cards
@@ -375,12 +375,12 @@ module remove_nth_card(
     reg remove_enable;
     wire card_removed;
 
-	wire [9:0] rem_address;
+    wire [9:0] rem_address;
     wire rem_clock;
     wire [31:0] rem_data;
     wire rem_wren;
 
-	reg [1:0] current_state;
+  	reg [1:0] current_state;
 
     localparam	DO_NOTHING = 2'd0, // Wait until enable is triggered
     			LOAD = 2'd1, // Load the address and n
@@ -428,7 +428,7 @@ module remove_nth_card(
 	    endcase
 	end
 
-    
+
     remove_card remover(
     	.enable(remove_enable),
     	.clock(clock),
