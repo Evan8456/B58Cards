@@ -1,19 +1,13 @@
-module player(clock, hand, first_card);
-	input clock;
-	output reg [9:0] hand; // The memory address of the hand
-	output [31:0] first_card;
+module player(load, hand, current_hand);
+	input load; // Load the hand on the positive edge of this
+	input [9:0] hand; // The address to the head of the linked list containing the hand
+	output [9:0] current_hand; // The address to the head of the linked list of the player's current hand
 
-	reg alloc_enable; // Allocate some memory for the player's hand
-	wire addr_found; // Make sure to stop when the address is found
+	reg [9:0] reg_hand;
 
-	always @(addr_found) begin
-		alloc_enable = addr_found ? 0 : 1;
+	always @(posedge load) begin
+		reg_hand = hand;
 	end
 
-	allocate_memory alloc(
-		.clock(clock),
-		.enable(alloc_enable),
-		.adr_found(addr_found),
-		.address(hand)
-	);
+	assign current_hand = reg_hand;
 endmodule
