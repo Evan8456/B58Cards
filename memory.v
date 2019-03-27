@@ -41,7 +41,7 @@ module ram_controller(load, address, clock, data, wren, q);
     input [31:0] data;
     input wren;
     output [31:0] q;
-
+    // REMEMBER TO DELETE THIS AND COMBINE IT WITH THE RAM LOGIC UNIT
     reg [9:0] cur_address;
     reg [31:0] cur_data;
     reg cur_wren;
