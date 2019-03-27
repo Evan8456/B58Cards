@@ -43,8 +43,8 @@ module ram_controller(
     input load_arg, // Loads the selected argument with the one provided
     input [2:0] select_arg, // Selects an argument for loading
     input [9:0] arg, // The argument to load
-    output finished_op; // If the operation has been finished since the last time enable was run
-    output [31:0] out1, out2, out3, out4; // The operation outputs
+    output reg finished_op; // If the operation has been finished since the last time enable was run
+    output reg [31:0] out1, out2, out3, out4; // The operation outputs
     );
 
     reg loading_arg;
