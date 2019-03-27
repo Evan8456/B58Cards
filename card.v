@@ -264,20 +264,6 @@ module split_list(
                         end
         endcase
     end
-
-    
-    remove_card remover(
-        .enable(remove_enable),
-        .clock(clock),
-        .address(current_addr),
-        .removed_card(out_card),
-        .finished_removing(card_removed),
-        .ram_address(rem_address),
-        .ram_clock(rem_clock),
-        .ram_data(rem_data),
-        .ram_wren(rem_wren),
-        .ram_q(ram_q)
-    );
 endmodule
 
 module remove_card(

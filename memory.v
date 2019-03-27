@@ -60,3 +60,37 @@ module ram_controller(load, address, clock, data, wren, q);
         .q(q)
     );
 endmodule
+
+module ram_logic_unit(
+    input enable,
+    input clock,
+    input load_op,
+    input select_op,
+    input load_reg,
+    input [$clog2(MAX_ARGS) - 1:0] select_reg;
+    );
+
+    parameter MAX_ARGS = 10;
+
+    reg [7:0] arg_array [MAX_ARGS - 1:0]; // The arguments that will be passed to the operation
+
+    reg current_op;
+
+    wire [9:0] ram_address; // The address of the ram unit
+    remove_nth_card rnc(
+        .enable
+        .clock,
+        .card,
+        .n,
+        .out_card,
+        .finished_removing,
+        .ram_address,
+        .ram_clock,
+        .ram_data,
+        .ram_wren,
+        .ram_q
+    );
+
+    ram_controller rc(load, address, clock, data, wren, q);
+endmodule
+
