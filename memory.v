@@ -45,103 +45,102 @@ module ram_controller(
     output reg [31:0] out1 // The operation output
     );
 
-	reg [1:0] real_enable;
-	
-    reg loading_arg;
-    reg [9:0] arg1, arg2, arg3, arg4, arg5, arg6; // The arguments for the operations
-
-    reg [9:0] current_arg;
-
     wire [9:0] ram_address;
     wire ram_clock;
     wire [31:0] ram_data;
     wire ram_wren;
     wire ram_q;
 
+    reg load_op, load_arg, start_module;
+    reg [9:0] current_arg1, current_arg2;
+
     reg [1:0] current_state;
 
-    localparam  DO_NOTHING  = 2'd0, // Wait until enable is active
-                LOAD_ARGS   = 2'd1, // Load the arguments
-                LOAD_OP     = 2'd2, // Load the operation
-                DO_OP       = 2'd3; // Do the operation  
+    localparam  DO_NOTHING      = 3'd0, // Wait until enable is active
+                LOAD_ARGS       = 3'd1, // Load the arguments
+                LOAD_ARGS_WAIT  = 3'd2 // Wait another clock cycle
+                LOAD_OP         = 3'd3, // Load the operation
+                LOAD_OP_WAIT    = 3'd4 // Wait another clock cycle
+                DO_OP           = 3'd5; // Do the operation  
 
     always @(posedge clock) begin
         case (current_state)
-            DO_NOTHING: current_state = enable ? LOAD_ARGS : DO_NOTHING;
-            LOAD_ARGS:  current_state = LOAD_OP;
-            LOAD_OP:    current_state = DO_OP;
-            DO_OP:      current_state = finished_op ? DO_NOTHING : DO_OP;
+            DO_NOTHING:     current_state = enable ? LOAD_ARGS : DO_NOTHING;
+            LOAD_ARGS:      current_state = LOAD_ARGS_WAIT;
+            LOAD_ARGS_WAIT: current_state = LOAD_OP;
+            LOAD_OP:        current_state = LOAD_OP_WAIT;
+            LOAD_OP_WAIT:   current_state = DO_OP;
+            DO_OP:          current_state = finished_op ? DO_NOTHING : DO_OP;
         endcase
     end
 
     always @(posedge clock) begin
         case (current_state)
-            DO_NOTHING: current_state = enable ? LOAD_ARGS : DO_NOTHING;
-            LOAD_ARGS:  current_state = LOAD_OP;
-            LOAD_OP:    current_state = DO_OP;
-            DO_OP:      current_state = finished_op ? DO_NOTHING : DO_OP;
+            DO_NOTHING:     begin
+                                ram_wren <= 0;
+                                load_op <= 0;
+                                load_arg <= 0;
+                                start_module <= 0;
+
+                                ac_enable <= 0;
+                                rnc_enable <= 0;
+                                sl_enable <= 0;
+                            end
+            LOAD_ARGS:      begin
+                                load_arg <= 1;
+                            end
+            LOAD_ARGS_WAIT: begin
+                                load_arg <= 0;
+                            end 
+            LOAD_OP:        begin
+                                load_op <= 1;
+                            end
+            LOAD_OP_WAIT:   begin
+                                load_op <= 0;
+                            end
+            DO_OP:          begin
+                                start_module <= 1;
+                            end
         endcase
     end
-
-    // Make sure not to enable modules while loading args
-    wire mod_enable = enable && ~loading_arg;
-
-	always @(posedge clock)begin
-		if(enable == 1 && real_enable == 0)
-			real_enable <= 2;
-		else if(enable == 1 && real_enable == 2)
-			real_enable <= 1;
-		else if(enable == 0)
-			real_enable <= 0;
-	end
 	
     // For loading arguments in the register
     always @(posedge load_arg) begin
-        case(select_arg)
-            3'd0: arg1 <= arg;
-            3'd1: arg2 <= arg;
-            3'd2: arg3 <= arg;
-            3'd3: arg4 <= arg;
-            3'd4: arg5 <= arg;
-            3'd5: arg6 <= arg;
-            default: arg1 <= arg;
-        endcase
+        current_arg1 <= arg1;
+        current_arg2 <= arg2;
     end
 
     // Load operation
     always @(posedge load_op) begin
-        if(finished_op) begin
-          loading_arg = 1;
-          case(select_op)
-              2'd0: begin // add
-                        ram_address = ac_ram_address;
-                        ram_clock = ac_ram_clock;
-                        ram_data = ac_ram_data;
-                        ram_wren = ac_ram_wren;
+        case(select_op)
+            2'd0: begin // add
+                    ram_address = ac_ram_address;
+                    ram_clock = ac_ram_clock;
+                    ram_data = ac_ram_data;
+                    ram_wren = ac_ram_wren;
 
-                        finished_op = ac_finished_adding;
-                        out1 = ac_next_card;
-                    end
-              2'd1: begin // remove
-                        ram_address = rnc_ram_address;
-                        ram_clock = rnc_ram_clock;
-                        ram_data = rnc_ram_data;
-                        ram_wren = rnc_ram_wren;
+                    finished_op = ac_finished_adding;
+                    out1 = ac_next_card;
+                end
+            2'd1: begin // remove
+                    ram_address = rnc_ram_address;
+                    ram_clock = rnc_ram_clock;
+                    ram_data = rnc_ram_data;
+                    ram_wren = rnc_ram_wren;
 
-                        finished_op = rnc_finished_removing;
-                        out1 = rnc_out_card;
-                    end
-              2'd2: begin // split
-                        ram_address = sl_ram_address;
-                        ram_clock = sl_ram_clock;
-                        ram_data = sl_ram_data;
-                        ram_wren = sl_ram_wren;
+                    finished_op = rnc_finished_removing;
+                    out1 = rnc_out_card;
+                end
+            2'd2: begin // split
+                    ram_address = sl_ram_address;
+                    ram_clock = sl_ram_clock;
+                    ram_data = sl_ram_data;
+                    ram_wren = sl_ram_wren;
 
-                        finished_op = sl_finished_splitting;
-                        out1 = sl_second_addr;
-                    end
-          endcase
-          default:  begin
+                    finished_op = sl_finished_splitting;
+                    out1 = sl_second_addr;
+                end
+            default: begin
                         ram_address = 0;
                         ram_clock = clock;
                         ram_data = 0;
@@ -153,8 +152,13 @@ module ram_controller(
                         out3 = 0;
                         out4 = 0;
                     end
-          loading_arg = 0;
-        end
+        endcase
+    end
+
+    always @(posedge start_module) begin
+        ac_enable = (select_op == 2'd0) ?  1 : 0;
+        rnc_enable = (select_op == 2'd1) ?  1 : 0;
+        sl_enable = (select_op == 2'd2) ?  1 : 0;
     end
 
     // The ram module
@@ -230,7 +234,7 @@ module ram_controller(
     );
 
     // Split list module inputs
-    reg 
+    reg sl_enable;
     wire [5:0] sl_n;
     wire [9:0] sl_address;
     wire [9:0] sl_second_addr;
@@ -246,7 +250,7 @@ module ram_controller(
     wire sl_ram_wren;
 
     split_list sl(
-      .enable(mod_enable),
+      .enable(sl_enable),
       .clock(clock),
       .n(sl_n),
       .address(sl_address),
