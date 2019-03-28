@@ -45,6 +45,8 @@ module ram_controller(
     output reg [31:0] out1 // The operation output
     );
 
+	reg [1:0] real_enable;
+	
     reg loading_arg;
     reg [9:0] arg1, arg2, arg3, arg4, arg5, arg6; // The arguments for the operations
 
@@ -84,6 +86,15 @@ module ram_controller(
     // Make sure not to enable modules while loading args
     wire mod_enable = enable && ~loading_arg;
 
+	always @(posedge clock)begin
+		if(enable == 1 && real_enable == 0)
+			real_enable <= 2;
+		else if(enable == 1 && real_enable == 2)
+			real_enable <= 1;
+		else if(enable == 0)
+			real_enable <= 0;
+	end
+	
     // For loading arguments in the register
     always @(posedge load_arg) begin
         case(select_arg)
@@ -102,7 +113,7 @@ module ram_controller(
         if(finished_op) begin
           loading_arg = 1;
           case(select_op)
-              2'd0: begin
+              2'd0: begin // add
                         ram_address = ac_ram_address;
                         ram_clock = ac_ram_clock;
                         ram_data = ac_ram_data;
@@ -111,7 +122,7 @@ module ram_controller(
                         finished_op = ac_finished_adding;
                         out1 = ac_next_card;
                     end
-              2'd1: begin
+              2'd1: begin // remove
                         ram_address = rnc_ram_address;
                         ram_clock = rnc_ram_clock;
                         ram_data = rnc_ram_data;
@@ -120,7 +131,7 @@ module ram_controller(
                         finished_op = rnc_finished_removing;
                         out1 = rnc_out_card;
                     end
-              2'd2: begin
+              2'd2: begin // split
                         ram_address = sl_ram_address;
                         ram_clock = sl_ram_clock;
                         ram_data = sl_ram_data;
@@ -144,12 +155,6 @@ module ram_controller(
                     end
           loading_arg = 0;
         end
-    end
-
-    always @(posedge load) begin
-        cur_address <= address;
-        cur_data <= data;
-        cur_wren <= wren;
     end
 
     // The ram module
@@ -179,7 +184,7 @@ module ram_controller(
     wire [31:0] ac_ram_data;
     wire ac_ram_wren;
 
-    module add_card ac(
+    add_card ac(
       .enable(ac_enable),
       .clock(clock),
       .value(ac_value),
@@ -210,7 +215,7 @@ module ram_controller(
     wire [31:0] rnc_ram_data;
     wire rnc_ram_wren;
 
-    module remove_nth_card rnc(
+    remove_nth_card rnc(
       .enable(rnc_enable),
       .clock(clock),
       .card(rnc_card),
@@ -225,6 +230,7 @@ module ram_controller(
     );
 
     // Split list module inputs
+    reg 
     wire [5:0] sl_n;
     wire [9:0] sl_address;
     wire [9:0] sl_second_addr;
@@ -234,12 +240,12 @@ module ram_controller(
     assign sl_address = arg2;
 
     // Split list ram inputs
-    wire [9:0] rnc_ram_addr;
-    wire rnc_ram_clock;
-    wire [31:0] rnc_ram_data;
-    wire rnc_ram_wren;
+    wire [9:0] sl_ram_addr;
+    wire sl_ram_clock;
+    wire [31:0] sl_ram_data;
+    wire sl_ram_wren;
 
-    module split_list sl(
+    split_list sl(
       .enable(mod_enable),
       .clock(clock),
       .n(sl_n),
