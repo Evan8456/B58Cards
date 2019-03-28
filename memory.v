@@ -38,13 +38,11 @@ endmodule
 module ram_controller(
     input enable, // The enable for the operation
     input clock, // The clocks for the modules
-    input load_op, // Loads the operation
     input [1:0] select_op, // Selects an operation for loading
-    input load_arg, // Loads the selected argument with the one provided
-    input [2:0] select_arg, // Selects an argument for loading
-    input [9:0] arg, // The argument to load
-    output reg finished_op; // If the operation has been finished since the last time enable was run
-    output reg [31:0] out1, out2, out3, out4; // The operation outputs
+    input [9:0] arg1, // The first argument for a module
+    input [9:0] arg2, // The second argument for a module
+    output reg finished_op, // If the operation has been finished since the last time enable was run
+    output reg [31:0] out1 // The operation output
     );
 
     reg loading_arg;
@@ -57,6 +55,31 @@ module ram_controller(
     wire [31:0] ram_data;
     wire ram_wren;
     wire ram_q;
+
+    reg [1:0] current_state;
+
+    localparam  DO_NOTHING  = 2'd0, // Wait until enable is active
+                LOAD_ARGS   = 2'd1, // Load the arguments
+                LOAD_OP     = 2'd2, // Load the operation
+                DO_OP       = 2'd3; // Do the operation  
+
+    always @(posedge clock) begin
+        case (current_state)
+            DO_NOTHING: current_state = enable ? LOAD_ARGS : DO_NOTHING;
+            LOAD_ARGS:  current_state = LOAD_OP;
+            LOAD_OP:    current_state = DO_OP;
+            DO_OP:      current_state = finished_op ? DO_NOTHING : DO_OP;
+        endcase
+    end
+
+    always @(posedge clock) begin
+        case (current_state)
+            DO_NOTHING: current_state = enable ? LOAD_ARGS : DO_NOTHING;
+            LOAD_ARGS:  current_state = LOAD_OP;
+            LOAD_OP:    current_state = DO_OP;
+            DO_OP:      current_state = finished_op ? DO_NOTHING : DO_OP;
+        endcase
+    end
 
     // Make sure not to enable modules while loading args
     wire mod_enable = enable && ~loading_arg;
@@ -139,6 +162,7 @@ module ram_controller(
     );
 
     // Add card module inputs
+    reg ac_enable;
     wire [3:0] ac_value;
     wire [1:0] ac_suit;
     wire [9:0] ac_address;
@@ -156,7 +180,7 @@ module ram_controller(
     wire ac_ram_wren;
 
     module add_card ac(
-      .enable(mod_enable),
+      .enable(ac_enable),
       .clock(clock),
       .value(ac_value),
       .suit(ac_suit),
@@ -171,6 +195,7 @@ module ram_controller(
     );
 
     // Remove nth card module inputs
+    reg rnc_enable;
     wire [9:0] rnc_card;
     wire [5:0] rnc_n;
     wire [5:0] rnc_out_card;
@@ -186,7 +211,7 @@ module ram_controller(
     wire rnc_ram_wren;
 
     module remove_nth_card rnc(
-      .enable(mod_enable),
+      .enable(rnc_enable),
       .clock(clock),
       .card(rnc_card),
       .n(rnc_n),
@@ -200,19 +225,6 @@ module ram_controller(
     );
 
     // Split list module inputs
-    input enable,
-    input clock,
-    input [5:0] n;
-    input [9:0] address, // The address of the head of the linked list
-    output reg [9:0] second_addr, // The address to the card that was split at
-    output reg finished_splitting, // If the module is finished splitting the hand
-
-    output reg [9:0] ram_address, // The input address of the ram module
-    output ram_clock, // The input clock of the ram module
-    output reg [31:0] ram_data, // The input data of the ram module
-    output reg ram_wren, // The input write enable of the ram module
-    input [31:0] ram_q // The output data of the ram module
-
     wire [5:0] sl_n;
     wire [9:0] sl_address;
     wire [9:0] sl_second_addr;
