@@ -54,6 +54,8 @@ module ram_controller(
     reg load_op, load_arg, start_module;
     reg [9:0] current_arg1, current_arg2;
 
+    reg fsm_finished_op;
+
     reg [1:0] current_state;
 
     localparam  DO_NOTHING      = 3'd0, // Wait until enable is active
@@ -61,7 +63,7 @@ module ram_controller(
                 LOAD_ARGS_WAIT  = 3'd2 // Wait another clock cycle
                 LOAD_OP         = 3'd3, // Load the operation
                 LOAD_OP_WAIT    = 3'd4 // Wait another clock cycle
-                DO_OP           = 3'd5; // Do the operation  
+                DO_OP           = 3'd5; // Do the operation
 
     always @(posedge clock) begin
         case (current_state)
@@ -70,7 +72,7 @@ module ram_controller(
             LOAD_ARGS_WAIT: current_state = LOAD_OP;
             LOAD_OP:        current_state = LOAD_OP_WAIT;
             LOAD_OP_WAIT:   current_state = DO_OP;
-            DO_OP:          current_state = finished_op ? DO_NOTHING : DO_OP;
+            DO_OP:          current_state = fsm_finished_op ? DO_NOTHING : DO_OP;
         endcase
     end
 
@@ -81,17 +83,19 @@ module ram_controller(
                                 load_op <= 0;
                                 load_arg <= 0;
                                 start_module <= 0;
-
+                                fsm_finished_op <= 1;
+                                finished_op <= 1;
                                 ac_enable <= 0;
                                 rnc_enable <= 0;
                                 sl_enable <= 0;
                             end
             LOAD_ARGS:      begin
+                                finished_op <= 0;
                                 load_arg <= 1;
                             end
             LOAD_ARGS_WAIT: begin
                                 load_arg <= 0;
-                            end 
+                            end
             LOAD_OP:        begin
                                 load_op <= 1;
                             end
@@ -103,7 +107,7 @@ module ram_controller(
                             end
         endcase
     end
-	
+
     // For loading arguments in the register
     always @(posedge load_arg) begin
         current_arg1 <= arg1;
@@ -119,7 +123,7 @@ module ram_controller(
                     ram_data = ac_ram_data;
                     ram_wren = ac_ram_wren;
 
-                    finished_op = ac_finished_adding;
+                    fsm_finished_op = ac_finished_adding;
                     out1 = ac_next_card;
                 end
             2'd1: begin // remove
@@ -128,7 +132,7 @@ module ram_controller(
                     ram_data = rnc_ram_data;
                     ram_wren = rnc_ram_wren;
 
-                    finished_op = rnc_finished_removing;
+                    fsm_finished_op = rnc_finished_removing;
                     out1 = rnc_out_card;
                 end
             2'd2: begin // split
@@ -137,7 +141,7 @@ module ram_controller(
                     ram_data = sl_ram_data;
                     ram_wren = sl_ram_wren;
 
-                    finished_op = sl_finished_splitting;
+                    fsm_finished_op = sl_finished_splitting;
                     out1 = sl_second_addr;
                 end
             default: begin
@@ -146,6 +150,7 @@ module ram_controller(
                         ram_data = 0;
                         ram_wren = 0;
 
+                        fsm_finished_op = 1;
                         finished_op = 1;
                         out1 = 0;
                         out2 = 0;

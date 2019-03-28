@@ -35,12 +35,12 @@ module store_card(
     		   LOAD = 3'd1, // Load the address, value and suit
                STORE_CARD = 3'd2, // Store the value and suit of the card
                STORE_CARD_WAIT = 3'd3, // Disable write enable
-               ALLOC = 3'd4; // Allocate memory for the next card
-               ALLOC_WAIT = 3'd5; // Disable write enable
+               ALLOC = 3'd4, // Allocate memory for the next card
+               ALLOC_WAIT = 3'd5, // Disable write enable
                STORE_NEXT = 3'd6; // Store the memory address of the next card
 
     always @(posedge clock) begin
-        case(current_state) begin
+        case(current_state)
             DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
             LOAD: current_state = STORE_CARD;
             STORE_CARD: current_state = STORE_CARD_WAIT;
@@ -53,7 +53,7 @@ module store_card(
     end
 
     always @(posedge clock) begin
-        case(current_state) begin
+        case(current_state)
             DO_NOTHING: begin
             				finished_storing = 1;
                             ram_wren = 0;
@@ -145,7 +145,7 @@ module add_card(
 
     always @(posedge clock) begin
         case(current_state)
-            DO_NOTHING: enable ? LOAD : DO_NOTHING;
+            DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
             LOAD: current_state = FIND_NTH;
             FIND_LAST: current_state = (ram[9:0] == 10'b0) ? REMOVE_CARD : FIND_LAST;
             STORE_CARD: current_state = finished_storing ? DO_NOTHING : STORE_CARD;
@@ -203,7 +203,7 @@ endmodule
 module split_list(
     input enable,
     input clock,
-    input [5:0] n;
+    input [5:0] n,
     input [9:0] address, // The address of the head of the linked list
     output reg [9:0] second_addr, // The address to the card that was split at
     output reg finished_splitting, // If the module is finished splitting the hand
@@ -230,10 +230,10 @@ module split_list(
 
     always @(posedge clock) begin
         case(current_state)
-            DO_NOTHING: enable ? LOAD : DO_NOTHING;
+            DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
             LOAD: current_state = FIND_NTH;
             FIND_NTH: current_state = (count == current_n - 1) ? REMOVE_CARD : FIND_NTH;
-            SPLIT_CARD: current_state = DO_NOTHING : REMOVE_CARD;
+            SPLIT_CARD: current_state = finished_splitting ? DO_NOTHING : REMOVE_CARD;
             default: DO_NOTHING;
         endcase
     end
@@ -304,7 +304,7 @@ module remove_card(
         	LOAD: current_state = GET_NEXT_CARD_ADDR;
         	GET_NEXT_CARD_ADDR: current_state = GET_NEXT_CARD;
         	DELETE_NEXT_CARD: current_state = DISABLE_WREN;
-        	DISABLE_WREN = current_state = SET_RAM_ADDR;
+        	DISABLE_WREN: current_state = SET_RAM_ADDR;
         	SET_RAM_ADDR: current_state = COPY_DATA;
         	COPY_DATA: current_state = DO_NOTHING;
         	default: current_state = DO_NOTHING;
@@ -389,7 +389,7 @@ module remove_nth_card(
 
     always @(posedge clock) begin
     	case(current_state)
-	    	DO_NOTHING: enable ? LOAD : DO_NOTHING;
+	    	DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
 	    	LOAD: current_state = FIND_NTH;
 	    	FIND_NTH: current_state = (count == current_n) ? REMOVE_CARD : FIND_NTH;
 	    	REMOVE_CARD: current_state = card_removed ? DO_NOTHING : REMOVE_CARD;
