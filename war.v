@@ -27,6 +27,8 @@ module warControl(
 	reg storeEn;
 	reg [1:0] winner; // 0-no winner yet, 1-player wins, 2-com wins
 	
+	reg [1:0] op; // ram operation
+	
 	reg [4:0] player_count; // the number of cards in the player's deck
 	reg [4:0] com_count; // the number of cards in the com's deck
 	
@@ -180,17 +182,32 @@ module warControl(
 	);
 	
 	ram_controller rc(		//pop n		//add
-		.enable(),			
-		.clock(),			
-		.load_op(),			
-		.select_op(),		
-		.load_arg(),		
-		.select_arg(),		
-		.arg(),				
+		.enable(drawEn || storeEn || dealEn),			
+		.clock(clock),						
+		.select_op(op),						
+		.arg1(),
+		.arg2(),
 		.finished_op(),		
-		.out1(),			
-		.out2(),			
-		.out3(),			
-		.out4()				
+		.out1()			
 	);
 endmodule
+
+
+module deal(
+	input clock,
+	input enable,
+	input [9:0]head,
+	output [15:0]card_out
+	);
+	
+	
+	
+	
+	
+
+endmodule
+
+
+
+
+
