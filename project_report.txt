@@ -86,6 +86,9 @@ We added a way to print pixels to a specified position onto the monitor. In addi
 Week 2:
 We created more FSM's in order to draw card numbers (2-10). The ram management was also cleaned up, it is now easiser to access cards. We also created a way to find unused blocks of memory. Combining this with the linked lists from last week, we can dynamically create a players hand without having to handpick memory address to store the cards. Outputting to VGA was also fixed, so now we can reliable output the images we want. We also updated the random number generator to be faster and easier to use.
 
+Week 3:
+We created a way to control ram operations and be able to manipulate and access data in memory with ease. We also created a way to store how to draw cards, and the FSM to draw the cards (with suit and number), so we can now display what a player is holding on the screen.
+
 References
 ----------
 <In this space clearly indicate all external sources used in this project. If you used anyone else's code (from previous B58 projects or other sources) clearly indicate what you used and where you found it. Usage of any material not credited in this space will be considered plagiarism. It is absolutely OK and expected to update this section as you progress in the projected.
