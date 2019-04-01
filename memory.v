@@ -182,8 +182,8 @@ module ram_controller(
     wire [9:0] ac_next_card;
     wire ac_finished_adding;
 
-    assign ac_address = arg1;
-    assign ac_value = arg2;
+    assign ac_address <= current_arg1;
+    assign ac_value <= current_arg2;
 
     // Add card module ram inputs
     wire [9:0] ac_ram_addr;
@@ -212,8 +212,8 @@ module ram_controller(
     wire [5:0] rnc_out_card;
     wire rnc_finished_removing;
 
-    assign rnc_card = arg1;
-    assign rnc_n = arg2;
+    assign rnc_card <= current_arg1;
+    assign rnc_n <= current_arg2;
 
     // Remove nth card module ram inputs
     wire [9:0] rnc_ram_addr;
@@ -242,8 +242,8 @@ module ram_controller(
     wire [9:0] sl_second_addr;
     wire sl_finished_splitting;
 
-    assign sl_n = arg1;
-    assign sl_address = arg2;
+    assign sl_n <= current_arg1;
+    assign sl_address <= current_arg2;
 
     // Split list ram inputs
     wire [9:0] sl_ram_addr;
