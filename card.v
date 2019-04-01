@@ -465,4 +465,3 @@ module remove_nth_card(
       .ram_q(ram_q)
     );
 endmodule
-

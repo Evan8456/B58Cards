@@ -1,13 +1,12 @@
 module warControl(
 	input clock,
 	input resetn,
-	input go, // HIGH indicates that a process has finished (player choosing a card, a card drawing, etc)
-	
-	input [9:0] player_head, // head of the player's deck - starts empty
-	input [9:0] com_head, // head of the com's deck - starts empty
-	
-	input [9:0] deck_head // head of original deck - starts with 52 cards
+	input go // HIGH indicates that a process has finished (player choosing a card, a card drawing, etc)
 	);
+	
+	reg [9:0] player_head; // head of the player's deck - starts empty
+	reg [9:0] com_head; // head of the com's deck - starts empty
+	reg [9:0] deck_head; // head of original deck - starts with 52 cards
 
     reg [4:0] current_state, next_state;
 	
@@ -39,6 +38,9 @@ module warControl(
 	reg [9:0] ram_arg1;
 	reg [9:0] ram_arg2;
 	
+	reg [3:0] curr_num;
+	reg [1:0] curr_suit;
+	
 	reg load_seed; // on loads seed to rng
 	reg next_int; // on triggers next int
 	reg rng_counter; // while on, counts to generate random value
@@ -46,26 +48,36 @@ module warControl(
 	reg plot; // toggles plotting graphics
     
 	localparam  
-				GENERATE_SEED			= 4'd0, // generate a random seed
-				SEED_GOT				= 4'd1, // the seed has been generated
-				DRAW_FROM_DECK			= 4'd2, // draw a card from the deck
-				NEXT_INT_1				= 4'd3, // calculate next int
-				TO_HAND					= 4'd4, // place it in the player's or the com's hand
-				CARD_DEALT				= 4'd5, // a card has been dealt to a player
-				PLAYER_WAIT				= 4'd6, // wait for user input "go"
-				DRAW_FROM_PLAYER		= 4'd7, // draw a card from the user's hand
-				NEXT_INT_2				= 4'd8, // calculate next int
-				DRAW_FROM_COM			= 4'd9, // draw a card from the com's hand
-				NEXT_INT_3				= 4'd10, // calculate next int
-				CALCULATE				= 4'd11, // calculate who wins
-				PC_TO_PLAYER			= 4'd12, // move the player's drawn card to the player's hand
-				CC_TO_PLAYER			= 4'd13, // move the com's drawn card to the player's hand
-				PC_TO_COM				= 4'd14, // move the player's drawn card to the com's hand
-				CC_TO_COM				= 4'd15; // move the com's drawn card to the com's hand
+				ALLOC_PLAYER			= 5'd0, // Allocate memory for the head of the player's deck
+				ALLOC_COM				= 5'd1, // Allocate memory for the head of the computer's deck
+				ALLOC_DECK				= 5'd2, // Allocate memory for the head of the deck
+				BUILD_DECK				= 5'd3, // add a card to the deck
+				WAIT_FOR_IT				= 5'd4, // it waits
+				GENERATE_SEED			= 5'd5, // generate a random seed
+				SEED_GOT				= 5'd6, // the seed has been generated
+				DRAW_FROM_DECK			= 5'd7, // draw a card from the deck
+				NEXT_INT_1				= 5'd8, // calculate next int
+				TO_HAND					= 5'd9, // place it in the player's or the com's hand
+				CARD_DEALT				= 5'd10, // a card has been dealt to a player
+				PLAYER_WAIT				= 5'd11, // wait for user input "go"
+				DRAW_FROM_PLAYER		= 5'd12, // draw a card from the user's hand
+				NEXT_INT_2				= 5'd13, // calculate next int
+				DRAW_FROM_COM			= 5'd14, // draw a card from the com's hand
+				NEXT_INT_3				= 5'd15, // calculate next int
+				CALCULATE				= 5'd16, // calculate who wins
+				PC_TO_PLAYER			= 5'd17, // move the player's drawn card to the player's hand
+				CC_TO_PLAYER			= 5'd18, // move the com's drawn card to the player's hand
+				PC_TO_COM				= 5'd19, // move the player's drawn card to the com's hand
+				CC_TO_COM				= 5'd20; // move the com's drawn card to the com's hand
 	
 	// Next state logic
 	always @(posedge clock) begin
 		case(current_state)
+				ALLOC_PLAYER:				next_state = ram_done ? ALLOC_COM : ALLOC_PLAYER;
+				ALLOC_COM:					next_state = ram_done ? ALLOC_DECK : ALLOC_COM;
+				ALLOC_DECK:					next_state = ram_done ? BUILD_DECK : ALLOC_DECK;
+				BUILD_DECK:					next_state = (curr_num==13 && curr_suit==3) ? GENERATE_SEED : WAIT_FOR_IT;
+				WAIT_FOR_IT:				next_state = ram_done ? BUILD_DECK : WAIT_FOR_IT;
 				GENERATE_SEED:				next_state = go ? SEED_GOT : GENERATE_SEED;
 				SEED_GOT:					next_state = DRAW_FROM_DECK;
 				DRAW_FROM_DECK:				next_state = ram_done ? TO_HAND : DRAW_FROM_DECK;
@@ -97,6 +109,33 @@ module warControl(
 			NEXT_INT_1: next_int <= 1;
 			NEXT_INT_2: next_int <= 1;
 			NEXT_INT_3: next_int <= 1;
+			ALLOC_PLAYER: begin
+				ram_enable <= 1;
+				op <= 3;
+				arg1 <= player_head;
+			end
+			ALLOC_COM: begin
+				ram_enable <= 1;
+				op <= 3;
+				arg1 <= com_head;
+			end
+			ALLOC_DECK: begin
+				ram_enable <= 1;
+				op <= 3;
+				arg1 <= deck_head;
+			end
+			BUILD_DECK: begin
+				ram_enable <= 1;
+				op <= 0;
+				arg1 <= deck_head;
+				arg2 <= {curr_suit,curr_num};
+				if(curr_suit == 3) begin
+					curr_suit <= 0;
+					curr_num <= curr_num+1;
+				end
+				else
+					curr_suit = curr_suit+1;
+			end
 			GENERATE_SEED: begin
 				rng_counter <= 1; // start counting
 			end
@@ -187,9 +226,12 @@ module warControl(
 	// update current_state
 	always@(posedge clock) begin
         if(!resetn) begin
+			player_head <= 32;
+			com_head <= 64;
+			deck_head <= 96;
 			player_count <= 0;
 			com_count <= 0;
-            current_state <= DRAW_FROM_DECK;
+            current_state <= ALLOC_PLAYER;
         end
         else
             current_state <= next_state;
