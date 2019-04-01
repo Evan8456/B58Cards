@@ -56,7 +56,7 @@ module ram_controller(
 
     reg fsm_finished_op;
 
-    reg [1:0] current_state;
+    reg [2:0] current_state;
 
     localparam  DO_NOTHING      = 3'd0, // Wait until enable is active
                 LOAD_ARGS       = 3'd1, // Load the arguments
@@ -83,7 +83,7 @@ module ram_controller(
                                 load_op <= 0;
                                 load_arg <= 0;
                                 start_module <= 0;
-                                fsm_finished_op <= 1;
+                                fsm_finished_op <= 0;
                                 finished_op <= 1;
                                 ac_enable <= 0;
                                 rnc_enable <= 0;
@@ -177,15 +177,13 @@ module ram_controller(
 
     // Add card module inputs
     reg ac_enable;
-    wire [3:0] ac_value;
-    wire [1:0] ac_suit;
+    wire [5:0] ac_value;
     wire [9:0] ac_address;
     wire [9:0] ac_next_card;
     wire ac_finished_adding;
 
-    assign ac_value = arg1;
-    assign ac_suit = arg2;
-    assign ac_address = arg3;
+    assign ac_address = arg1;
+    assign ac_value = arg2;
 
     // Add card module ram inputs
     wire [9:0] ac_ram_addr;
@@ -197,7 +195,6 @@ module ram_controller(
       .enable(ac_enable),
       .clock(clock),
       .value(ac_value),
-      .suit(ac_suit),
       .address(ac_address),
       .next_card(ac_next_card),
       .finished_adding(ac_finished_adding),

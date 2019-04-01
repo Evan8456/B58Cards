@@ -2,8 +2,7 @@ module store_card(
     input enable, // If the module should store
     input clock, // Stores to memory on this clock tick
     input [9:0] address, // The address to store the card at
-    input [3:0] value, // The card value
-    input [1:0] suit, // The card suit
+    input [5:0] value, // The number and suit of the card
     output reg [9:0] next_card, // The memory address of the next card
     output reg finished_storing, // If the module is finished storing a card after enable is triggered
 
@@ -15,8 +14,7 @@ module store_card(
     );
 
     reg [9:0] current_addr;
-    reg [3:0] current_value;
-    reg [1:0] current_suit;
+    reg [5:0] current_value;
 
     wire [9:0] alloc_address;
     wire alloc_clock;
@@ -27,17 +25,18 @@ module store_card(
     wire next_addr_found; // If memory for the next card has been allocated
     wire [9:0] next_card_addr; // Allocates memory for a new card
 
-    assign card_info = {1, 9'b0, current_suit, current_value, 6'b0, next_card_addr}; // Fill the remaining positions with 0's
+    assign card_info = {1, 9'b0, current_value, 6'b0, next_card_addr}; // Fill the remaining positions with 0's
 
     reg [2:0] current_state;
 
     localparam DO_NOTHING = 3'd0, // Wait until enable is triggered
-    		   LOAD = 3'd1, // Load the address, value and suit
+    		       LOAD = 3'd1, // Load the address, value and suit
                STORE_CARD = 3'd2, // Store the value and suit of the card
                STORE_CARD_WAIT = 3'd3, // Disable write enable
                ALLOC = 3'd4, // Allocate memory for the next card
                ALLOC_WAIT = 3'd5, // Disable write enable
-               STORE_NEXT = 3'd6; // Store the memory address of the next card
+               STORE_NEXT = 3'd6, // Store the memory address of the next card
+               SET_DONE = 3'd7; // Sets the module to have been finished
 
     always @(posedge clock) begin
         case(current_state)
@@ -47,7 +46,8 @@ module store_card(
             STORE_CARD_WAIT: current_state = ALLOC;
             ALLOC: current_state = next_addr_found ? ALLOC_WAIT : ALLOC;
             ALLOC_WAIT: current_state = STORE_NEXT;
-            STORE_NEXT: current_state = DO_NOTHING;
+            STORE_NEXT: current_state = SET_DONE;
+            SET_DONE: current_state = DO_NOTHING;
             default: current_state = DO_NOTHING;
         endcase
     end
@@ -55,18 +55,17 @@ module store_card(
     always @(posedge clock) begin
         case(current_state)
             DO_NOTHING: begin
-            				finished_storing = 1;
+            				        finished_storing = 0;
                             ram_wren = 0;
                             alloc_enable = 0;
                         end
             LOAD:	begin
-            			current_addr = address;
-            			current_value = value;
-            			current_suit = suit;
+                      current_addr = address;
+                      current_value = value;
 
-                        ram_clock = clock;
-                        ram_address = current_addr;
-                        ram_data = card_info;
+                      ram_clock = clock;
+                      ram_address = current_addr;
+                      ram_data = card_info;
             		end
             STORE_CARD: begin
             				finished_storing = 0;
@@ -88,11 +87,14 @@ module store_card(
            					alloc_enable = 0;
            				end
             STORE_NEXT: begin
-            				ram_address = address;
+            				        ram_address = address;
                             ram_clock = clock;
                             ram_data = card_info;
                             ram_wren = 1;
-            			end
+            			      end
+            SET_DONE: begin
+                        finished_storing = 1;
+                      end
         endcase
     end
 
@@ -113,8 +115,7 @@ endmodule
 module add_card(
     input enable,
     input clock,
-    input [3:0] value,
-    input [1:0] suit,
+    input [5:0] value,
     input [9:0] address, // The address of the head of the linked list
     output reg [9:0] next_card, // The memory address of the next card
     output reg finished_adding, // If the module has finished adding the card to the linked list
@@ -126,6 +127,7 @@ module add_card(
     input [31:0] ram_q // The output data of the ram module
     );
 
+    reg [5:0] current_value;
     reg [9:0] current_addr;
 
     reg store_enable;
@@ -136,20 +138,22 @@ module add_card(
     wire [31:0] store_data;
     wire store_wren;
 
-    reg [1:0] current_state;
+    reg [2:0] current_state;
 
-    localparam  DO_NOTHING = 2'd0, // Wait until enable is triggered
-                LOAD = 2'd1, // Load the address and n
-                FIND_LAST = 2'd2, // Find the address of the last card in the linked list
-                STORE_CARD = 2'd3; // Remove the n'th card
+    localparam  DO_NOTHING = 3'd0, // Wait until enable is triggered
+                LOAD = 3'd1, // Load the address and n
+                FIND_LAST = 3'd2, // Find the address of the last card in the linked list
+                STORE_CARD = 3'd3, // Remove the n'th card
+                SET_DONE = 3'd4; // Set the module to have been done
 
     always @(posedge clock) begin
         case(current_state)
             DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
             LOAD: current_state = FIND_NTH;
             FIND_LAST: current_state = (ram[9:0] == 10'b0) ? REMOVE_CARD : FIND_LAST;
-            STORE_CARD: current_state = finished_storing ? DO_NOTHING : STORE_CARD;
-            default: DO_NOTHING;
+            STORE_CARD: current_state = finished_storing ? SET_DONE : STORE_CARD;
+            SET_DONE: current_state = DO_NOTHING;
+            default: current_state = DO_NOTHING;
         endcase
     end
 
@@ -159,11 +163,12 @@ module add_card(
                             store_enable = 0;
                             count = 0;
                             ram_wren = 0;
-                            finished_adding = 1;
+                            finished_adding = 0;
                         end
             LOAD:   begin
                         finished_adding = 0;
                         current_addr = address;
+                        current_value = value;
                         ram_address = current_addr;
                     end
             FIND_LAST:  begin
@@ -179,6 +184,9 @@ module add_card(
                             ram_wren = store_wren;
                             store_enable = 1;
                         end
+            SET_DONE: begin
+                        finished_adding = 1;
+                      end
         endcase
     end
 
@@ -187,7 +195,7 @@ module add_card(
         .enable(store_enable),
         .clock(clock),
         .address(current_addr),
-        .value(value),
+        .value(current_value),
         .suit(suit),
         .next_card(next_card),
         .finished_storing(finished_storing),
@@ -221,20 +229,22 @@ module split_list(
     reg [9:0] current_addr;
     reg [5:0] current_n, count;
 
-    reg [1:0] current_state;
+    reg [2:0] current_state;
 
-    localparam  DO_NOTHING = 2'd0, // Wait until enable is triggered
-                LOAD = 2'd1, // Load the address and n
-                FIND_NTH = 2'd2, // Find the n'th card
-                SPLIT_CARD = 2'd3; // Remove at the n'th card
+    localparam  DO_NOTHING = 3'd0, // Wait until enable is triggered
+                LOAD = 3'd1, // Load the address and n
+                FIND_NTH = 3'd2, // Find the n'th card
+                SPLIT_CARD = 3'd3, // Remove at the n'th card
+                SET_DONE = 3'd4; // Set the module to have been done
 
     always @(posedge clock) begin
         case(current_state)
             DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
             LOAD: current_state = FIND_NTH;
             FIND_NTH: current_state = (count == current_n - 1) ? REMOVE_CARD : FIND_NTH;
-            SPLIT_CARD: current_state = finished_splitting ? DO_NOTHING : REMOVE_CARD;
-            default: DO_NOTHING;
+            SPLIT_CARD: current_state = finished_splitting ? SET_DONE : REMOVE_CARD;
+            SET_DONE: current_state = DO_NOTHING;
+            default:  current_state = DO_NOTHING;
         endcase
     end
 
@@ -243,7 +253,7 @@ module split_list(
             DO_NOTHING: begin
                             count = 0;
                             ram_wren = 0;
-                            finished_splitting = 1;
+                            finished_splitting = 0;
                         end
             LOAD:   begin
                         finished_splitting = 0;
@@ -262,6 +272,9 @@ module split_list(
                             second_addr = ram_q[9:0];
                             ram_wren = 1;
                         end
+            SET_DONE: begin
+                        finished_splitting = 1;
+                      end
         endcase
     end
 endmodule
@@ -287,16 +300,17 @@ module remove_card(
         empty_card = 32'b0;
     end
 
-    reg [2:0] current_state;
+    reg [3:0] current_state;
 
-    localparam 	DO_NOTHING = 3'd0, // Do nothing until enable is triggered
-    			LOAD = 3'd1, // Load the address of the card to remove
-                GET_NEXT_CARD_ADDR = 3'd2, // Get the address for the next card in the list
-                GET_NEXT_CARD = 3'd3, // Get the data of the next card
-                DELETE_NEXT_CARD = 3'd4, // Remove the data for the next card
-                DISABLE_WREN = 3'd5, // Stop write enable
-                SET_RAM_ADDR = 3'd6, // Set the address to the given one
-                COPY_DATA = 3'd7; // Copy the next card's data to this one, effectively removing it
+    localparam 	DO_NOTHING = 4'd0, // Do nothing until enable is triggered
+    		      	LOAD = 4'd1, // Load the address of the card to remove
+                GET_NEXT_CARD_ADDR = 4'd2, // Get the address for the next card in the list
+                GET_NEXT_CARD = 4'd3, // Get the data of the next card
+                DELETE_NEXT_CARD = 4'd4, // Remove the data for the next card
+                DISABLE_WREN = 4'd5, // Stop write enable
+                SET_RAM_ADDR = 4'd6, // Set the address to the given one
+                COPY_DATA = 4'd7, // Copy the next card's data to this one, effectively removing it
+                SET_DONE = 4'd8; // Set the that module has finished
 
     always @(posedge clock) begin
         case (current_state)
@@ -306,7 +320,8 @@ module remove_card(
         	DELETE_NEXT_CARD: current_state = DISABLE_WREN;
         	DISABLE_WREN: current_state = SET_RAM_ADDR;
         	SET_RAM_ADDR: current_state = COPY_DATA;
-        	COPY_DATA: current_state = DO_NOTHING;
+        	COPY_DATA: current_state = SET_DONE;
+          SET_DONE: current_state = DO_NOTHING;
         	default: current_state = DO_NOTHING;
         endcase
     end
@@ -314,8 +329,8 @@ module remove_card(
     always @(posedge clock) begin
         case (current_state)
             DO_NOTHING:	begin
-            				finished_removing = 1;
-            				ram_wren = 0;
+                          finished_removing = 0;
+                          ram_wren = 0;
                         end
             LOAD:	begin
             			finished_removing = 0;
@@ -349,6 +364,9 @@ module remove_card(
             COPY_DATA: begin
                            wren = 1;
                        end
+            SET_DONE: begin
+                        finished_removing = 1;
+                      end
         endcase
     end
 endmodule
@@ -380,20 +398,22 @@ module remove_nth_card(
     wire [31:0] rem_data;
     wire rem_wren;
 
-  	reg [1:0] current_state;
+  	reg [2:0] current_state;
 
-    localparam	DO_NOTHING = 2'd0, // Wait until enable is triggered
-    			LOAD = 2'd1, // Load the address and n
-    			FIND_NTH = 2'd2, // Find the n'th card
-    			REMOVE_CARD = 2'd3; // Remove the n'th card
+    localparam	DO_NOTHING = 3'd0, // Wait until enable is triggered
+                LOAD = 3'd1, // Load the address and n
+                FIND_NTH = 3'd2, // Find the n'th card
+                REMOVE_CARD = 3'd3, // Remove the n'th card
+                SET_DONE = 3'd4; // Set that the module is done
 
     always @(posedge clock) begin
     	case(current_state)
 	    	DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
 	    	LOAD: current_state = FIND_NTH;
 	    	FIND_NTH: current_state = (count == current_n) ? REMOVE_CARD : FIND_NTH;
-	    	REMOVE_CARD: current_state = card_removed ? DO_NOTHING : REMOVE_CARD;
-	    	default: DO_NOTHING;
+	    	REMOVE_CARD: current_state = card_removed ? SET_DONE : REMOVE_CARD;
+        SET_DONE: current_state = DO_NOTHING;
+	    	default: current_state = DO_NOTHING;
     	endcase
     end
 
@@ -403,7 +423,7 @@ module remove_nth_card(
     						remove_enable = 0;
     						count = 0;
     						ram_wren = 0;
-    						finished_removing = 1;
+    						finished_removing = 0;
     					end
 	    	LOAD:	begin
 	    				finished_removed = 0;
@@ -425,6 +445,9 @@ module remove_nth_card(
 	    						ram_wren = rem_wren;
 	    						remove_enable = 1;
 	    					end
+        SET_DONE: begin
+                    finished_removing = 1;
+                  end
 	    endcase
 	end
 
@@ -435,11 +458,11 @@ module remove_nth_card(
     	.address(current_addr),
     	.removed_card(out_card),
     	.finished_removing(card_removed),
-        .ram_address(rem_address),
+      .ram_address(rem_address),
     	.ram_clock(rem_clock),
-        .ram_data(rem_data),
-        .ram_wren(rem_wren),
-        .ram_q(ram_q)
+      .ram_data(rem_data),
+      .ram_wren(rem_wren),
+      .ram_q(ram_q)
     );
 endmodule
 
