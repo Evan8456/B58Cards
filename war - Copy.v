@@ -8,6 +8,8 @@ module warControl(
 	
 	input [9:0] deck_head, // head of original deck - starts with 52 cards
 	
+	input rng_counter, // while on, counts to create random seed
+	
 	output reg plot
 	);
 
@@ -22,6 +24,9 @@ module warControl(
 	assign com_x_loc = 8'200;
 	assign com_y_loc = 8'd100;
 	
+	//reg dealEn;
+	//reg drawEn;
+	//reg storeEn;
 	reg [1:0] winner; // 0-no winner yet, 1-player wins, 2-com wins
 	
 	reg [1:0] op; // ram operation
@@ -29,7 +34,6 @@ module warControl(
 	reg [4:0] player_count; // the number of cards in the player's deck
 	reg [4:0] com_count; // the number of cards in the com's deck
 	
-	reg [15:0] drawn_card;
 	reg [15:0] player_card;
 	reg [15:0] com_card;
 	reg [15:0] card_out;
@@ -40,146 +44,108 @@ module warControl(
 	reg ram_done;
 	reg [9:0] ram_arg1;
 	reg [9:0] ram_arg2;
-	
-	reg load_seed; // on loads seed to rng
-	reg next_int; // on triggers next int
-	reg rng_counter; // while on, counts to generate random value
-	
-	reg plot; // toggles plotting graphics
     
 	localparam  
-				GENERATE_SEED			= 4'd0, // generate a random seed
-				SEED_GOT				= 4'd1, // the seed has been generated
-				DRAW_FROM_DECK			= 4'd2, // draw a card from the deck
-				NEXT_INT_1				= 4'd3, // calculate next int
-				TO_HAND					= 4'd4, // place it in the player's or the com's hand
-				CARD_DEALT				= 4'd5, // a card has been dealt to a player
-				PLAYER_WAIT				= 4'd6, // wait for user input "go"
-				DRAW_FROM_PLAYER		= 4'd7, // draw a card from the user's hand
-				NEXT_INT_2				= 4'd8, // calculate next int
-				DRAW_FROM_COM			= 4'd9, // draw a card from the com's hand
-				NEXT_INT_3				= 4'd10, // calculate next int
-				CALCULATE				= 4'd11, // calculate who wins
-				PC_TO_PLAYER			= 4'd12, // move the player's drawn card to the player's hand
-				CC_TO_PLAYER			= 4'd13, // move the com's drawn card to the player's hand
-				PC_TO_COM				= 4'd14, // move the player's drawn card to the com's hand
-				CC_TO_COM				= 4'd15; // move the com's drawn card to the com's hand
+				DEAL_TO_PLAYER			= 4'd0,
+				DEAL_TO_COM				= 4'd1,
+				PLAYER_WAIT				= 4'd2,
+				PLAYER_PLAY				= 4'd3,
+				PLAYER_DRAW				= 4'd4,
+				COM_PLAY				= 4'd5,
+				COM_DRAW				= 4'd6,
+				CALCULATE				= 4'd7, // calculate who wins
+				PLAYER_CARD_TO_PLAYER	= 4'd8,
+				COM_CARD_TO_PLAYER		= 4'd9,
+				PLAYER_CARD_TO_COM		= 4'd10,
+				COM_CARD_TO_COM			= 4'd11;
 	
 	// Next state logic
 	always @(posedge clock) begin
 		case(current_state)
-				GENERATE_SEED:				next_state = go ? SEED_GOT : GENERATE_SEED;
-				SEED_GOT:					next_state = DRAW_FROM_DECK;
-				DRAW_FROM_DECK:				next_state = ram_done ? TO_HAND : DRAW_FROM_DECK;
-				TO_HAND:					next_state = ram_done ? CARD_DEALT : TO_HAND;
-				CARD_DEALT:					next_state = com_count==26 ? PLAYER_WAIT : REMOVE_FROM_DECK;
-				PLAYER_WAIT:				next_state = go ? DRAW_FROM_PLAYER : PLAYER_WAIT;
-				DRAW_FROM_PLAYER:			next_state = ram_done ? DRAW_FROM_COM : DRAW_FROM_PLAYER;
-				DRAW_FROM_COM:				next_state = ram_done ? CALCULATE : DRAW_FROM_COM;
-				CALCULATE: begin
-					if(winner == 0)			next_state = CALCULATE;
-					else if(winner == 1)	next_state = PC_TO_PLAYER;
-					else					next_state = PC_TO_COM;
+				DEAL_TO_PLAYER: begin
+					if(player_count == 4'd26)
+						next_state = DEAL_TO_COM;
+					else
+						next_state = DEAL_TO_PLAYER;
 				end
-				PC_TO_PLAYER:				next_state = ram_done ? CC_TO_PLAYER : PC_TO_PLAYER;
-				PC_TO_COM:					next_state = ram_done ? CC_TO_COM : PC_TO_COM;
-				CC_TO_PLAYER:				next_state = ram_done ? PLAYER_WAIT : CC_TO_PLAYER;
-				CC_TO_COM:					next_state = ram_done ? PLAYER_WAIT : CC_TO_COM;
-            default: next_state = PLAYER_WAIT;
+				DEAL_TO_COM: begin
+					if(com_count == 4'd26)
+						next_state = PLAYER_WAIT;
+					else
+						next_state = DEAL_TO_COM;
+				end
+				PLAYER_WAIT: 				next_state = go ? PLAYER_PLAY : PLAYER_WAIT;
+				PLAYER_PLAY: 				next_state = PLAYER_DRAW;
+				PLAYER_DRAW:				next_state = go ? COM_PLAY : PLAYER_DRAW;
+				COM_PLAY: 					next_state = COM_DRAW;
+				COM_DRAW:					next_state = go ? CALCULATE : COM_DRAW;
+				CALCULATE: begin
+					if(winner == 0):
+						next_state = CALCULATE;
+					else if(winner == 1):
+						next_state = PLAYER_CARD_TO_PLAYER;
+					else
+						next_state = PLAYER_CARD_TO_COM;
+				end
+				PLAYER_CARD_TO_PLAYER:		next_state = 
+				PLAYER_WINS:		next_state = go ? DEAL : PLAYER_WINS;
+				COM_WINS:		next_state = go ? DEAL : COM_WINS;
+            default: next_state = DEAL;
 		endcase
 	end
 	
 	// Output Logic
 	always @(*) begin
-		next_int <= 0;
-		load_seed <= 0;
-		ram_enable <= 0;
-		plot <= 0;
+		ramEn = 0;
+		winner = 0;
 		case(current_state)
-			NEXT_INT_1: next_int <= 1;
-			NEXT_INT_2: next_int <= 1;
-			NEXT_INT_3: next_int <= 1;
-			GENERATE_SEED: begin
-				rng_counter <= 1; // start counting
+			DEAL_TO_PLAYER: begin
+				if(ram_done == 1) begin
+					player_count <= player_count+1;
+					// move card from deck to player
+					card_head <= deck_head;
+					store_to_head <= player_head;
+					ramEn <= 1;
+				end
 			end
-			SEED_GOT: begin
-				load_seed <= 1; // load the seed
-				rng_counter <= 0; // stop counter
+			DEAL_TO_COM: begin
+				dealEn <= 1;
+				com_count <= com_count+1
+				// move card from deck to com
+				card_head <= deck_head;
+				store_to_head <= com_head;
+				storeEn <= 1;
 			end
-			DRAW_FROM_DECK: begin
-				ram_enable <= 1;
-				op <= 1;
-				drawn_card <= card_out;
-				arg1 <= deck_head;
-				arg2 <= rand_int;
-			end
-			TO_HAND: begin
-				ram_enable <= 1;
-				op <= 0;
-				if(player_count < 26)
-					//////////////////////////////////////////set head to player_head?
-					// increment count?
-					if(ram_done == 1)
-						player_count <= player_count+1;
-				else
-					//////////////////////////////////////////set head to com_head?
-					// increment count?
-					if(ram_done == 1)
-						com_count <= com_count+1;
-				arg1 <= drawn_card[5:2];///////////////////////value
-				arg2 <= drawn_card[1:0];///////////////////////suit
-			end
-			DRAW_FROM_PLAYER: begin
-				ram_enable <= 1;
-				op <= 1;
-				player_card <= card_out;
-				arg1 <= player_head;
-				arg2 <= rand_int;
+			PLAYER_PLAY: begin
+				card_head <= player_head;
 				x_loc <= player_x_loc;
 				y_loc <= player_y_loc;
-				plot <= 1;
+				drawEn <= 1;
+				player_card <= card_out[15:0];
 			end
-			DRAW_FROM_COM: begin
-				ram_enable <= 1;
-				op <= 1;
-				com_card <= card_out;
-				arg1 <= com_head;
-				arg2 <= rand_int;
+			COM_PLAY: begin
+				card_head <= com_head;
 				x_loc <= com_x_loc;
 				y_loc <= com_y_loc;
-				plot <= 1;
+				drawEn <= 1;
+				com_card <= card_out[15:0];
 			end
-			PC_TO_PLAYER: begin
-				ram_enable <= 1;
-				op <= 0;
-				//////////////////////////////////////////set head to player_head?
-				arg1 <= player_card[5:2];///////////////////////value
-				arg2 <= player_card[1:0];///////////////////////suit
+			CALCULATE: begin
+				// check winner
+				if(player_card[3:0] < com_card[3:0])
+					winner <= 2;
+				else
+					winner <= 1;
 			end
-			CC_TO_PLAYER: begin
-				ram_enable <= 1;
-				op <= 0;
-				player_count <= player_count+1;
-				com_count <= com_count-1;
-				//////////////////////////////////////////set head to player_head?
-				arg1 <= com_card[5:2];///////////////////////value
-				arg2 <= com_card[1:0];///////////////////////suit
+			PLAYER_WINS: begin
+				storeEn <= 1;
+				store_to_head <= player_head;
+				///////////////////////////////////////////////////// Store player and com cards to player
 			end
-			PC_TO_COM: begin
-				ram_enable <= 1;
-				op <= 0;
-				player_count <= player_count-1;
-				com_count <= com_count+1;
-				//////////////////////////////////////////set head to com_head?
-				arg1 <= player_card[5:2];///////////////////////value
-				arg2 <= player_card[1:0];///////////////////////suit
-			end
-			CC_TO_PLAYER: begin
-				ram_enable <= 1;
-				op <= 0;
-				//////////////////////////////////////////set head to com_head?
-				arg1 <= com_card[5:2];///////////////////////value
-				arg2 <= com_card[1:0];///////////////////////suit
+			COM_WINS: begin
+				storeEn <= 1;
+				store_to_head <= com_head;
+				///////////////////////////////////////////////////// Store player and com cards to com
 			end
 		endcase
 	end
@@ -189,7 +155,7 @@ module warControl(
         if(!resetn)
 			player_count <= 0;
 			com_count <= 0;
-            current_state <= DRAW_FROM_DECK;
+            current_state <= DEAL_TO_PLAYER;
         else
             current_state <= next_state;
 	end
@@ -218,10 +184,10 @@ module warControl(
 	RNG RNGmod(
 		.clock(clock),
 		.LoadSeed(generatorSeed),
-		.Load_n(load_seed),
+		.Load_n(SW[14]),
 		.min_n(16'd1),
 		.max_n(16'd53),
-		.next_int(next_int),
+		.next_int(SW[13]),
 		.rand_int(rand_int),
 		.seed(currentSeed)
 	);
