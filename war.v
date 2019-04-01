@@ -6,9 +6,7 @@ module warControl(
 	input [9:0] player_head, // head of the player's deck - starts empty
 	input [9:0] com_head, // head of the com's deck - starts empty
 	
-	input [9:0] deck_head, // head of original deck - starts with 52 cards
-	
-	output reg plot
+	input [9:0] deck_head // head of original deck - starts with 52 cards
 	);
 
     reg [4:0] current_state, next_state;
@@ -17,10 +15,10 @@ module warControl(
 	wire [7:0] player_y_loc; // y location for drawing player card
 	wire [7:0] com_x_loc; // x location for drawing com card
 	wire [7:0] com_y_loc; // y location for drawing com card
-	assign player_x_loc = 8'd200;
-	assign player_y_loc = 8'd500;
-	assign com_x_loc = 8'200;
-	assign com_y_loc = 8'd100;
+	assign player_x_loc = 8'd50;
+	assign player_y_loc = 8'd50;
+	assign com_x_loc = 8'd50;
+	assign com_y_loc = 8'd200;
 	
 	reg [1:0] winner; // 0-no winner yet, 1-player wins, 2-com wins
 	
@@ -117,17 +115,16 @@ module warControl(
 				ram_enable <= 1;
 				op <= 0;
 				if(player_count < 26)
-					//////////////////////////////////////////set head to player_head?
+					arg1 <= player_head;
 					// increment count?
 					if(ram_done == 1)
 						player_count <= player_count+1;
 				else
-					//////////////////////////////////////////set head to com_head?
+					arg1 = com_head;
 					// increment count?
 					if(ram_done == 1)
 						com_count <= com_count+1;
-				arg1 <= drawn_card[5:2];///////////////////////value
-				arg2 <= drawn_card[1:0];///////////////////////suit
+				arg2 <= drawn_card[5:0];
 			end
 			DRAW_FROM_PLAYER: begin
 				ram_enable <= 1;
@@ -152,44 +149,41 @@ module warControl(
 			PC_TO_PLAYER: begin
 				ram_enable <= 1;
 				op <= 0;
-				//////////////////////////////////////////set head to player_head?
-				arg1 <= player_card[5:2];///////////////////////value
-				arg2 <= player_card[1:0];///////////////////////suit
+				arg1 <= player_head;
+				arg2 <= player_card[5:0];
 			end
 			CC_TO_PLAYER: begin
 				ram_enable <= 1;
 				op <= 0;
 				player_count <= player_count+1;
 				com_count <= com_count-1;
-				//////////////////////////////////////////set head to player_head?
-				arg1 <= com_card[5:2];///////////////////////value
-				arg2 <= com_card[1:0];///////////////////////suit
+				arg1 <= player_head;
+				arg2 <= com_card[5:0];
 			end
 			PC_TO_COM: begin
 				ram_enable <= 1;
 				op <= 0;
 				player_count <= player_count-1;
 				com_count <= com_count+1;
-				//////////////////////////////////////////set head to com_head?
-				arg1 <= player_card[5:2];///////////////////////value
-				arg2 <= player_card[1:0];///////////////////////suit
+				arg1 <= com_head;
+				arg2 <= player_card[5:0];
 			end
 			CC_TO_PLAYER: begin
 				ram_enable <= 1;
 				op <= 0;
-				//////////////////////////////////////////set head to com_head?
-				arg1 <= com_card[5:2];///////////////////////value
-				arg2 <= com_card[1:0];///////////////////////suit
+				arg1 <= com_head;
+				arg2 <= com_card[5:0];
 			end
 		endcase
 	end
 	
 	// update current_state
 	always@(posedge clock) begin
-        if(!resetn)
+        if(!resetn) begin
 			player_count <= 0;
 			com_count <= 0;
             current_state <= DRAW_FROM_DECK;
+        end
         else
             current_state <= next_state;
 	end
