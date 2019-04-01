@@ -146,6 +146,13 @@ module warControl(
 				y_loc <= com_y_loc;
 				plot <= 1;
 			end
+			CALCULATE: begin
+				// check winner
+				if(player_card[3:0] < com_card[3:0])
+					winner <= 2;
+				else
+					winner <= 1;
+			end
 			PC_TO_PLAYER: begin
 				ram_enable <= 1;
 				op <= 0;
