@@ -1,6 +1,6 @@
 Analysis & Synthesis report for cards
-Mon Mar 18 18:50:54 2019
-Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+Tue Apr 02 13:50:02 2019
+Quartus II 64-Bit Version 14.1.0 Build 186 12/03/2014 SJ Full Version
 
 
 ---------------------
@@ -10,37 +10,21 @@ Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
   2. Analysis & Synthesis Summary
   3. Analysis & Synthesis Settings
   4. Parallel Compilation
-  5. Analysis & Synthesis Source Files Read
-  6. Analysis & Synthesis Resource Usage Summary
-  7. Analysis & Synthesis Resource Utilization by Entity
-  8. Analysis & Synthesis RAM Summary
-  9. General Register Statistics
- 10. Source assignments for store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated
- 11. Parameter Settings for User Entity Instance: store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component
- 12. altsyncram Parameter Settings by Entity Instance
- 13. Port Connectivity Checks: "HexDecoder:hd3"
- 14. Port Connectivity Checks: "HexDecoder:hd2"
- 15. Port Connectivity Checks: "HexDecoder:hd"
- 16. Port Connectivity Checks: "store_card:sc|ram1024x32:ram"
- 17. Port Connectivity Checks: "store_card:sc"
- 18. Post-Synthesis Netlist Statistics for Top Partition
- 19. Elapsed Time Per Partition
- 20. Analysis & Synthesis Messages
- 21. Analysis & Synthesis Suppressed Messages
+  5. Analysis & Synthesis Messages
 
 
 
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
 Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
 to the terms and conditions of the Altera Program License 
-Subscription Agreement, the Altera Quartus Prime License Agreement,
+Subscription Agreement, the Altera Quartus II License Agreement,
 the Altera MegaCore Function License Agreement, or other 
 applicable license agreement, including, without limitation, 
 that your use is for the sole purpose of programming logic 
@@ -53,20 +37,20 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Mar 18 18:50:53 2019       ;
-; Quartus Prime Version              ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
+; Analysis & Synthesis Status        ; Failed - Tue Apr 02 13:50:02 2019           ;
+; Quartus II 64-Bit Version          ; 14.1.0 Build 186 12/03/2014 SJ Full Version ;
 ; Revision Name                      ; cards                                       ;
 ; Top-level Entity Name              ; cards                                       ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 22                                          ;
-;     Total combinational functions  ; 22                                          ;
-;     Dedicated logic registers      ; 0                                           ;
-; Total registers                    ; 0                                           ;
-; Total pins                         ; 62                                          ;
-; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 64                                          ;
-; Embedded Multiplier 9-bit elements ; 0                                           ;
-; Total PLLs                         ; 0                                           ;
+; Total logic elements               ; N/A until Partition Merge                   ;
+;     Total combinational functions  ; N/A until Partition Merge                   ;
+;     Dedicated logic registers      ; N/A until Partition Merge                   ;
+; Total registers                    ; N/A until Partition Merge                   ;
+; Total pins                         ; N/A until Partition Merge                   ;
+; Total virtual pins                 ; N/A until Partition Merge                   ;
+; Total memory bits                  ; N/A until Partition Merge                   ;
+; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                   ;
+; Total PLLs                         ; N/A until Partition Merge                   ;
 +------------------------------------+---------------------------------------------+
 
 
@@ -77,7 +61,7 @@ agreement for further details.
 +----------------------------------------------------------------------------+--------------------+--------------------+
 ; Device                                                                     ; EP4CE115F29C7      ;                    ;
 ; Top-level entity name                                                      ; cards              ; cards              ;
-; Family name                                                                ; Cyclone IV E       ; Cyclone V          ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone IV GX      ;
 ; Use smart compilation                                                      ; Off                ; Off                ;
 ; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
 ; Enable compact report table                                                ; Off                ; Off                ;
@@ -157,408 +141,40 @@ agreement for further details.
 +----------------------------------------------------------------------------+--------------------+--------------------+
 
 
-Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
-+-------------------------------------+
-; Parallel Compilation                ;
-+----------------------------+--------+
-; Processors                 ; Number ;
-+----------------------------+--------+
-; Number detected on machine ; 4      ;
-; Maximum allowed            ; 1      ;
-+----------------------------+--------+
-
-
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                              ;
-+----------------------------------+-----------------+------------------------------+---------------------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                          ; Library ;
-+----------------------------------+-----------------+------------------------------+---------------------------------------------------------------------------------------+---------+
-; ../../B58Cards/project.v         ; yes             ; User Verilog HDL File        ; /cmshome/trananso/B58Cards/project.v                                                  ;         ;
-; ../../B58Cards/ram1024x32.v      ; yes             ; User Wizard-Generated File   ; /cmshome/trananso/B58Cards/ram1024x32.v                                               ;         ;
-; card.v                           ; yes             ; User Verilog HDL File        ; /cmshome/trananso/Quartus Projects/cards/card.v                                       ;         ;
-; altsyncram.tdf                   ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
-; stratix_ram_block.inc            ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
-; lpm_mux.inc                      ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/lpm_mux.inc           ;         ;
-; lpm_decode.inc                   ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/lpm_decode.inc        ;         ;
-; aglobal160.inc                   ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/aglobal160.inc        ;         ;
-; a_rdenreg.inc                    ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/a_rdenreg.inc         ;         ;
-; altrom.inc                       ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altrom.inc            ;         ;
-; altram.inc                       ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altram.inc            ;         ;
-; altdpram.inc                     ; yes             ; Megafunction                 ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altdpram.inc          ;         ;
-; db/altsyncram_79g1.tdf           ; yes             ; Auto-Generated Megafunction  ; /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf                       ;         ;
-+----------------------------------+-----------------+------------------------------+---------------------------------------------------------------------------------------+---------+
-
-
-+-----------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary               ;
-+---------------------------------------------+-------------+
-; Resource                                    ; Usage       ;
-+---------------------------------------------+-------------+
-; Estimated Total logic elements              ; 22          ;
-;                                             ;             ;
-; Total combinational functions               ; 22          ;
-; Logic element usage by number of LUT inputs ;             ;
-;     -- 4 input functions                    ; 14          ;
-;     -- 3 input functions                    ; 7           ;
-;     -- <=2 input functions                  ; 1           ;
-;                                             ;             ;
-; Logic elements by mode                      ;             ;
-;     -- normal mode                          ; 22          ;
-;     -- arithmetic mode                      ; 0           ;
-;                                             ;             ;
-; Total registers                             ; 0           ;
-;     -- Dedicated logic registers            ; 0           ;
-;     -- I/O registers                        ; 0           ;
-;                                             ;             ;
-; I/O pins                                    ; 62          ;
-; Total memory bits                           ; 64          ;
-;                                             ;             ;
-; Embedded Multiplier 9-bit elements          ; 0           ;
-;                                             ;             ;
-; Maximum fan-out node                        ; SW[0]~input ;
-; Maximum fan-out                             ; 15          ;
-; Total fan-out                               ; 215         ;
-; Average fan-out                             ; 1.40        ;
-+---------------------------------------------+-------------+
-
-
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                            ;
-+----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------------------+-----------------+--------------+
-; Compilation Hierarchy Node                   ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                ; Entity Name     ; Library Name ;
-+----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------------------+-----------------+--------------+
-; |cards                                       ; 22 (1)            ; 0 (0)        ; 64          ; 0            ; 0       ; 0         ; 62   ; 0            ; |cards                                                                                             ; cards           ; work         ;
-;    |HexDecoder:hd2|                          ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|HexDecoder:hd2                                                                              ; HexDecoder      ; work         ;
-;    |HexDecoder:hd3|                          ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|HexDecoder:hd3                                                                              ; HexDecoder      ; work         ;
-;    |HexDecoder:hd|                           ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|HexDecoder:hd                                                                               ; HexDecoder      ; work         ;
-;    |store_card:sc|                           ; 0 (0)             ; 0 (0)        ; 64          ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|store_card:sc                                                                               ; store_card      ; work         ;
-;       |ram1024x32:ram|                       ; 0 (0)             ; 0 (0)        ; 64          ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|store_card:sc|ram1024x32:ram                                                                ; ram1024x32      ; work         ;
-;          |altsyncram:altsyncram_component|   ; 0 (0)             ; 0 (0)        ; 64          ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component                                ; altsyncram      ; work         ;
-;             |altsyncram_79g1:auto_generated| ; 0 (0)             ; 0 (0)        ; 64          ; 0            ; 0       ; 0         ; 0    ; 0            ; |cards|store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated ; altsyncram_79g1 ; work         ;
-+----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------------------+-----------------+--------------+
-Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
-
-
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis RAM Summary                                                                                                                                                                       ;
-+--------------------------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+------+
-; Name                                                                                                   ; Type ; Mode        ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size  ; MIF  ;
-+--------------------------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+------+
-; store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|ALTSYNCRAM ; AUTO ; Single Port ; 1024         ; 32           ; --           ; --           ; 32768 ; None ;
-+--------------------------------------------------------------------------------------------------------+------+-------------+--------------+--------------+--------------+--------------+-------+------+
-
-
-+------------------------------------------------------+
-; General Register Statistics                          ;
-+----------------------------------------------+-------+
-; Statistic                                    ; Value ;
-+----------------------------------------------+-------+
-; Total registers                              ; 0     ;
-; Number of registers using Synchronous Clear  ; 0     ;
-; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 0     ;
-; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 0     ;
-; Number of registers using Preset             ; 0     ;
-+----------------------------------------------+-------+
-
-
-+--------------------------------------------------------------------------------------------------------------------+
-; Source assignments for store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated ;
-+---------------------------------+--------------------+------+------------------------------------------------------+
-; Assignment                      ; Value              ; From ; To                                                   ;
-+---------------------------------+--------------------+------+------------------------------------------------------+
-; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                                    ;
-+---------------------------------+--------------------+------+------------------------------------------------------+
-
-
-+-----------------------------------------------------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component ;
-+------------------------------------+----------------------+-----------------------------------------------+
-; Parameter Name                     ; Value                ; Type                                          ;
-+------------------------------------+----------------------+-----------------------------------------------+
-; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                                       ;
-; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                                    ;
-; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                                  ;
-; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                                  ;
-; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                                ;
-; WIDTH_BYTEENA                      ; 1                    ; Untyped                                       ;
-; OPERATION_MODE                     ; SINGLE_PORT          ; Untyped                                       ;
-; WIDTH_A                            ; 32                   ; Signed Integer                                ;
-; WIDTHAD_A                          ; 10                   ; Signed Integer                                ;
-; NUMWORDS_A                         ; 1024                 ; Signed Integer                                ;
-; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                                       ;
-; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                                       ;
-; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                                       ;
-; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                                       ;
-; INDATA_ACLR_A                      ; NONE                 ; Untyped                                       ;
-; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                                       ;
-; WIDTH_B                            ; 1                    ; Untyped                                       ;
-; WIDTHAD_B                          ; 1                    ; Untyped                                       ;
-; NUMWORDS_B                         ; 1                    ; Untyped                                       ;
-; INDATA_REG_B                       ; CLOCK1               ; Untyped                                       ;
-; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                                       ;
-; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                                       ;
-; ADDRESS_REG_B                      ; CLOCK1               ; Untyped                                       ;
-; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                                       ;
-; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                                       ;
-; INDATA_ACLR_B                      ; NONE                 ; Untyped                                       ;
-; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                                       ;
-; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                                       ;
-; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                                       ;
-; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                                       ;
-; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                                       ;
-; WIDTH_BYTEENA_A                    ; 1                    ; Signed Integer                                ;
-; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                                       ;
-; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                                       ;
-; BYTE_SIZE                          ; 8                    ; Untyped                                       ;
-; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE            ; Untyped                                       ;
-; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                                       ;
-; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                                       ;
-; INIT_FILE                          ; UNUSED               ; Untyped                                       ;
-; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                                       ;
-; MAXIMUM_DEPTH                      ; 0                    ; Untyped                                       ;
-; CLOCK_ENABLE_INPUT_A               ; BYPASS               ; Untyped                                       ;
-; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                                       ;
-; CLOCK_ENABLE_OUTPUT_A              ; BYPASS               ; Untyped                                       ;
-; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                                       ;
-; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                                       ;
-; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                                       ;
-; ENABLE_ECC                         ; FALSE                ; Untyped                                       ;
-; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                                       ;
-; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                                       ;
-; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                                       ;
-; CBXI_PARAMETER                     ; altsyncram_79g1      ; Untyped                                       ;
-+------------------------------------+----------------------+-----------------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+----------------------------------------------------------------------------------------------------------+
-; altsyncram Parameter Settings by Entity Instance                                                         ;
-+-------------------------------------------+--------------------------------------------------------------+
-; Name                                      ; Value                                                        ;
-+-------------------------------------------+--------------------------------------------------------------+
-; Number of entity instances                ; 1                                                            ;
-; Entity Instance                           ; store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component ;
-;     -- OPERATION_MODE                     ; SINGLE_PORT                                                  ;
-;     -- WIDTH_A                            ; 32                                                           ;
-;     -- NUMWORDS_A                         ; 1024                                                         ;
-;     -- OUTDATA_REG_A                      ; UNREGISTERED                                                 ;
-;     -- WIDTH_B                            ; 1                                                            ;
-;     -- NUMWORDS_B                         ; 1                                                            ;
-;     -- ADDRESS_REG_B                      ; CLOCK1                                                       ;
-;     -- OUTDATA_REG_B                      ; UNREGISTERED                                                 ;
-;     -- RAM_BLOCK_TYPE                     ; AUTO                                                         ;
-;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE                                                    ;
-+-------------------------------------------+--------------------------------------------------------------+
-
-
-+---------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "HexDecoder:hd3"                                                                                                        ;
-+------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-; Port ; Type   ; Severity ; Details                                                                                                                ;
-+------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-; OUT  ; Output ; Warning  ; Output or bidir port (8 bits) is wider than the port expression (7 bits) it drives; bit(s) "OUT[7..7]" have no fanouts ;
-+------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-
-
-+---------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "HexDecoder:hd2"                                                                                                        ;
-+------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-; Port ; Type   ; Severity ; Details                                                                                                                ;
-+------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-; OUT  ; Output ; Warning  ; Output or bidir port (8 bits) is wider than the port expression (7 bits) it drives; bit(s) "OUT[7..7]" have no fanouts ;
-+------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-
-
-+----------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "HexDecoder:hd"                                                                                                          ;
-+-------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-; Port  ; Type   ; Severity ; Details                                                                                                                ;
-+-------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-; IN[3] ; Input  ; Info     ; Stuck at GND                                                                                                           ;
-; OUT   ; Output ; Warning  ; Output or bidir port (8 bits) is wider than the port expression (7 bits) it drives; bit(s) "OUT[7..7]" have no fanouts ;
-+-------+--------+----------+------------------------------------------------------------------------------------------------------------------------+
-
-
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "store_card:sc|ram1024x32:ram"                                                                                                                            ;
-+--------------+--------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port         ; Type   ; Severity ; Details                                                                                                                                          ;
-+--------------+--------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------+
-; data         ; Input  ; Warning  ; Input port expression (16 bits) is smaller than the input port (32 bits) it drives.  Extra input bit(s) "data[31..16]" will be connected to GND. ;
-; data[15..14] ; Input  ; Info     ; Stuck at GND                                                                                                                                     ;
-; data[7..0]   ; Input  ; Info     ; Stuck at GND                                                                                                                                     ;
-; q            ; Output ; Warning  ; Output or bidir port (32 bits) is wider than the port expression (17 bits) it drives; bit(s) "q[31..17]" have no fanouts                         ;
-+--------------+--------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------+
-
-
-+-------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "store_card:sc"                                                                               ;
-+---------------+--------+----------+-------------------------------------------------------------------------------------+
-; Port          ; Type   ; Severity ; Details                                                                             ;
-+---------------+--------+----------+-------------------------------------------------------------------------------------+
-; address[9..4] ; Input  ; Info     ; Stuck at GND                                                                        ;
-; value[3..1]   ; Input  ; Info     ; Stuck at GND                                                                        ;
-; value[0]      ; Input  ; Info     ; Stuck at VCC                                                                        ;
-; card[7..0]    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; card[16]      ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+---------------+--------+----------+-------------------------------------------------------------------------------------+
-
-
-+-----------------------------------------------------+
-; Post-Synthesis Netlist Statistics for Top Partition ;
-+-----------------------+-----------------------------+
-; Type                  ; Count                       ;
-+-----------------------+-----------------------------+
-; boundary_port         ; 62                          ;
-; cycloneiii_lcell_comb ; 24                          ;
-;     normal            ; 24                          ;
-;         0 data inputs ; 1                           ;
-;         1 data inputs ; 2                           ;
-;         3 data inputs ; 7                           ;
-;         4 data inputs ; 14                          ;
-; cycloneiii_ram_block  ; 8                           ;
-;                       ;                             ;
-; Max LUT depth         ; 2.00                        ;
-; Average LUT depth     ; 1.18                        ;
-+-----------------------+-----------------------------+
-
-
-+-------------------------------+
-; Elapsed Time Per Partition    ;
-+----------------+--------------+
-; Partition Name ; Elapsed Time ;
-+----------------+--------------+
-; Top            ; 00:00:00     ;
-+----------------+--------------+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-4         ;   0.0%      ;
++----------------------------+-------------+
 
 
 +-------------------------------+
 ; Analysis & Synthesis Messages ;
 +-------------------------------+
 Info: *******************************************************************
-Info: Running Quartus Prime Analysis & Synthesis
-    Info: Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
-    Info: Processing started: Mon Mar 18 18:50:44 2019
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 14.1.0 Build 186 12/03/2014 SJ Full Version
+    Info: Processing started: Tue Apr 02 13:49:48 2019
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cards -c cards
-Warning (20028): Parallel compilation is not licensed and has been disabled
-Info (12021): Found 6 design units, including 6 entities, in source file /cmshome/trananso/B58Cards/project.v
-    Info (12023): Found entity 1: project File: /cmshome/trananso/B58Cards/project.v Line: 9
-    Info (12023): Found entity 2: randomSeedGenerator File: /cmshome/trananso/B58Cards/project.v Line: 61
-    Info (12023): Found entity 3: counter16Bit File: /cmshome/trananso/B58Cards/project.v Line: 91
-    Info (12023): Found entity 4: RNG File: /cmshome/trananso/B58Cards/project.v Line: 112
-    Info (12023): Found entity 5: xorShift File: /cmshome/trananso/B58Cards/project.v Line: 157
-    Info (12023): Found entity 6: HexDecoder File: /cmshome/trananso/B58Cards/project.v Line: 179
-Info (12021): Found 1 design units, including 1 entities, in source file /cmshome/trananso/B58Cards/ram1024x32.v
-    Info (12023): Found entity 1: ram1024x32 File: /cmshome/trananso/B58Cards/ram1024x32.v Line: 40
-Info (12021): Found 2 design units, including 2 entities, in source file card.v
-    Info (12023): Found entity 1: cards File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 1
-    Info (12023): Found entity 2: store_card File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 44
-Info (12127): Elaborating entity "cards" for the top level hierarchy
-Warning (10230): Verilog HDL assignment warning at card.v(24): truncated value with size 9 to match size of target (8) File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 24
-Warning (10034): Output port "LEDR[17..8]" at card.v(6) has no driver File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-Info (12128): Elaborating entity "store_card" for hierarchy "store_card:sc" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 26
-Warning (10036): Verilog HDL or VHDL warning at card.v(54): object "current_value" assigned a value but never read File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 54
-Warning (10036): Verilog HDL or VHDL warning at card.v(55): object "current_suit" assigned a value but never read File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 55
-Warning (10036): Verilog HDL or VHDL warning at card.v(56): object "current_addr" assigned a value but never read File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 56
-Info (12128): Elaborating entity "ram1024x32" for hierarchy "store_card:sc|ram1024x32:ram" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 75
-Info (12128): Elaborating entity "altsyncram" for hierarchy "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component" File: /cmshome/trananso/B58Cards/ram1024x32.v Line: 86
-Info (12130): Elaborated megafunction instantiation "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component" File: /cmshome/trananso/B58Cards/ram1024x32.v Line: 86
-Info (12133): Instantiated megafunction "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component" with the following parameter: File: /cmshome/trananso/B58Cards/ram1024x32.v Line: 86
-    Info (12134): Parameter "clock_enable_input_a" = "BYPASS"
-    Info (12134): Parameter "clock_enable_output_a" = "BYPASS"
-    Info (12134): Parameter "intended_device_family" = "Cyclone IV E"
-    Info (12134): Parameter "lpm_hint" = "ENABLE_RUNTIME_MOD=NO"
-    Info (12134): Parameter "lpm_type" = "altsyncram"
-    Info (12134): Parameter "numwords_a" = "1024"
-    Info (12134): Parameter "operation_mode" = "SINGLE_PORT"
-    Info (12134): Parameter "outdata_aclr_a" = "NONE"
-    Info (12134): Parameter "outdata_reg_a" = "UNREGISTERED"
-    Info (12134): Parameter "power_up_uninitialized" = "FALSE"
-    Info (12134): Parameter "read_during_write_mode_port_a" = "NEW_DATA_NO_NBE_READ"
-    Info (12134): Parameter "widthad_a" = "10"
-    Info (12134): Parameter "width_a" = "32"
-    Info (12134): Parameter "width_byteena_a" = "1"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_79g1.tdf
-    Info (12023): Found entity 1: altsyncram_79g1 File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 28
-Info (12128): Elaborating entity "altsyncram_79g1" for hierarchy "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated" File: /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "HexDecoder" for hierarchy "HexDecoder:hd" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 31
-Warning (14284): Synthesized away the following node(s):
-    Warning (14285): Synthesized away the following RAM node(s):
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[0]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 37
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[1]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 59
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[2]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 81
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[3]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 103
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[4]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 125
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[5]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 147
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[6]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 169
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[7]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 191
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[16]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 389
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[17]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 411
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[18]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 433
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[19]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 455
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[20]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 477
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[21]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 499
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[22]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 521
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[23]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 543
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[24]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 565
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[25]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 587
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[26]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 609
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[27]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 631
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[28]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 653
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[29]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 675
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[30]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 697
-        Warning (14320): Synthesized away node "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|q_a[31]" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 719
-Warning (12241): 4 hierarchies have connectivity warnings - see the Connectivity Checks report folder
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "LEDR[8]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[9]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[10]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[11]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[12]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[13]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[14]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[15]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[16]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-    Warning (13410): Pin "LEDR[17]" is stuck at GND File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 6
-Info (286030): Timing-Driven Synthesis is running
-Info (17036): Removed 7 MSB VCC or GND address nodes from RAM block "store_card:sc|ram1024x32:ram|altsyncram:altsyncram_component|altsyncram_79g1:auto_generated|ALTSYNCRAM" File: /cmshome/trananso/Quartus Projects/cards/db/altsyncram_79g1.tdf Line: 33
-Info (144001): Generated suppressed messages file /cmshome/trananso/Quartus Projects/cards/output_files/cards.map.smsg
-Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
-    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 16 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "SW[3]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[6]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[7]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[8]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[9]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[10]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[11]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[13]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[14]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[15]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "SW[16]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 2
-    Warning (15610): No output dependent on input pin "KEY[0]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 4
-    Warning (15610): No output dependent on input pin "KEY[1]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 4
-    Warning (15610): No output dependent on input pin "KEY[2]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 4
-    Warning (15610): No output dependent on input pin "KEY[3]" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 4
-    Warning (15610): No output dependent on input pin "CLOCK_50" File: /cmshome/trananso/Quartus Projects/cards/card.v Line: 5
-Info (21057): Implemented 92 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 23 input pins
-    Info (21059): Implemented 39 output pins
-    Info (21061): Implemented 22 logic cells
-    Info (21064): Implemented 8 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 61 warnings
-    Info: Peak virtual memory: 1241 megabytes
-    Info: Processing ended: Mon Mar 18 18:50:54 2019
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:20
-
-
-+------------------------------------------+
-; Analysis & Synthesis Suppressed Messages ;
-+------------------------------------------+
-The suppressed messages can be found in /cmshome/trananso/Quartus Projects/cards/output_files/cards.map.smsg.
+Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
+Warning (12019): Can't analyze file -- file ../../B58Cards/project.v is missing
+Warning (12019): Can't analyze file -- file ../../B58Cards/ram1024x32.v is missing
+Error (10170): Verilog HDL syntax error at card.v(182) near text "**";  expecting a description File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cards/card.v Line: 182
+Info (12021): Found 0 design units, including 0 entities, in source file card.v
+Error: Quartus II 64-Bit Analysis & Synthesis was unsuccessful. 1 error, 17 warnings
+    Error: Peak virtual memory: 4746 megabytes
+    Error: Processing ended: Tue Apr 02 13:50:03 2019
+    Error: Elapsed time: 00:00:15
+    Error: Total CPU time (on all processors): 00:00:33
 
 
