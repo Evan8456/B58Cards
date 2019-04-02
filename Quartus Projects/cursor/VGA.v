@@ -98,8 +98,8 @@ module cursor(
 		.drawNum(drawNum),
 		.drawSuit(drawSuit),
 
-		.cardNum(4'd2),
-		.cardSuit(2'd3),
+		.cardNum(SW[3:0]),
+		.cardSuit(SW[6:5]),
 
 		.xOut(x[7:0]),
 		.yOut(y[6:0]),
@@ -341,6 +341,7 @@ module control(
 
     localparam
 			NO_DRAW      	= 4'd0,
+			NO_DRAW_TO_LOAD = 4'd8,
 			LOAD_NUM_SUIT	= 4'd1,
 			DRAW_BLANK  	= 4'd2,
 			WAIT_BLANK  	= 4'd3,
@@ -348,11 +349,12 @@ module control(
 			WAIT_NUM			= 4'd5,
 			DRAW_SUIT		= 4'd6,
 			WAIT_SUIT 		= 4'd7;
-		  
+
     always @(*)
     begin
         case (current_state)
-            NO_DRAW 			: next_state = go ? LOAD_NUM_SUIT : NO_DRAW;
+            NO_DRAW 			: next_state = go ? NO_DRAW_TO_LOAD : NO_DRAW;
+				NO_DRAW_TO_LOAD: next_state = ~go ? LOAD_NUM_SUIT : NO_DRAW_TO_LOAD;
 				LOAD_NUM_SUIT 	: next_state = DRAW_BLANK;
             DRAW_BLANK 		: next_state = WAIT_BLANK;
 				WAIT_BLANK		: next_state = blankDone ? DRAW_NUM : WAIT_BLANK;
@@ -419,12 +421,14 @@ module drawBlankCard(
 
 	localparam
 		NO_DRAW 	= 2'd0,
-		DRAW		= 2'd1;
+		DRAW		= 2'd1,
+		DONE		= 2'd2;
 
 	always@(*) begin
 		case (current_state)
 			NO_DRAW 		: next_state = start ? DRAW : NO_DRAW;
-			DRAW			: next_state = done ? NO_DRAW : DRAW;
+			DRAW			: next_state = done ? DONE : DRAW;
+			DONE			: next_state = NO_DRAW;
 		endcase
 	end
 
@@ -443,10 +447,9 @@ module drawBlankCard(
 				xOut <= 8'b0;
 				yOut <= 7'b0;
 				cOut <= 3'b0;
-				done <= 1'b1;
+				done <= 1'b0;
 			end
 			DRAW: begin
-				done <= 1'b0;
 				if (xOffset < 8'd23)
 					xOffset <= xOffset + 1'b1;
 				else if (yOffset < 8'd39) begin
@@ -458,6 +461,9 @@ module drawBlankCard(
 				xOut <= xReg + xOffset;
 				yOut <= yReg + yOffset;
 				cOut <= 3'b111;
+			end
+			DONE:	begin
+				done <= 1'b1;
 			end
 		endcase
 	end
@@ -508,6 +514,7 @@ module drawNumSuit(
 	end
 	
 	always@(posedge clock) begin
+		done <= 1'b0;
 		case (current_state)
 			NO_DRAW: begin
 				if (!resetN) begin
@@ -519,12 +526,10 @@ module drawNumSuit(
 					cOut <= 2'b0;
 					xOffset <= 8'b0;
 					yOffset <= 7'b0;
-					done <= 1'b1;
 				end
 			end
 
 			LOAD:	begin
-						done <= 1'b0;
 						dataReg <= data;
 						xReg <= x;
 						yReg <= y;
