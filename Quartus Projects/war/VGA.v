@@ -1,6 +1,6 @@
 // Part 2 skeleton
 
-module cursor(
+module vga(
     CLOCK_50,				//	On Board 50 MHz
     // Your inputs and outputs here
     KEY,
@@ -98,8 +98,8 @@ module cursor(
 		.drawNum(drawNum),
 		.drawSuit(drawSuit),
 
-		.cardNum(4'd2),
-		.cardSuit(2'd3),
+		.cardNum(SW[3:0]),
+		.cardSuit(SW[6:5]),
 
 		.xOut(x[7:0]),
 		.yOut(y[6:0]),
@@ -127,23 +127,8 @@ module cursor(
 		.plot(plot),
 		
 		.current_state(LEDR[17:13]),
-		.next_state(LEDR[12:8]),
-		.done(vga_done)
+		.next_state(LEDR[12:8])
 	);
-	
-	
-	/**drawNumSuit num(
-		.resetN(resetN),
-		.clock(CLOCK_50),
-		.start(go),
-		.x(8'd30),
-		.y(7'd10),
-		.data(768'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFFFFFFFE071FFFFFFFFE3F1FFFFFFFFFF8FFFFFFFFFE00FFFFFFFFFE3FFFFFFFFFFE001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF),
-		.xOut(x[7:0]),
-		.yOut(y[6:0]),
-		.cOut(colour[2:0]),
-		.done()
-	);**/
 	
 	
 	
@@ -291,7 +276,7 @@ module drawCard(
 		.clock(clock),
 		.start(drawSuit),
 		.x(xIn + 2'd2),
-		.y(yIn + 5'd16),
+		.y(yIn + 5'd23),
 		.data(suitDataReg),
 		.xOut(suitOutX),
 		.yOut(suitOutY),
@@ -335,35 +320,34 @@ module control(
 	output reg drawSuit,
 	output reg loadNumSuit,
    output reg plot,            	// Signal to output the current pixel and draw on the VGA monitor
-	output reg [4:0] current_state, next_state,
-	output reg done
+	output reg [4:0] current_state, next_state
     );
 
     //reg [4:0] current_state, next_state;
 
     localparam
 			NO_DRAW      	= 4'd0,
+			NO_DRAW_TO_LOAD = 4'd8,
 			LOAD_NUM_SUIT	= 4'd1,
 			DRAW_BLANK  	= 4'd2,
 			WAIT_BLANK  	= 4'd3,
 			DRAW_NUM			= 4'd4,
 			WAIT_NUM			= 4'd5,
 			DRAW_SUIT		= 4'd6,
-			WAIT_SUIT 		= 4'd7,
-			DONE				= 4'd8;
-		  
+			WAIT_SUIT 		= 4'd7;
+
     always @(*)
     begin
         case (current_state)
-            NO_DRAW 			: next_state = go ? LOAD_NUM_SUIT : NO_DRAW;
+            NO_DRAW 			: next_state = go ? NO_DRAW_TO_LOAD : NO_DRAW;
+				NO_DRAW_TO_LOAD: next_state = ~go ? LOAD_NUM_SUIT : NO_DRAW_TO_LOAD;
 				LOAD_NUM_SUIT 	: next_state = DRAW_BLANK;
             DRAW_BLANK 		: next_state = WAIT_BLANK;
 				WAIT_BLANK		: next_state = blankDone ? DRAW_NUM : WAIT_BLANK;
 				DRAW_NUM 		: next_state = WAIT_NUM;
 				WAIT_NUM			: next_state = numDone ? DRAW_SUIT : WAIT_NUM;
 				DRAW_SUIT 		: next_state = WAIT_SUIT;
-				WAIT_SUIT		: next_state = suitDone ? DONE : WAIT_SUIT;
-				DONE				: next_state = NO_DRAW;
+				WAIT_SUIT		: next_state = suitDone ? NO_DRAW : WAIT_SUIT;
             default: next_state = NO_DRAW;
        endcase
     end
@@ -390,7 +374,6 @@ module control(
 				drawSuit <= 1'b1;
 				plot <= 1'b1;
 			end
-			DONE: done <= 1'b1;
        endcase
     end
 
@@ -424,12 +407,14 @@ module drawBlankCard(
 
 	localparam
 		NO_DRAW 	= 2'd0,
-		DRAW		= 2'd1;
+		DRAW		= 2'd1,
+		DONE		= 2'd2;
 
 	always@(*) begin
 		case (current_state)
 			NO_DRAW 		: next_state = start ? DRAW : NO_DRAW;
-			DRAW			: next_state = done ? NO_DRAW : DRAW;
+			DRAW			: next_state = done ? DONE : DRAW;
+			DONE			: next_state = NO_DRAW;
 		endcase
 	end
 
@@ -448,10 +433,9 @@ module drawBlankCard(
 				xOut <= 8'b0;
 				yOut <= 7'b0;
 				cOut <= 3'b0;
-				done <= 1'b1;
+				done <= 1'b0;
 			end
 			DRAW: begin
-				done <= 1'b0;
 				if (xOffset < 8'd23)
 					xOffset <= xOffset + 1'b1;
 				else if (yOffset < 8'd39) begin
@@ -463,6 +447,9 @@ module drawBlankCard(
 				xOut <= xReg + xOffset;
 				yOut <= yReg + yOffset;
 				cOut <= 3'b111;
+			end
+			DONE:	begin
+				done <= 1'b1;
 			end
 		endcase
 	end
@@ -513,6 +500,7 @@ module drawNumSuit(
 	end
 	
 	always@(posedge clock) begin
+		done <= 1'b0;
 		case (current_state)
 			NO_DRAW: begin
 				if (!resetN) begin
@@ -524,12 +512,10 @@ module drawNumSuit(
 					cOut <= 2'b0;
 					xOffset <= 8'b0;
 					yOffset <= 7'b0;
-					done <= 1'b1;
 				end
 			end
 
 			LOAD:	begin
-						done <= 1'b0;
 						dataReg <= data;
 						xReg <= x;
 						yReg <= y;

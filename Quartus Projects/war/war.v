@@ -1,5 +1,5 @@
 // 
-module war(CLOCK_50,				//	On Board 50 MHz
+module wasr(CLOCK_50,				//	On Board 50 MHz
     // Your inputs and outputs here
     KEY,
     SW,
@@ -17,6 +17,9 @@ module war(CLOCK_50,				//	On Board 50 MHz
     HEX5,
    	HEX4,
     	HEX3,
+		HEX2,
+		HEX1,
+		HEX0,
     	LEDR
 	);
 
@@ -41,6 +44,8 @@ module war(CLOCK_50,				//	On Board 50 MHz
 	output [6:0] HEX5;
 	output [6:0] HEX4;
 	output [6:0] HEX3;
+	output [6:0] HEX2, HEX1;
+	output [6:0] HEX0;
 
 	wire clock;
 	wire resetn;
@@ -97,16 +102,16 @@ module war(CLOCK_50,				//	On Board 50 MHz
 		.resetN(resetn),
 		.clock(CLOCK_50),
 
-		.xIn(player_x_loc),                // 8 bit x location input
-		.yIn(player_y_loc),                // 7 bit y location input
+		.xIn(x_loc),                // 8 bit x location input
+		.yIn(y_loc),                // 7 bit y location input
 
 		.loadNumSuit(loadNumSuit),	 // FSM signals
 		.drawBlank(drawBlank),
 		.drawNum(drawNum),
 		.drawSuit(drawSuit),
 
-		.cardNum(SW[5:2]), // num_to_draw
-		.cardSuit(SW[8:7]), // suit_to_draw
+		.cardNum(num_to_draw), // num_to_draw
+		.cardSuit(suit_to_draw), // suit_to_draw
 
 		.xOut(x[7:0]),
 		.yOut(y[6:0]),
@@ -134,35 +139,38 @@ module war(CLOCK_50,				//	On Board 50 MHz
 		.plot(plot),
 		
 		.current_state(),
-		.next_state(),
-		.done(vga_done)
+		.next_state()
 	);
 	
-	HexDecoder hexX1(.IN(x[7:4]),
+	HexDecoder hexX1(.IN(player_card[3:0]),
 					.OUT(HEX7[6:0])
 	);
 	 
-	HexDecoder hexX2(.IN(x[3:0]),
+	HexDecoder hexX2(.IN(player_card[5:4]),
 					.OUT(HEX6[6:0])
 	);
 	 
-	HexDecoder hexY1(.IN(y[6:4]),
+	HexDecoder hexY1(.IN(com_card[3:0]),
 					.OUT(HEX5[6:0])
 	);
 	 
-	HexDecoder hexY2(.IN(y[3:0]),
+	HexDecoder hexY2(.IN(com_card[5:4]),
 					.OUT(HEX4[6:0])
 	);
 	 
-	HexDecoder hexColour(.IN(colour[2:0]),
+	HexDecoder hexColour1(.IN(colour[2:0]),
 					.OUT(HEX3[6:0])
+	);
+	 
+	HexDecoder hexColour2(.IN({2'b0, winner}),
+					.OUT(HEX1[6:0])
 	);
 
 	reg [9:0] player_head; // head of the player's deck - starts empty
 	reg [9:0] com_head; // head of the com's deck - starts empty
 	reg [9:0] deck_head; // head of original deck - starts with 52 cards
 
-   reg [5:0] current_state, next_state;
+   reg [4:0] current_state, next_state;
 	assign LEDR[17:13] = current_state;
 	assign LEDR[12:8] = next_state;
 	
@@ -170,17 +178,18 @@ module war(CLOCK_50,				//	On Board 50 MHz
 	wire [7:0] player_y_loc; // y location for drawing player card
 	wire [7:0] com_x_loc; // x location for drawing com card
 	wire [7:0] com_y_loc; // y location for drawing com card
-	assign player_x_loc = 8'd50;
-	assign player_y_loc = 8'd50;
-	assign com_x_loc = 8'd50;
-	assign com_y_loc = 8'd200;
+	assign player_x_loc = 8'd30;
+	assign player_y_loc = 8'd70;
+	assign com_x_loc = 8'd200;
+	assign com_y_loc = 8'd70;
 	
 	reg [1:0] winner; // 0-no winner yet, 1-player wins, 2-com wins
 	
 	reg [1:0] op; // ram operation
 	
-	reg [4:0] player_count; // the number of cards in the player's deck
-	reg [4:0] com_count; // the number of cards in the com's deck
+	reg [5:0] player_count; // the number of cards in the player's deck
+	reg [5:0] com_count; // the number of cards in the com's deck
+	reg [5:0] curr_deck_count;
 	
 	reg [5:0] drawn_card;
 	reg [5:0] player_card;
@@ -192,9 +201,10 @@ module war(CLOCK_50,				//	On Board 50 MHz
 	reg ram_enable;
 	wire temp_ram_done;
 	wire ram_done;
-	assign ram_done = SW[8];
+	assign ram_done = temp_ram_done;
 	assign LEDR[0] = ram_done;
 	wire vga_done;
+	assign vga_done = SW[7];
 	assign LEDR[1] = vga_done;
 	reg [9:0] ram_arg1;
 	reg [9:0] ram_arg2;
@@ -213,38 +223,41 @@ module war(CLOCK_50,				//	On Board 50 MHz
 				BUILD_DECK				= 5'd3, // add a card to the deck
 				WAIT_FOR_IT				= 5'd4, // it waits
 				GENERATE_SEED			= 5'd5, // generate a random seed
-				SEED_GOT					= 5'd6, // the seed has been generated
-				DRAW_FROM_DECK			= 5'd7, // draw a card from the deck
-				NEXT_INT_1				= 5'd8, // calculate next int
-				TO_HAND					= 5'd9, // place it in the player's or the com's hand
-				CARD_DEALT				= 5'd10, // a card has been dealt to a player
-				PLAYER_WAIT				= 5'd11, // wait for user input "go"
-				DRAW_FROM_PLAYER		= 5'd12, // draw a card from the user's hand
-				WAIT_DRAW_PLAYER		= 5'd13, // Wait until the player's card is done drawing
-				NEXT_INT_2				= 5'd14, // calculate next int
-				DRAW_FROM_COM			= 5'd15, // draw a card from the com's hand
-				WAIT_DRAW_COM			= 5'd16, // Wait until the computer card is done drawing
-				NEXT_INT_3				= 5'd17, // calculate next int
-				CALCULATE				= 5'd18, // calculate who wins
-				PC_TO_PLAYER			= 5'd19, // move the player's drawn card to the player's hand
-				CC_TO_PLAYER			= 5'd20, // move the com's drawn card to the player's hand
-				PC_TO_COM				= 5'd21, // move the player's drawn card to the com's hand
-				CC_TO_COM				= 5'd22; // move the com's drawn card to the com's hand
-	
+				WAIT_GO_DISABLE		= 5'd6, // Wait until go is down to get the cards
+				SEED_GOT					= 5'd7, // the seed has been generated
+				DRAW_FROM_DECK			= 5'd8, // draw a card from the deck
+				NEXT_INT_1				= 5'd9, // calculate next int
+				TO_HAND					= 5'd10, // place it in the player's or the com's hand
+				CARD_DEALT				= 5'd11, // a card has been dealt to a player
+				PLAYER_WAIT				= 5'd12, // wait for user input "go"
+				DRAW_FROM_PLAYER		= 5'd13, // draw a card from the user's hand
+				WAIT_DRAW_PLAYER		= 5'd14, // Wait until the player's card is done drawing
+				NEXT_INT_2				= 5'd15, // calculate next int
+				DRAW_FROM_COM			= 5'd16, // draw a card from the com's hand
+				WAIT_DRAW_COM			= 5'd17, // Wait until the computer card is done drawing
+				NEXT_INT_3				= 5'd18, // calculate next int
+				CALCULATE				= 5'd19, // calculate who wins
+				PC_TO_PLAYER			= 5'd20, // move the player's drawn card to the player's hand
+				CC_TO_PLAYER			= 5'd21, // move the com's drawn card to the player's hand
+				PC_TO_COM				= 5'd22, // move the player's drawn card to the com's hand
+				CC_TO_COM				= 5'd23, // move the com's drawn card to the com's hand
+				STOP_ENABLE 			= 5'd24; // Wait until go is low to play the next two cards
+
 	// Next state logic
 	always @(posedge clock) begin
 		case(current_state)
 				ALLOC_PLAYER:				next_state = ram_done ? ALLOC_COM : ALLOC_PLAYER;
 				ALLOC_COM:					next_state = ram_done ? ALLOC_DECK : ALLOC_COM;
 				ALLOC_DECK:					next_state = ram_done ? BUILD_DECK : ALLOC_DECK;
-				BUILD_DECK:					next_state = (curr_num==13 && curr_suit==3) ? GENERATE_SEED : WAIT_FOR_IT;
+				BUILD_DECK:					next_state = (curr_num==4'd13 && curr_suit==2'd3) ? GENERATE_SEED : WAIT_FOR_IT;
 				WAIT_FOR_IT:				next_state = ram_done ? BUILD_DECK : WAIT_FOR_IT;
-				GENERATE_SEED:				next_state = go ? SEED_GOT : GENERATE_SEED;
+				GENERATE_SEED:				next_state = go ? WAIT_GO_DISABLE : GENERATE_SEED;
+				WAIT_GO_DISABLE:			next_state = ~go ? SEED_GOT : WAIT_GO_DISABLE;
 				SEED_GOT:					next_state = DRAW_FROM_DECK;
 				DRAW_FROM_DECK:			next_state = ram_done ? NEXT_INT_1 : DRAW_FROM_DECK;
 				NEXT_INT_1:					next_state = TO_HAND;
 				TO_HAND:						next_state = ram_done ? CARD_DEALT : TO_HAND;
-				CARD_DEALT:					next_state = com_count==26 ? PLAYER_WAIT : DRAW_FROM_DECK;
+				CARD_DEALT:					next_state = com_count==6'd26 ? PLAYER_WAIT : DRAW_FROM_DECK;
 				PLAYER_WAIT:				next_state = go ? DRAW_FROM_PLAYER : PLAYER_WAIT;
 				DRAW_FROM_PLAYER:			next_state = ram_done ? WAIT_DRAW_PLAYER : DRAW_FROM_PLAYER;
 				WAIT_DRAW_PLAYER:			next_state = vga_done ? NEXT_INT_2 : WAIT_DRAW_PLAYER;
@@ -259,8 +272,9 @@ module war(CLOCK_50,				//	On Board 50 MHz
 				end
 				PC_TO_PLAYER:				next_state = ram_done ? CC_TO_PLAYER : PC_TO_PLAYER;
 				PC_TO_COM:					next_state = ram_done ? CC_TO_COM : PC_TO_COM;
-				CC_TO_PLAYER:				next_state = ram_done ? PLAYER_WAIT : CC_TO_PLAYER;
-				CC_TO_COM:					next_state = ram_done ? PLAYER_WAIT : CC_TO_COM;
+				CC_TO_PLAYER:				next_state = ram_done ? STOP_ENABLE : CC_TO_PLAYER;
+				CC_TO_COM:					next_state = ram_done ? STOP_ENABLE : CC_TO_COM;
+				STOP_ENABLE:				next_state = ~go ? PLAYER_WAIT : STOP_ENABLE;
             default: next_state = ALLOC_PLAYER;
 		endcase
 	end
@@ -279,28 +293,29 @@ module war(CLOCK_50,				//	On Board 50 MHz
 			NEXT_INT_2: next_int <= 1;
 			NEXT_INT_3: next_int <= 1;
 			ALLOC_PLAYER: begin
+				winner <= 0;
 				player_count <= 0;
 				com_count <= 0;
 				ram_enable <= 1;
-				op <= 3;
+				op <= 2'd3;
 				ram_arg1 <= player_head;
 			end
 			ALLOC_COM: begin
 				ram_enable <= 1;
-				op <= 3;
+				op <= 2'd3;
 				ram_arg1 <= com_head;
 			end
 			ALLOC_DECK: begin
 				ram_enable <= 1;
-				op <= 3;
+				op <= 2'd3;
 				ram_arg1 <= deck_head;
 			end
 			BUILD_DECK: begin
 				ram_enable <= 1;
-				op <= 0;
+				op <= 2'd0;
 				ram_arg1 <= deck_head;
 				ram_arg2 <= {curr_suit,curr_num};
-				if(curr_suit == 3) begin
+				if(curr_suit == 2'd3) begin
 					curr_suit <= 0;
 					curr_num <= curr_num+4'd1;
 				end
@@ -318,28 +333,30 @@ module war(CLOCK_50,				//	On Board 50 MHz
 				ram_enable <= 1;
 				op <= 1;
 				drawn_card <= card_out;
+				curr_deck_count <= 6'd52 - player_count - com_count;
 				ram_arg1 <= deck_head;
 				ram_arg2 <= rand_int[9:0];
 			end
 			TO_HAND: begin
 				ram_enable <= 1;
 				op <= 0;
-				if(player_count < 26)
+				if(player_count < 6'd26)
 					ram_arg1 <= player_head;
 					// increment count?
 					if(ram_done == 1)
-						player_count <= player_count+5'd1;
+						player_count <= player_count+6'd1;
 				else
 					ram_arg1 <= com_head;
 					// increment count?
 					if(ram_done == 1)
-						com_count <= com_count+5'd1;
+						com_count <= com_count+6'd1;
 				ram_arg2 <= drawn_card[5:0];
 			end
 			DRAW_FROM_PLAYER: begin
 				ram_enable <= 1;
 				op <= 1;
 				player_card <= card_out;
+				curr_deck_count <= player_count;
 				ram_arg1 <= player_head;
 				ram_arg2 <= rand_int[9:0];
 				x_loc <= player_x_loc;
@@ -353,6 +370,7 @@ module war(CLOCK_50,				//	On Board 50 MHz
 				ram_enable <= 1;
 				op <= 1;
 				com_card <= card_out;
+				curr_deck_count <= com_count;
 				ram_arg1 <= com_head;
 				ram_arg2 <= rand_int[9:0];
 				x_loc <= com_x_loc;
@@ -365,9 +383,9 @@ module war(CLOCK_50,				//	On Board 50 MHz
 			CALCULATE: begin
 				// check winner
 				if(player_card[3:0] < com_card[3:0])
-					winner <= 2;
+					winner <= 2'd2;
 				else
-					winner <= 1;
+					winner <= 2'd1;
 			end
 			PC_TO_PLAYER: begin
 				ram_enable <= 1;
@@ -386,8 +404,8 @@ module war(CLOCK_50,				//	On Board 50 MHz
 			PC_TO_COM: begin
 				ram_enable <= 1;
 				op <= 0;
-				player_count <= player_count-5'd1;
-				com_count <= com_count+5'd1;
+				player_count <= player_count-6'd1;
+				com_count <= com_count+6'd1;
 				ram_arg1 <= com_head;
 				ram_arg2 <= player_card[5:0];
 			end
@@ -404,23 +422,24 @@ module war(CLOCK_50,				//	On Board 50 MHz
 	// update current_state
 	always@(posedge clock) begin
         if(!resetn) begin
-			player_head <= 32;
-			com_head <= 64;
-			deck_head <= 96;
+			player_head <= 10'd32;
+			com_head <= 10'd64;
+			deck_head <= 10'd96;
             current_state <= ALLOC_PLAYER;
         end
         else
             current_state <= next_state;
 	end
 	
-	ram_controller rc(
-		.enable(ram_enable),			
+	ram_controller rc(.HEX0(HEX2),
+		.enable(ram_enable),
 		.clock(clock),						
 		.select_op(op),						
 		.arg1(ram_arg1),
 		.arg2(ram_arg2),
 		.finished_op(temp_ram_done),
-		.out1(card_out)
+		.out1(card_out),
+		.states(LEDR[7:3])
 	);
 	
 	// rng and RAM wires
@@ -433,13 +452,13 @@ module war(CLOCK_50,				//	On Board 50 MHz
 		.enable_count(rng_counter),
 		.seed(generatorSeed)
 	);
-	
+	// Decrease max with deck size
 	RNG RNGmod(
 		.clock(clock),
 		.LoadSeed(generatorSeed),
 		.Load_n(load_seed),
 		.min_n(16'd1),
-		.max_n(16'd53),
+		.max_n(curr_deck_count),
 		.next_int(next_int),
 		.rand_int(rand_int),
 		.seed(currentSeed)

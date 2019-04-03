@@ -3,183 +3,63 @@ TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
-Slack : -16.200
-TNS   : -179.615
-
-Type  : Slow 1200mV 85C Model Setup 'ram_controller:rc|ram_clock'
-Slack : -1.792
-TNS   : -3.358
-
-Type  : Slow 1200mV 85C Model Setup 'ram_controller:rc|start_module'
-Slack : -0.755
-TNS   : -2.607
-
-Type  : Slow 1200mV 85C Model Setup 'ram_controller:rc|load_arg'
-Slack : -0.700
-TNS   : -5.611
-
-Type  : Slow 1200mV 85C Model Setup 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 31.178
-TNS   : 0.000
+Slack : -10.992
+TNS   : -913.945
 
 Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
-Slack : 0.322
-TNS   : 0.000
+Slack : -0.284
+TNS   : -0.599
 
-Type  : Slow 1200mV 85C Model Hold 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 0.402
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'ram_controller:rc|load_arg'
-Slack : 0.636
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'ram_controller:rc|start_module'
-Slack : 0.749
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'ram_controller:rc|ram_clock'
-Slack : 2.068
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'ram_controller:rc|ram_clock'
-Slack : -2.693
-TNS   : -8.079
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -301.858
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'ram_controller:rc|load_arg'
 Slack : -1.285
 TNS   : -15.420
 
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'ram_controller:rc|start_module'
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'ram_controller:rc|load_op'
 Slack : -1.285
-TNS   : -5.140
-
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.553
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 19.708
-TNS   : 0.000
+TNS   : -2.570
 
 Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
-Slack : -12.614
-TNS   : -141.934
-
-Type  : Slow 1200mV 0C Model Setup 'ram_controller:rc|ram_clock'
-Slack : -1.553
-TNS   : -2.880
-
-Type  : Slow 1200mV 0C Model Setup 'ram_controller:rc|start_module'
-Slack : -0.613
-TNS   : -2.072
-
-Type  : Slow 1200mV 0C Model Setup 'ram_controller:rc|load_arg'
-Slack : -0.521
-TNS   : -4.290
-
-Type  : Slow 1200mV 0C Model Setup 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 32.001
-TNS   : 0.000
+Slack : -9.916
+TNS   : -817.028
 
 Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.330
-TNS   : 0.000
+Slack : -0.331
+TNS   : -0.853
 
-Type  : Slow 1200mV 0C Model Hold 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 0.354
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Hold 'ram_controller:rc|load_arg'
-Slack : 0.548
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Hold 'ram_controller:rc|start_module'
-Slack : 0.718
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Hold 'ram_controller:rc|ram_clock'
-Slack : 1.886
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|ram_clock'
-Slack : -2.649
-TNS   : -7.947
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -301.594
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|load_arg'
 Slack : -1.285
 TNS   : -15.420
 
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|start_module'
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|load_op'
 Slack : -1.285
-TNS   : -5.140
-
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.561
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 19.709
-TNS   : 0.000
+TNS   : -2.570
 
 Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
-Slack : -0.587
-TNS   : -5.471
-
-Type  : Fast 1200mV 0C Model Setup 'ram_controller:rc|ram_clock'
-Slack : -0.451
-TNS   : -0.825
-
-Type  : Fast 1200mV 0C Model Setup 'ram_controller:rc|load_arg'
-Slack : 0.084
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Setup 'ram_controller:rc|start_module'
-Slack : 0.155
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Setup 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 35.580
-TNS   : 0.000
+Slack : -4.884
+TNS   : -359.444
 
 Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.118
-TNS   : 0.000
+Slack : -0.425
+TNS   : -1.713
 
-Type  : Fast 1200mV 0C Model Hold 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 0.181
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'ram_controller:rc|load_arg'
-Slack : 0.194
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'ram_controller:rc|start_module'
-Slack : 0.267
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'ram_controller:rc|ram_clock'
-Slack : 1.045
-TNS   : 0.000
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -293.687
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|load_arg'
 Slack : -1.000
 TNS   : -12.000
 
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|start_module'
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|load_op'
 Slack : -1.000
-TNS   : -4.000
-
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'ram_controller:rc|ram_clock'
-Slack : -1.000
-TNS   : -3.000
-
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.201
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'VGA|mypll|altpll_component|pll|clk[0]'
-Slack : 19.754
-TNS   : 0.000
+TNS   : -2.000
 
 ------------------------------------------------------------

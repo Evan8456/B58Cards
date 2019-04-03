@@ -14,6 +14,7 @@ module allocate_memory(enable, clock, addr_found, out_address, ram_address, ram_
     assign ram_data = {1'b1, 31'b0}; // Allocate the block by putting 1 in the most significant bit
 
 	reg [1:0] current_state;
+
 	localparam DO_NOTHING	= 2'd0, // Wait for enable
 				  FIND_ADDR		= 2'd1; // Find a free address 
 
@@ -103,19 +104,21 @@ module ram_controller(
     input [9:0] arg1, // The first argument for a module
     input [9:0] arg2, // The second argument for a module
     output reg finished_op, // If the operation has been finished since the last time enable was run
-    output reg [31:0] out1 // The operation output
+    output reg [31:0] out1, // The operation output
+	 output reg [4:0] states
     );
 
     reg [9:0] ram_address;
     reg ram_clock;
     reg [31:0] ram_data;
     reg ram_wren;
-    wire ram_q;
+    wire [31:0] ram_q;
 
     reg load_op, load_arg, start_module;
     reg [9:0] current_arg1, current_arg2;
 
     reg fsm_finished_op;
+    reg [1:0] current_op;
 
     reg [2:0] current_state;
 
@@ -133,82 +136,39 @@ module ram_controller(
             LOAD_ARGS_WAIT: current_state = LOAD_OP;
             LOAD_OP:        current_state = DO_OP;
             DO_OP:          current_state = fsm_finished_op ? DONE_OP : DO_OP;
-				DONE_OP:			 current_state = DO_NOTHING;
+				DONE_OP:			 current_state = ~enable ? DO_NOTHING : DONE_OP;
+				default:			 current_state = DO_NOTHING;
         endcase
     end
 
     always @(posedge clock) begin
-        case (current_state)
-            DO_NOTHING:     begin
-                                ram_wren <= 0;
-                                load_op <= 0;
-                                load_arg <= 0;
-                                start_module <= 0;
-                                fsm_finished_op <= 0;
-                                finished_op <= 0;
-                            end
-            LOAD_ARGS:      begin
-                                finished_op <= 0;
-                                load_arg <= 1;
-                            end
-            LOAD_ARGS_WAIT: begin
-                                load_arg <= 0;
-                            end
-            LOAD_OP:        begin
-											case(select_op)
-												2'd0: begin // add
-														  ram_address = ac_ram_addr;
-														  ram_clock = ac_ram_clock;
-														  ram_data = ac_ram_data;
-														  ram_wren = ac_ram_wren;
+		  load_op <= 0;
+		  load_arg <= 0;
+		  start_module <= 0;
+		  finished_op <= 0;
+		  states <= 5'd0;
 
-														  fsm_finished_op = ac_finished_adding;
-														  out1 = ac_next_card;
-													 end
-												2'd1: begin // remove
-														  ram_address = rnc_ram_addr;
-														  ram_clock = rnc_ram_clock;
-														  ram_data = rnc_ram_data;
-														  ram_wren = rnc_ram_wren;
-
-														  fsm_finished_op = rnc_finished_removing;
-														  out1 = rnc_out_card;
-													 end
-												2'd2: begin // split
-														  ram_address = sl_ram_addr;
-														  ram_clock = sl_ram_clock;
-														  ram_data = sl_ram_data;
-														  ram_wren = sl_ram_wren;
-
-														  fsm_finished_op = sl_finished_splitting;
-														  out1 = sl_second_addr;
-													 end
-											2'd3: begin // Set
-													ram_address = sa_ram_addr;
-														  ram_clock = sa_ram_clock;
-														  ram_data = sa_ram_data;
-														  ram_wren = sa_ram_wren;
-
-														  fsm_finished_op = sa_finished_setting;
-												end
-												default: begin
-																ram_address = 0;
-																ram_clock = clock;
-																ram_data = 0;
-																ram_wren = 0;
-
-																fsm_finished_op = 1;
-																finished_op = 1;
-																out1 = 0;
-														  end
-										  endcase
-                            end
-            DO_OP:          begin
-                                start_module <= 1;
-                            end
-				DONE_OP:			 begin
-										  finished_op <= 1;
-									 end
+			case (current_state)
+            LOAD_ARGS:begin
+									load_arg <= 1;
+									states <= 5'd1;
+				end
+            LOAD_ARGS_WAIT:begin
+									load_arg <= 0;
+									states <= 5'd2;
+				end
+				LOAD_OP:begin
+									load_op <= 1;
+									states <= 5'd4;	
+				end
+            DO_OP:begin
+									start_module <= 1;
+									states <= 5'd8;
+				end
+				DONE_OP:begin
+									finished_op <= 1;
+									states <= 5'd16;
+				end
         endcase
     end
 
@@ -218,16 +178,64 @@ module ram_controller(
         current_arg2 <= arg2;
     end
 
-    // Load operation
-    always @(posedge load_op) begin
-        
-    end
+	always @(posedge load_op) begin
+		current_op <= select_op;
+	end
 
-    always @(posedge start_module) begin
-        ac_enable <= (select_op == 2'd0 && current_state != DO_NOTHING) ?  1 : 0;
-        rnc_enable <= (select_op == 2'd1 && current_state != DO_NOTHING) ?  1 : 0;
-        sl_enable <= (select_op == 2'd2 && current_state != DO_NOTHING) ?  1 : 0;
-		  sa_enable <= (select_op == 2'd3 && current_state != DO_NOTHING) ?  1 : 0;
+	 always @(*) begin
+	  ram_address <= 10'b0;
+	  ram_clock <= clock;
+	  ram_data <= 32'b0;
+	  ram_wren <= 0;
+
+	  fsm_finished_op <= 0;
+	  out1 <= 0;
+
+		case(current_op)
+			2'd0: begin // add
+					  ram_address <= ac_ram_addr;
+					  ram_clock <= ac_ram_clock;
+					  ram_data <= ac_ram_data;
+					  ram_wren <= ac_ram_wren;
+
+					  fsm_finished_op <= ac_finished_adding;
+					  out1 <= ac_next_card;
+			end
+			2'd1: begin // remove
+					  ram_address <= rnc_ram_addr;
+					  ram_clock <= rnc_ram_clock;
+					  ram_data <= rnc_ram_data;
+					  ram_wren <= rnc_ram_wren;
+
+					  fsm_finished_op <= rnc_finished_removing;
+					  out1 <= rnc_out_card;
+			end
+			2'd2: begin // split
+					  ram_address <= sl_ram_addr;
+					  ram_clock <= sl_ram_clock;
+					  ram_data <= sl_ram_data;
+					  ram_wren <= sl_ram_wren;
+
+					  fsm_finished_op <= sl_finished_splitting;
+					  out1 <= sl_second_addr;
+			end
+			2'd3: begin // Set
+					  ram_address <= sa_ram_addr;
+					  ram_clock <= sa_ram_clock;
+					  ram_data <= sa_ram_data;
+					  ram_wren <= sa_ram_wren;
+
+					  fsm_finished_op <= sa_finished_setting;
+			end
+		endcase
+	 end
+
+	 // Set the enables
+    always @(posedge clock) begin
+        ac_enable <= (current_op == 2'd0 && start_module) ?  1'b1 : 1'b0;
+        rnc_enable <= (current_op == 2'd1 && start_module) ?  1'b1 : 1'b0;
+        sl_enable <= (current_op == 2'd2 && start_module) ?  1'b1 : 1'b0;
+		  sa_enable <= (current_op == 2'd3 && start_module) ?  1'b1 : 1'b0;
     end
 
     // The ram module
@@ -247,7 +255,7 @@ module ram_controller(
     wire ac_finished_adding;
 
     assign ac_address = current_arg1;
-    assign ac_value = current_arg2;
+    assign ac_value = current_arg2[5:0];
 
     // Add card module ram inputs
     wire [9:0] ac_ram_addr;
@@ -277,7 +285,7 @@ module ram_controller(
     wire rnc_finished_removing;
 
     assign rnc_card = current_arg1;
-    assign rnc_n = current_arg2;
+    assign rnc_n = current_arg2[5:0];
 
     // Remove nth card module ram inputs
     wire [9:0] rnc_ram_addr;
@@ -306,7 +314,7 @@ module ram_controller(
     wire [9:0] sl_second_addr;
     wire sl_finished_splitting;
 
-    assign sl_n = current_arg1;
+    assign sl_n = current_arg1[5:0];
     assign sl_address = current_arg2;
 
     // Split list ram inputs

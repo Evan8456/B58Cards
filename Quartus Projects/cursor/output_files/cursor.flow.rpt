@@ -1,5 +1,5 @@
 Flow report for cursor
-Wed Apr 03 10:19:46 2019
+Wed Apr 03 17:02:28 2019
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -41,17 +41,17 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Apr 03 10:19:46 2019       ;
+; Flow Status                        ; Successful - Wed Apr 03 17:02:28 2019       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; cursor                                      ;
 ; Top-level Entity Name              ; cursor                                      ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 1,365 / 114,480 ( 1 % )                     ;
-;     Total combinational functions  ; 1,359 / 114,480 ( 1 % )                     ;
-;     Dedicated logic registers      ; 1,060 / 114,480 ( < 1 % )                   ;
-; Total registers                    ; 1067                                        ;
+; Total logic elements               ; 745 / 114,480 ( < 1 % )                     ;
+;     Total combinational functions  ; 744 / 114,480 ( < 1 % )                     ;
+;     Dedicated logic registers      ; 450 / 114,480 ( < 1 % )                     ;
+; Total registers                    ; 457                                         ;
 ; Total pins                         ; 111 / 529 ( 21 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 230,400 / 3,981,312 ( 6 % )                 ;
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/03/2019 10:18:54 ;
+; Start date & time ; 04/03/2019 17:01:36 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cursor              ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
 +-------------------------------------+----------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 22727984236474.155430113404660         ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID               ; 22727984236474.155432529605208         ; --            ; --          ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                            ; --            ; --          ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (Verilog)              ; <None>        ; --          ; --             ;
 ; EDA_TIME_SCALE                      ; 1 ps                                   ; --            ; --          ; eda_simulation ;
@@ -97,12 +97,12 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:17     ; 1.0                     ; 4784 MB             ; 00:00:35                           ;
-; Fitter                    ; 00:00:17     ; 1.0                     ; 5467 MB             ; 00:00:25                           ;
-; Assembler                 ; 00:00:04     ; 1.0                     ; 4709 MB             ; 00:00:04                           ;
-; TimeQuest Timing Analyzer ; 00:00:03     ; 1.1                     ; 4858 MB             ; 00:00:04                           ;
-; EDA Netlist Writer        ; 00:00:05     ; 1.0                     ; 4695 MB             ; 00:00:03                           ;
-; Total                     ; 00:00:46     ; --                      ; --                  ; 00:01:11                           ;
+; Analysis & Synthesis      ; 00:00:20     ; 1.0                     ; 4792 MB             ; 00:00:39                           ;
+; Fitter                    ; 00:00:16     ; 1.0                     ; 5454 MB             ; 00:00:23                           ;
+; Assembler                 ; 00:00:04     ; 1.0                     ; 4707 MB             ; 00:00:04                           ;
+; TimeQuest Timing Analyzer ; 00:00:04     ; 1.0                     ; 4851 MB             ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 4688 MB             ; 00:00:03                           ;
+; Total                     ; 00:00:47     ; --                      ; --                  ; 00:01:12                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

@@ -90,16 +90,16 @@ module cursor(
 		.resetN(resetN),
 		.clock(CLOCK_50),
 
-		.xIn(8'd30),                // 8 bit x location input
-		.yIn(7'd10),                // 7 bit y location input
+		.xIn(SW[14:7]),                // 8 bit x location input
+		.yIn(SW[17:15]),                // 7 bit y location input
 
 		.loadNumSuit(loadNumSuit),	 // FSM signals
 		.drawBlank(drawBlank),
 		.drawNum(drawNum),
 		.drawSuit(drawSuit),
 
-		.cardNum(SW[3:0]),
-		.cardSuit(SW[6:5]),
+		.cardNum(number),
+		.cardSuit(suit),
 
 		.xOut(x[7:0]),
 		.yOut(y[6:0]),
@@ -130,22 +130,6 @@ module cursor(
 		.next_state(LEDR[12:8])
 	);
 	
-	
-	/**drawNumSuit num(
-		.resetN(resetN),
-		.clock(CLOCK_50),
-		.start(go),
-		.x(8'd30),
-		.y(7'd10),
-		.data(768'hFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0FFFFFFFFFE071FFFFFFFFE3F1FFFFFFFFFF8FFFFFFFFFE00FFFFFFFFFE3FFFFFFFFFFE001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF),
-		.xOut(x[7:0]),
-		.yOut(y[6:0]),
-		.cOut(colour[2:0]),
-		.done()
-	);**/
-	
-	
-	
 	HexDecoder hexX1(.IN(x[7:4]),
 					.OUT(HEX7[6:0])
 	);
@@ -164,6 +148,30 @@ module cursor(
 	 
 	HexDecoder hexColour(.IN(colour[2:0]),
 					.OUT(HEX3[6:0])
+	);
+
+	wire [3:0] number = rand_int >> 2;
+	wire [1:0] suit = rand_int[1:0];
+	// rng and RAM wires
+	wire [15:0] generatorSeed;
+	wire [15:0] currentSeed;
+	wire [15:0] rand_int;
+
+	randomSeedGenerator generator(
+		.clock(clock),
+		.enable_count(rng_counter),
+		.seed(generatorSeed)
+	);
+	// Decrease max with deck size
+	RNG RNGmod(
+		.clock(clock),
+		.LoadSeed(generatorSeed),
+		.Load_n(load_seed),
+		.min_n(16'd1),
+		.max_n(16'd52),
+		.next_int(SW[0]),
+		.rand_int(rand_int),
+		.seed(currentSeed)
 	);
 endmodule
 
@@ -276,7 +284,7 @@ module drawCard(
 		.resetN(resetN),
 		.clock(clock),
 		.start(drawNum),
-		.x(xIn + 2'd2),
+		.x(xIn + 3'd4),
 		.y(yIn + 2'd2),
 		.data(numDataReg),
 		.xOut(numOutX),
@@ -289,7 +297,7 @@ module drawCard(
 		.resetN(resetN),
 		.clock(clock),
 		.start(drawSuit),
-		.x(xIn + 2'd2),
+		.x(xIn + 3'd5),
 		.y(yIn + 5'd23),
 		.data(suitDataReg),
 		.xOut(suitOutX),
@@ -517,16 +525,14 @@ module drawNumSuit(
 		done <= 1'b0;
 		case (current_state)
 			NO_DRAW: begin
-				if (!resetN) begin
-					dataReg <= 768'b0;
-					xReg <= 8'b0;
-					yReg <= 7'b0;
-					xOut <= 8'b0;
-					yOut <= 7'b0;
-					cOut <= 2'b0;
-					xOffset <= 8'b0;
-					yOffset <= 7'b0;
-				end
+				dataReg <= 768'b0;
+				xReg <= 8'b0;
+				yReg <= 7'b0;
+				xOut <= 8'b0;
+				yOut <= 7'b0;
+				cOut <= 2'b0;
+				xOffset <= 8'b0;
+				yOffset <= 7'b0;
 			end
 
 			LOAD:	begin

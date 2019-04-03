@@ -57,12 +57,11 @@ module store_card(
     end
 
     always @(posedge clock) begin
+		  finished_storing <= 0;
+		  ram_wren = 0;
+		  alloc_enable = 0;
+
         case(current_state)
-            DO_NOTHING: begin
-            				        finished_storing = 0;
-                            ram_wren = 0;
-                            alloc_enable = 0;
-                        end
             LOAD:	begin
                       current_addr = address;
                       current_value = value;
@@ -72,7 +71,6 @@ module store_card(
                       ram_data = card_info;
             		end
             STORE_CARD: begin
-            				finished_storing = 0;
                             ram_wren <= 1;
                         end
             STORE_CARD_WAIT: begin
@@ -87,8 +85,6 @@ module store_card(
             	   end
            	ALLOC_WAIT: begin
            					next_card = next_card_addr;
-           					ram_wren = 0;
-           					alloc_enable = 0;
            				end
             STORE_NEXT: begin
             				        ram_address = address;
@@ -97,7 +93,7 @@ module store_card(
                             ram_wren = 1;
             			      end
             SET_DONE: begin
-                        finished_storing = 1;
+                        finished_storing <= 1;
                       end
         endcase
     end
@@ -146,14 +142,16 @@ module add_card(
 
     localparam  DO_NOTHING = 3'd0, // Wait until enable is triggered
                 LOAD = 3'd1, // Load the address and n
-                FIND_LAST = 3'd2, // Find the address of the last card in the linked list
-                STORE_CARD = 3'd3, // Remove the n'th card
-                SET_DONE = 3'd4; // Set the module to have been done
+					 SET_RAM_ADDR	= 3'd2, // Load the ram address
+                FIND_LAST = 3'd3, // Find the address of the last card in the linked list
+                STORE_CARD = 3'd4, // Remove the n'th card
+                SET_DONE = 3'd5; // Set the module to have been done
 
     always @(posedge clock) begin
         case(current_state)
             DO_NOTHING: current_state = enable ? LOAD : DO_NOTHING;
-            LOAD: current_state = FIND_LAST;
+            LOAD: current_state = SET_RAM_ADDR;
+				SET_RAM_ADDR:	current_state = FIND_LAST;
             FIND_LAST: current_state = (ram_q[9:0] == 10'b0) ? STORE_CARD : FIND_LAST;
             STORE_CARD: current_state = finished_storing ? SET_DONE : STORE_CARD;
             SET_DONE: current_state = DO_NOTHING;
@@ -162,22 +160,21 @@ module add_card(
     end
 
     always @(posedge clock) begin
+		  ram_wren = 0;
+		  store_enable = 0;
+		  finished_adding = 0;
+
         case(current_state)
-            DO_NOTHING: begin
-                            store_enable = 0;
-                            ram_wren = 0;
-                            finished_adding = 0;
-                        end
             LOAD:   begin
-                        finished_adding = 0;
-                        current_addr = address;
-                        current_value = value;
-                        ram_address = current_addr;
+                        current_addr <= address;
+                        current_value <= value;
                     end
+				SET_RAM_ADDR:	begin
+										ram_address <= current_addr;
+									end
             FIND_LAST:  begin
                             if(ram_q[9:0] != 10'b0) begin
-                                current_addr = ram_q[9:0];
-                                ram_address = current_addr;
+                                ram_address <= ram_address[9:0];
                             end
                         end
             STORE_CARD: begin
@@ -192,7 +189,6 @@ module add_card(
                       end
         endcase
     end
-
 
     store_card sc(
         .enable(store_enable),
@@ -268,7 +264,7 @@ module split_list(
                     end
             FIND_NTH:   begin // Behaviour undefined if num_cards(linked list) < n
                             if(count != current_n - 1) begin
-                                count = count + 1;
+                                count = count + 6'b1;
                                 current_addr = ram_q[9:0];
                                 ram_address = current_addr;
                             end
@@ -433,7 +429,7 @@ module remove_nth_card(
 	    			end
 	    	FIND_NTH:	begin // Behaviour undefined if num_cards(linked list) < n
 	    					if(count != current_n) begin
-	    						count = count + 1;
+	    						count = count + 6'b1;
 	    						current_addr = ram_q[9:0];
 	    						ram_address = current_addr;
 	    					end
