@@ -1,0 +1,143 @@
+
+State Machine - |war|current_state
+Name current_state.ALLOC_COM current_state.CC_TO_COM current_state.PC_TO_COM current_state.CC_TO_PLAYER current_state.PC_TO_PLAYER current_state.CALCULATE current_state.NEXT_INT_3 current_state.WAIT_DRAW_COM current_state.DRAW_FROM_COM current_state.NEXT_INT_2 current_state.WAIT_DRAW_PLAYER current_state.DRAW_FROM_PLAYER current_state.PLAYER_WAIT current_state.CARD_DEALT current_state.TO_HAND current_state.NEXT_INT_1 current_state.DRAW_FROM_DECK current_state.SEED_GOT current_state.GENERATE_SEED current_state.WAIT_FOR_IT current_state.BUILD_DECK current_state.ALLOC_DECK current_state.ALLOC_PLAYER 
+current_state.ALLOC_PLAYER 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+current_state.ALLOC_DECK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+current_state.BUILD_DECK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+current_state.WAIT_FOR_IT 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+current_state.GENERATE_SEED 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+current_state.SEED_GOT 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+current_state.DRAW_FROM_DECK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+current_state.NEXT_INT_1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+current_state.TO_HAND 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+current_state.CARD_DEALT 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+current_state.PLAYER_WAIT 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+current_state.DRAW_FROM_PLAYER 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+current_state.WAIT_DRAW_PLAYER 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.NEXT_INT_2 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.DRAW_FROM_COM 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.WAIT_DRAW_COM 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.NEXT_INT_3 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.CALCULATE 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.PC_TO_PLAYER 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.CC_TO_PLAYER 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.PC_TO_COM 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.CC_TO_COM 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+current_state.ALLOC_COM 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |war|winner
+Name winner.00 winner.10 winner.01 
+winner.00 0 0 0 
+winner.01 1 0 1 
+winner.10 1 1 0 
+
+State Machine - |war|next_state
+Name next_state.ALLOC_PLAYER next_state.CC_TO_COM next_state.PC_TO_COM next_state.CC_TO_PLAYER next_state.PC_TO_PLAYER next_state.CALCULATE next_state.NEXT_INT_3 next_state.WAIT_DRAW_COM next_state.DRAW_FROM_COM next_state.NEXT_INT_2 next_state.WAIT_DRAW_PLAYER next_state.DRAW_FROM_PLAYER next_state.PLAYER_WAIT next_state.CARD_DEALT next_state.TO_HAND next_state.NEXT_INT_1 next_state.DRAW_FROM_DECK next_state.SEED_GOT next_state.GENERATE_SEED next_state.WAIT_FOR_IT next_state.BUILD_DECK next_state.ALLOC_DECK next_state.ALLOC_COM 
+next_state.ALLOC_COM 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+next_state.ALLOC_DECK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+next_state.BUILD_DECK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+next_state.WAIT_FOR_IT 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+next_state.GENERATE_SEED 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+next_state.SEED_GOT 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+next_state.DRAW_FROM_DECK 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+next_state.NEXT_INT_1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+next_state.TO_HAND 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+next_state.CARD_DEALT 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+next_state.PLAYER_WAIT 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+next_state.DRAW_FROM_PLAYER 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+next_state.WAIT_DRAW_PLAYER 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.NEXT_INT_2 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.DRAW_FROM_COM 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.WAIT_DRAW_COM 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.NEXT_INT_3 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.CALCULATE 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.PC_TO_PLAYER 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.CC_TO_PLAYER 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.PC_TO_COM 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.CC_TO_COM 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+next_state.ALLOC_PLAYER 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |war|ram_controller:rc|current_state
+Name current_state.DONE_OP current_state.DO_OP current_state.LOAD_OP current_state.LOAD_ARGS_WAIT current_state.LOAD_ARGS current_state.DO_NOTHING 
+current_state.DO_NOTHING 0 0 0 0 0 0 
+current_state.LOAD_ARGS 0 0 0 0 1 1 
+current_state.LOAD_ARGS_WAIT 0 0 0 1 0 1 
+current_state.LOAD_OP 0 0 1 0 0 1 
+current_state.DO_OP 0 1 0 0 0 1 
+current_state.DONE_OP 1 0 0 0 0 1 
+
+State Machine - |war|ram_controller:rc|set_address:sa|current_state
+Name current_state.FINISH current_state.ENABLE_WRITE current_state.LOAD_ADDRESS current_state.DO_NOTHING 
+current_state.DO_NOTHING 0 0 0 0 
+current_state.LOAD_ADDRESS 0 0 1 1 
+current_state.ENABLE_WRITE 0 1 0 1 
+current_state.FINISH 1 0 0 1 
+
+State Machine - |war|ram_controller:rc|split_list:sl|current_state
+Name current_state.SPLIT_CARD current_state.FIND_NTH current_state.LOAD current_state.DO_NOTHING current_state.SET_DONE 
+current_state.DO_NOTHING 0 0 0 0 0 
+current_state.LOAD 0 0 1 1 0 
+current_state.FIND_NTH 0 1 0 1 0 
+current_state.SPLIT_CARD 1 0 0 1 0 
+current_state.SET_DONE 0 0 0 1 1 
+
+State Machine - |war|ram_controller:rc|remove_nth_card:rnc|current_state
+Name current_state.REMOVE_CARD current_state.FIND_NTH current_state.LOAD current_state.DO_NOTHING current_state.SET_DONE 
+current_state.DO_NOTHING 0 0 0 0 0 
+current_state.LOAD 0 0 1 1 0 
+current_state.FIND_NTH 0 1 0 1 0 
+current_state.REMOVE_CARD 1 0 0 1 0 
+current_state.SET_DONE 0 0 0 1 1 
+
+State Machine - |war|ram_controller:rc|remove_nth_card:rnc|remove_card:remover|current_state
+Name current_state.COPY_DATA current_state.SET_RAM_ADDR current_state.DISABLE_WREN current_state.DELETE_NEXT_CARD current_state.GET_NEXT_CARD current_state.GET_NEXT_CARD_ADDR current_state.LOAD current_state.DO_NOTHING current_state.SET_DONE 
+current_state.DO_NOTHING 0 0 0 0 0 0 0 0 0 
+current_state.LOAD 0 0 0 0 0 0 1 1 0 
+current_state.GET_NEXT_CARD_ADDR 0 0 0 0 0 1 0 1 0 
+current_state.GET_NEXT_CARD 0 0 0 0 1 0 0 1 0 
+current_state.DELETE_NEXT_CARD 0 0 0 1 0 0 0 1 0 
+current_state.DISABLE_WREN 0 0 1 0 0 0 0 1 0 
+current_state.SET_RAM_ADDR 0 1 0 0 0 0 0 1 0 
+current_state.COPY_DATA 1 0 0 0 0 0 0 1 0 
+current_state.SET_DONE 0 0 0 0 0 0 0 1 1 
+
+State Machine - |war|ram_controller:rc|add_card:ac|current_state
+Name current_state.STORE_CARD current_state.FIND_LAST current_state.LOAD current_state.DO_NOTHING current_state.SET_DONE 
+current_state.DO_NOTHING 0 0 0 0 0 
+current_state.LOAD 0 0 1 1 0 
+current_state.FIND_LAST 0 1 0 1 0 
+current_state.STORE_CARD 1 0 0 1 0 
+current_state.SET_DONE 0 0 0 1 1 
+
+State Machine - |war|ram_controller:rc|add_card:ac|store_card:sc|current_state
+Name current_state.SET_DONE current_state.STORE_NEXT current_state.ALLOC_WAIT current_state.ALLOC current_state.STORE_CARD_WAIT current_state.STORE_CARD current_state.LOAD current_state.DO_NOTHING 
+current_state.DO_NOTHING 0 0 0 0 0 0 0 0 
+current_state.LOAD 0 0 0 0 0 0 1 1 
+current_state.STORE_CARD 0 0 0 0 0 1 0 1 
+current_state.STORE_CARD_WAIT 0 0 0 0 1 0 0 1 
+current_state.ALLOC 0 0 0 1 0 0 0 1 
+current_state.ALLOC_WAIT 0 0 1 0 0 0 0 1 
+current_state.STORE_NEXT 0 1 0 0 0 0 0 1 
+current_state.SET_DONE 1 0 0 0 0 0 0 1 
+
+State Machine - |war|ram_controller:rc|add_card:ac|store_card:sc|allocate_memory:alloc|current_state
+Name current_state.FIND_ADDR 
+current_state.DO_NOTHING 0 
+current_state.FIND_ADDR 1 
+
+State Machine - |war|drawCard:DC|drawNumSuit:suit|current_state
+Name current_state.NO_DRAW current_state.DRAW current_state.LOAD 
+current_state.NO_DRAW 0 0 0 
+current_state.LOAD 1 0 1 
+current_state.DRAW 1 1 0 
+
+State Machine - |war|drawCard:DC|drawNumSuit:num|current_state
+Name current_state.NO_DRAW current_state.DRAW current_state.LOAD 
+current_state.NO_DRAW 0 0 0 
+current_state.LOAD 1 0 1 
+current_state.DRAW 1 1 0 
+
+State Machine - |war|drawCard:DC|drawBlankCard:blank|current_state
+Name current_state.DRAW 
+current_state.NO_DRAW 0 
+current_state.DRAW 1 

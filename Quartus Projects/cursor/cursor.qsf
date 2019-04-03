@@ -1128,4 +1128,5 @@ set_global_assignment -name HEX_FILE white.hex
 set_global_assignment -name MIF_FILE white.mif
 set_global_assignment -name CDF_FILE output_files/Chain4.cdf
 set_global_assignment -name CDF_FILE output_files/Chain1.cdf
+set_global_assignment -name CDF_FILE Chain6.cdf
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

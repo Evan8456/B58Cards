@@ -1,0 +1,2 @@
+Warning (10268): Verilog HDL information at VGA.v(369): always construct contains both blocking and non-blocking assignments File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 369
+Info (10281): Verilog HDL Declaration information at VGA.v(416): object "done" differs only in case from object "DONE" in the same scope File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 416

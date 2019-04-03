@@ -290,7 +290,7 @@ module drawCard(
 		.clock(clock),
 		.start(drawSuit),
 		.x(xIn + 2'd2),
-		.y(yIn + 5'd16),
+		.y(yIn + 5'd23),
 		.data(suitDataReg),
 		.xOut(suitOutX),
 		.yOut(suitOutY),
