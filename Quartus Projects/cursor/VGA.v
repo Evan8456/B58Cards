@@ -15,13 +15,13 @@ module cursor(
     VGA_G,	 				//	VGA Green[9:0]
     VGA_B,   				//	VGA Blue[9:0]
     HEX7,
-    HEX6,
+    HEX6,/*
     HEX5,
 	 HEX4,
     HEX3,
     HEX2,
     HEX1,
-    HEX0,
+    HEX0,*/
     	LEDR
 	);
 
@@ -42,13 +42,13 @@ module cursor(
 	output	[9:0] VGA_B;  //	VGA Blue[9:0]
 	
 	output [6:0] HEX7;
-	output [6:0] HEX6;
+	output [6:0] HEX6;/*
 	output [6:0] HEX5;
 	output [6:0] HEX4;
 	output [6:0] HEX3;
 	output [6:0] HEX2;
 	output [6:0] HEX1;
-	output [6:0] HEX0;
+	output [6:0] HEX0;*/
 	
 	wire [7:0] player_x_loc; // x location for drawing player card
 	wire [7:0] player_y_loc; // y location for drawing player card
@@ -251,7 +251,7 @@ module cursor(
 		.current_state(),
 		.next_state()
 	);
-	
+	/*
 	HexDecoder hexX1(.IN(p1_card[3:0]),
 					.OUT(HEX7[6:0])
 	);
@@ -267,11 +267,13 @@ module cursor(
 	HexDecoder hexY2(.IN(y[3:0]),
 					.OUT(HEX4[6:0])
 	);
-	
+	*/
 	HexDecoder hex3(
 		.IN(winner),
-		.OUT(HEX3[6:0])
+		.OUT(HEX6[6:0])
 	);
+	assign HEX7[6:0] = 7'b0001100;
+	/*
 	HexDecoder hex2(
 		.IN(current_state),
 		.OUT(HEX2[6:0])
@@ -284,7 +286,7 @@ module cursor(
 		.IN(rand_int[3:0]),
 		.OUT(HEX0[6:0])
 	);
-
+	*/
 	wire [3:0] number = rand_int[5:2];
 	wire [1:0] suit = rand_int[1:0];
 	// rng and RAM wires

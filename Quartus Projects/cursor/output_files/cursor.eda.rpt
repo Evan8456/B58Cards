@@ -1,5 +1,5 @@
 EDA Netlist Writer report for cursor
-Thu Apr 04 14:43:51 2019
+Thu Apr 04 15:00:44 2019
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -37,7 +37,7 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Thu Apr 04 14:43:51 2019 ;
+; EDA Netlist Writer Status ; Successful - Thu Apr 04 15:00:44 2019 ;
 ; Revision Name             ; cursor                                ;
 ; Top-level Entity Name     ; cursor                                ;
 ; Family                    ; Cyclone IV E                          ;
@@ -89,7 +89,7 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Thu Apr 04 14:43:45 2019
+    Info: Processing started: Thu Apr 04 15:00:39 2019
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off cursor -c cursor
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (204019): Generated file cursor_7_1200mv_85c_slow.vo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
@@ -101,8 +101,8 @@ Info (204019): Generated file cursor_7_1200mv_0c_v_slow.sdo in folder "C:/Users/
 Info (204019): Generated file cursor_min_1200mv_0c_v_fast.sdo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
 Info (204019): Generated file cursor_v.sdo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 13 warnings
-    Info: Peak virtual memory: 4705 megabytes
-    Info: Processing ended: Thu Apr 04 14:43:51 2019
+    Info: Peak virtual memory: 4701 megabytes
+    Info: Processing ended: Thu Apr 04 15:00:45 2019
     Info: Elapsed time: 00:00:06
     Info: Total CPU time (on all processors): 00:00:04
 

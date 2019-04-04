@@ -36,18 +36,12 @@ SW[13] => ~NO_FANOUT~
 SW[14] => ~NO_FANOUT~
 SW[15] => ~NO_FANOUT~
 SW[16] => resetN.IN3
-SW[17] => Mux3.IN29
-SW[17] => Mux3.IN30
-SW[17] => Mux3.IN31
-SW[17] => Mux2.IN25
-SW[17] => Mux2.IN26
-SW[17] => Mux2.IN27
-SW[17] => Mux2.IN28
-SW[17] => Mux1.IN27
-SW[17] => Mux1.IN28
-SW[17] => Mux0.IN27
-SW[17] => Mux0.IN28
-SW[17] => Mux0.IN29
+SW[17] => Selector0.IN1
+SW[17] => next_state.DATAB
+SW[17] => Selector6.IN1
+SW[17] => Selector4.IN1
+SW[17] => Selector3.IN1
+SW[17] => next_state.DATAB
 VGA_CLK <= vga_adapter:VGA.VGA_CLK
 VGA_HS <= vga_adapter:VGA.VGA_HS
 VGA_VS <= vga_adapter:VGA.VGA_VS
@@ -83,62 +77,20 @@ VGA_B[6] <= vga_adapter:VGA.VGA_B
 VGA_B[7] <= vga_adapter:VGA.VGA_B
 VGA_B[8] <= vga_adapter:VGA.VGA_B
 VGA_B[9] <= vga_adapter:VGA.VGA_B
-HEX7[0] <= HexDecoder:hexX1.OUT
-HEX7[1] <= HexDecoder:hexX1.OUT
-HEX7[2] <= HexDecoder:hexX1.OUT
-HEX7[3] <= HexDecoder:hexX1.OUT
-HEX7[4] <= HexDecoder:hexX1.OUT
-HEX7[5] <= HexDecoder:hexX1.OUT
-HEX7[6] <= HexDecoder:hexX1.OUT
-HEX6[0] <= HexDecoder:hexX2.OUT
-HEX6[1] <= HexDecoder:hexX2.OUT
-HEX6[2] <= HexDecoder:hexX2.OUT
-HEX6[3] <= HexDecoder:hexX2.OUT
-HEX6[4] <= HexDecoder:hexX2.OUT
-HEX6[5] <= HexDecoder:hexX2.OUT
-HEX6[6] <= HexDecoder:hexX2.OUT
-HEX5[0] <= HexDecoder:hexY1.OUT
-HEX5[1] <= HexDecoder:hexY1.OUT
-HEX5[2] <= HexDecoder:hexY1.OUT
-HEX5[3] <= HexDecoder:hexY1.OUT
-HEX5[4] <= HexDecoder:hexY1.OUT
-HEX5[5] <= HexDecoder:hexY1.OUT
-HEX5[6] <= HexDecoder:hexY1.OUT
-HEX4[0] <= HexDecoder:hexY2.OUT
-HEX4[1] <= HexDecoder:hexY2.OUT
-HEX4[2] <= HexDecoder:hexY2.OUT
-HEX4[3] <= HexDecoder:hexY2.OUT
-HEX4[4] <= HexDecoder:hexY2.OUT
-HEX4[5] <= HexDecoder:hexY2.OUT
-HEX4[6] <= HexDecoder:hexY2.OUT
-HEX3[0] <= HexDecoder:hex3.OUT
-HEX3[1] <= HexDecoder:hex3.OUT
-HEX3[2] <= HexDecoder:hex3.OUT
-HEX3[3] <= HexDecoder:hex3.OUT
-HEX3[4] <= HexDecoder:hex3.OUT
-HEX3[5] <= HexDecoder:hex3.OUT
-HEX3[6] <= HexDecoder:hex3.OUT
-HEX2[0] <= HexDecoder:hex2.OUT
-HEX2[1] <= HexDecoder:hex2.OUT
-HEX2[2] <= HexDecoder:hex2.OUT
-HEX2[3] <= HexDecoder:hex2.OUT
-HEX2[4] <= HexDecoder:hex2.OUT
-HEX2[5] <= HexDecoder:hex2.OUT
-HEX2[6] <= HexDecoder:hex2.OUT
-HEX1[0] <= HexDecoder:hex1.OUT
-HEX1[1] <= HexDecoder:hex1.OUT
-HEX1[2] <= HexDecoder:hex1.OUT
-HEX1[3] <= HexDecoder:hex1.OUT
-HEX1[4] <= HexDecoder:hex1.OUT
-HEX1[5] <= HexDecoder:hex1.OUT
-HEX1[6] <= HexDecoder:hex1.OUT
-HEX0[0] <= HexDecoder:hex0.OUT
-HEX0[1] <= HexDecoder:hex0.OUT
-HEX0[2] <= HexDecoder:hex0.OUT
-HEX0[3] <= HexDecoder:hex0.OUT
-HEX0[4] <= HexDecoder:hex0.OUT
-HEX0[5] <= HexDecoder:hex0.OUT
-HEX0[6] <= HexDecoder:hex0.OUT
+HEX7[0] <= <GND>
+HEX7[1] <= <GND>
+HEX7[2] <= <VCC>
+HEX7[3] <= <VCC>
+HEX7[4] <= <GND>
+HEX7[5] <= <GND>
+HEX7[6] <= <GND>
+HEX6[0] <= HexDecoder:hex3.OUT
+HEX6[1] <= HexDecoder:hex3.OUT
+HEX6[2] <= HexDecoder:hex3.OUT
+HEX6[3] <= HexDecoder:hex3.OUT
+HEX6[4] <= HexDecoder:hex3.OUT
+HEX6[5] <= HexDecoder:hex3.OUT
+HEX6[6] <= HexDecoder:hex3.OUT
 LEDR[0] <= LEDR.DB_MAX_OUTPUT_PORT_TYPE
 LEDR[1] <= LEDR.DB_MAX_OUTPUT_PORT_TYPE
 LEDR[2] <= LEDR.DB_MAX_OUTPUT_PORT_TYPE
@@ -5227,105 +5179,7 @@ next_state[3] <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
 next_state[4] <= <GND>
 
 
-|cursor|HexDecoder:hexX1
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|cursor|HexDecoder:hexX2
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|cursor|HexDecoder:hexY1
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|cursor|HexDecoder:hexY2
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
 |cursor|HexDecoder:hex3
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|cursor|HexDecoder:hex2
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|cursor|HexDecoder:hex1
-IN[0] => Decoder0.IN3
-IN[1] => Decoder0.IN2
-IN[2] => Decoder0.IN1
-IN[3] => Decoder0.IN0
-OUT[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
-OUT[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
-OUT[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
-OUT[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
-OUT[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
-OUT[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-OUT[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|cursor|HexDecoder:hex0
 IN[0] => Decoder0.IN3
 IN[1] => Decoder0.IN2
 IN[2] => Decoder0.IN1

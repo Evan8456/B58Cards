@@ -1,4 +1,32 @@
 
+State Machine - |cursor|current_state
+Name current_state.NEXT_INT_1 current_state.DRAW current_state.DRAW_P2_WAIT current_state.P2_WINS current_state.P1_WINS current_state.CALCULATE current_state.DRAW_P2 current_state.NEXT_INT_2 current_state.DRAW_P1_WAIT current_state.DRAW_P1 current_state.GENERATE_SEED 
+current_state.GENERATE_SEED 0 0 0 0 0 0 0 0 0 0 0 
+current_state.DRAW_P1 0 0 0 0 0 0 0 0 0 1 1 
+current_state.DRAW_P1_WAIT 0 0 0 0 0 0 0 0 1 0 1 
+current_state.NEXT_INT_2 0 0 0 0 0 0 0 1 0 0 1 
+current_state.DRAW_P2 0 0 0 0 0 0 1 0 0 0 1 
+current_state.CALCULATE 0 0 0 0 0 1 0 0 0 0 1 
+current_state.P1_WINS 0 0 0 0 1 0 0 0 0 0 1 
+current_state.P2_WINS 0 0 0 1 0 0 0 0 0 0 1 
+current_state.DRAW_P2_WAIT 0 0 1 0 0 0 0 0 0 0 1 
+current_state.DRAW 0 1 0 0 0 0 0 0 0 0 1 
+current_state.NEXT_INT_1 1 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |cursor|next_state
+Name next_state.GENERATE_SEED next_state.DRAW next_state.DRAW_P2_WAIT next_state.P2_WINS next_state.P1_WINS next_state.CALCULATE next_state.DRAW_P2 next_state.NEXT_INT_2 next_state.DRAW_P1_WAIT next_state.DRAW_P1 next_state.NEXT_INT_1 
+next_state.NEXT_INT_1 0 0 0 0 0 0 0 0 0 0 0 
+next_state.DRAW_P1 0 0 0 0 0 0 0 0 0 1 1 
+next_state.DRAW_P1_WAIT 0 0 0 0 0 0 0 0 1 0 1 
+next_state.NEXT_INT_2 0 0 0 0 0 0 0 1 0 0 1 
+next_state.DRAW_P2 0 0 0 0 0 0 1 0 0 0 1 
+next_state.CALCULATE 0 0 0 0 0 1 0 0 0 0 1 
+next_state.P1_WINS 0 0 0 0 1 0 0 0 0 0 1 
+next_state.P2_WINS 0 0 0 1 0 0 0 0 0 0 1 
+next_state.DRAW_P2_WAIT 0 0 1 0 0 0 0 0 0 0 1 
+next_state.DRAW 0 1 0 0 0 0 0 0 0 0 1 
+next_state.GENERATE_SEED 1 0 0 0 0 0 0 0 0 0 1 
+
 State Machine - |cursor|drawCard:DC|drawNumSuit:suit|current_state
 Name current_state.NO_DRAW current_state.DRAW current_state.LOAD 
 current_state.NO_DRAW 0 0 0 
