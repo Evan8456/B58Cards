@@ -1,6 +1,0 @@
-Info (10281): Verilog HDL Declaration information at rng.v(17): object "HEX3" differs only in case from object "hex3" in the same scope File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 17
-Info (10281): Verilog HDL Declaration information at rng.v(16): object "HEX2" differs only in case from object "hex2" in the same scope File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 16
-Info (10281): Verilog HDL Declaration information at rng.v(15): object "HEX1" differs only in case from object "hex1" in the same scope File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 15
-Info (10281): Verilog HDL Declaration information at rng.v(14): object "HEX0" differs only in case from object "hex0" in the same scope File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 14
-Warning (10268): Verilog HDL information at VGA.v(529): always construct contains both blocking and non-blocking assignments File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 529
-Info (10281): Verilog HDL Declaration information at VGA.v(576): object "done" differs only in case from object "DONE" in the same scope File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 576
