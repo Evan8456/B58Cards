@@ -1,6 +1,6 @@
 EDA Netlist Writer report for cursor
-Thu Apr 04 15:00:44 2019
-Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+Thu Apr  4 18:42:32 2019
+Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 
 
 ---------------------
@@ -17,18 +17,18 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2016  Intel Corporation. All rights reserved.
-Your use of Intel Corporation's design tools, logic functions 
+Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
-to the terms and conditions of the Intel Program License 
-Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
 applicable license agreement, including, without limitation, 
 that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
+devices manufactured by Altera and sold by Altera or its 
 authorized distributors.  Please refer to the applicable 
 agreement for further details.
 
@@ -37,7 +37,7 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Thu Apr 04 15:00:44 2019 ;
+; EDA Netlist Writer Status ; Successful - Thu Apr  4 18:42:32 2019 ;
 ; Revision Name             ; cursor                                ;
 ; Top-level Entity Name     ; cursor                                ;
 ; Family                    ; Cyclone IV E                          ;
@@ -67,20 +67,20 @@ agreement for further details.
 +---------------------------------------------------------------------------------------------------+---------------------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------+
-; Simulation Generated Files                                                                                                                     ;
-+------------------------------------------------------------------------------------------------------------------------------------------------+
-; Generated Files                                                                                                                                ;
-+------------------------------------------------------------------------------------------------------------------------------------------------+
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_85c_slow.vo     ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_0c_slow.vo      ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_min_1200mv_0c_fast.vo    ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor.vo                       ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_85c_v_slow.sdo  ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_0c_v_slow.sdo   ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_min_1200mv_0c_v_fast.sdo ;
-; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_v.sdo                    ;
-+------------------------------------------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------+
+; Simulation Generated Files                                                                                     ;
++----------------------------------------------------------------------------------------------------------------+
+; Generated Files                                                                                                ;
++----------------------------------------------------------------------------------------------------------------+
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_85c_slow.vo     ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_0c_slow.vo      ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_min_1200mv_0c_fast.vo    ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor.vo                       ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_85c_v_slow.sdo  ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_7_1200mv_0c_v_slow.sdo   ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_min_1200mv_0c_v_fast.sdo ;
+; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/cursor_v.sdo                    ;
++----------------------------------------------------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -88,22 +88,21 @@ agreement for further details.
 +-----------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
-    Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Thu Apr 04 15:00:39 2019
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+    Info: Processing started: Thu Apr  4 18:42:29 2019
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off cursor -c cursor
-Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (204019): Generated file cursor_7_1200mv_85c_slow.vo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor_7_1200mv_0c_slow.vo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor_min_1200mv_0c_fast.vo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor.vo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor_7_1200mv_85c_v_slow.sdo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor_7_1200mv_0c_v_slow.sdo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor_min_1200mv_0c_v_fast.sdo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file cursor_v.sdo in folder "C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
-Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 13 warnings
-    Info: Peak virtual memory: 4701 megabytes
-    Info: Processing ended: Thu Apr 04 15:00:45 2019
-    Info: Elapsed time: 00:00:06
-    Info: Total CPU time (on all processors): 00:00:04
+Info (204019): Generated file cursor_7_1200mv_85c_slow.vo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor_7_1200mv_0c_slow.vo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor_min_1200mv_0c_fast.vo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor.vo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor_7_1200mv_85c_v_slow.sdo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor_7_1200mv_0c_v_slow.sdo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor_min_1200mv_0c_v_fast.sdo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file cursor_v.sdo in folder "/cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/simulation/modelsim/" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 1348 megabytes
+    Info: Processing ended: Thu Apr  4 18:42:32 2019
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:02
 
 

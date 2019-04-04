@@ -10,10 +10,10 @@
 	  			  /    \     ||                _ _ _      /__     |        _ _ _
 			  ___|    |___  ||                \\\\\\       |     |       //////
 			  \__________/  ||                 \\\\\\     /       \     //////
-				 | o  o |    ||                  \\\\\\   |         |   //////
+				 | o  o |    ||                  \\\\\\   |\/ \/ \/ |   //////
 				 |   -  |   / /                   \\\\\\  |  \/ \/  |  //////
 				  \_  _/   / /                     \\\\\\ | \/ \/ \/| //////
-				    ||____/ /                       \\\\\\|         |//////
+				    ||____/ /                       \\\\\\|\/ \/ \/ |//////
 					/  _____/                         ---------------------
 				  //||                         
 				  
@@ -86,11 +86,13 @@ module cursor(
 	wire [6:0] y;
 	wire plot;
    wire resetN;
-	assign resetN = SW[16];
+	wire vga_resetN;
+	assign resetN = SW[0];
+	assign vga_resetN = SW[16];
 	wire go;
 	assign go = SW[17];
 	reg vga_go;
-	
+
 	reg [1:0] winner; // 0-no winner, 1-p1 wins, 2-p2 wins, 3-draw
 	wire vga_done;
 	
@@ -100,17 +102,15 @@ module cursor(
 	reg [4:0] current_state, next_state;
 	
 	localparam
-					GENERATE_SEED			= 5'd15,
+					GENERATE_SEED			= 5'd0,
 					NEXT_INT_1				= 5'd1,
 					DRAW_P1					= 5'd2,
 					DRAW_P1_WAIT			= 5'd3,
 					NEXT_INT_2				= 5'd4,
 					DRAW_P2					= 5'd5,
-					CALCULATE				= 5'd6,
-					P1_WINS					= 5'd7,
-					P2_WINS					= 5'd8,
-					DRAW_P2_WAIT			= 5'd9,
-					DRAW						= 5'd10;
+					DRAW_P2_WAIT			= 5'd6,
+					CALCULATE				= 5'd7,
+					DRAW						= 5'd8;
 	
 	always @(posedge CLOCK_50) begin
 		case(current_state)
@@ -124,30 +124,27 @@ module cursor(
 			CALCULATE:				begin
 											if(winner == 2'd0)
 												next_state = CALCULATE;
-											else if(winner == 2'd1)
-												next_state = P1_WINS;
-											else if(winner == 2'd2)
-												next_state = P2_WINS;
 											else
 												next_state = DRAW;
 										end
-			P1_WINS:					next_state = go ? NEXT_INT_1 : P1_WINS;
-			P2_WINS:					next_state = go ? NEXT_INT_1 : P2_WINS;
 			DRAW:						next_state = go ? NEXT_INT_1 : DRAW;
 			default: next_state = GENERATE_SEED;
 		endcase
 	end
 	
 	always @(posedge CLOCK_50) begin
-		rng_counter <= 1'b1;
+		//rng_counter <= 1'b0;
 		next_int <= 1'b0;
 		vga_go <= 1'b0;
 		case(current_state)
 			GENERATE_SEED: begin
-				//rng_counter <= 1'b1;
+				rng_counter <= 1'b1;
 				winner <= 1'b0;
 			end
-			NEXT_INT_1: next_int <= 1'b1;
+			NEXT_INT_1: begin
+				rng_counter <= 1'b0;
+				next_int <= 1'b1;
+			end
 			DRAW_P1: begin
 				vga_go <= 1'b1;
 				x_loc <= player_x_loc;
@@ -174,9 +171,6 @@ module cursor(
 				else
 					winner <= 2'd3;
 			end
-			//P1_WINS: begin
-				
-			//end
 			default: begin end
 		endcase
 	end
@@ -194,7 +188,7 @@ module cursor(
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
 	vga_adapter VGA(
-			.resetn(resetN),
+			.resetn(vga_resetN),
 			.clock(CLOCK_50),
 			.colour(colour[2:0]),
 			.x(x[7:0]),

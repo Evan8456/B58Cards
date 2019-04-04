@@ -1,6 +1,6 @@
 Analysis & Synthesis report for cursor
-Thu Apr 04 14:59:58 2019
-Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+Thu Apr  4 18:41:55 2019
+Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 
 
 ---------------------
@@ -48,18 +48,18 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2016  Intel Corporation. All rights reserved.
-Your use of Intel Corporation's design tools, logic functions 
+Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
-to the terms and conditions of the Intel Program License 
-Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
 applicable license agreement, including, without limitation, 
 that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
+devices manufactured by Altera and sold by Altera or its 
 authorized distributors.  Please refer to the applicable 
 agreement for further details.
 
@@ -68,15 +68,15 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Thu Apr 04 14:59:58 2019       ;
-; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
+; Analysis & Synthesis Status        ; Successful - Thu Apr  4 18:41:55 2019       ;
+; Quartus Prime Version              ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
 ; Revision Name                      ; cursor                                      ;
 ; Top-level Entity Name              ; cursor                                      ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 2,171                                       ;
-;     Total combinational functions  ; 2,152                                       ;
-;     Dedicated logic registers      ; 1,145                                       ;
-; Total registers                    ; 1145                                        ;
+; Total logic elements               ; 2,168                                       ;
+;     Total combinational functions  ; 2,148                                       ;
+;     Dedicated logic registers      ; 1,144                                       ;
+; Total registers                    ; 1144                                        ;
 ; Total pins                         ; 90                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 230,400                                     ;
@@ -99,7 +99,7 @@ agreement for further details.
 ; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
 ; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
 ; Preserve fewer node names                                                  ; On                 ; On                 ;
-; OpenCore Plus hardware evaluation                                          ; Enable             ; Enable             ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
 ; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
 ; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
 ; State Machine Processing                                                   ; Auto               ; Auto               ;
@@ -168,64 +168,59 @@ agreement for further details.
 ; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
 ; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
 ; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
 +----------------------------------------------------------------------------+--------------------+--------------------+
 
 
-+------------------------------------------+
-; Parallel Compilation                     ;
-+----------------------------+-------------+
-; Processors                 ; Number      ;
-+----------------------------+-------------+
-; Number detected on machine ; 4           ;
-; Maximum allowed            ; 2           ;
-;                            ;             ;
-; Average used               ; 1.00        ;
-; Maximum used               ; 2           ;
-;                            ;             ;
-; Usage by Processor         ; % Time Used ;
-;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.1%      ;
-+----------------------------+-------------+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 4      ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                                                                      ;
-+--------------------------------------+-----------------+----------------------------------------+---------------------------------------------------------------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path     ; Used in Netlist ; File Type                              ; File Name with Absolute Path                                                                                                    ; Library ;
-+--------------------------------------+-----------------+----------------------------------------+---------------------------------------------------------------------------------------------------------------------------------+---------+
-; rng.v                                ; yes             ; User Verilog HDL File                  ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v                                ;         ;
-; vga_adapter/vga_pll.v                ; yes             ; User Wizard-Generated File             ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v                ;         ;
-; vga_adapter/vga_controller.v         ; yes             ; User Verilog HDL File                  ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_controller.v         ;         ;
-; vga_adapter/vga_address_translator.v ; yes             ; User Verilog HDL File                  ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_address_translator.v ;         ;
-; vga_adapter/vga_adapter.v            ; yes             ; User Verilog HDL File                  ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v            ;         ;
-; VGA.v                                ; yes             ; User Verilog HDL File                  ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v                                ;         ;
-; altsyncram.tdf                       ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/altsyncram.tdf                                                           ;         ;
-; stratix_ram_block.inc                ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/stratix_ram_block.inc                                                    ;         ;
-; lpm_mux.inc                          ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/lpm_mux.inc                                                              ;         ;
-; lpm_decode.inc                       ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/lpm_decode.inc                                                           ;         ;
-; aglobal161.inc                       ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/aglobal161.inc                                                           ;         ;
-; a_rdenreg.inc                        ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/a_rdenreg.inc                                                            ;         ;
-; altrom.inc                           ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/altrom.inc                                                               ;         ;
-; altram.inc                           ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/altram.inc                                                               ;         ;
-; altdpram.inc                         ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/altdpram.inc                                                             ;         ;
-; db/altsyncram_s0g1.tdf               ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf               ;         ;
-; black.mif                            ; yes             ; Auto-Found Memory Initialization File  ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/black.mif                            ;         ;
-; db/decode_5ua.tdf                    ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/decode_5ua.tdf                    ;         ;
-; db/decode_u9a.tdf                    ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/decode_u9a.tdf                    ;         ;
-; db/mux_gob.tdf                       ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/mux_gob.tdf                       ;         ;
-; altpll.tdf                           ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/altpll.tdf                                                               ;         ;
-; stratix_pll.inc                      ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/stratix_pll.inc                                                          ;         ;
-; stratixii_pll.inc                    ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/stratixii_pll.inc                                                        ;         ;
-; cycloneii_pll.inc                    ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/cycloneii_pll.inc                                                        ;         ;
-; lpm_divide.tdf                       ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/lpm_divide.tdf                                                           ;         ;
-; abs_divider.inc                      ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/abs_divider.inc                                                          ;         ;
-; sign_div_unsign.inc                  ; yes             ; Megafunction                           ; c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/sign_div_unsign.inc                                                      ;         ;
-; db/lpm_divide_ocm.tdf                ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/lpm_divide_ocm.tdf                ;         ;
-; db/sign_div_unsign_dnh.tdf           ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/sign_div_unsign_dnh.tdf           ;         ;
-; db/alt_u_div_eaf.tdf                 ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/alt_u_div_eaf.tdf                 ;         ;
-; db/add_sub_7pc.tdf                   ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/add_sub_7pc.tdf                   ;         ;
-; db/add_sub_8pc.tdf                   ; yes             ; Auto-Generated Megafunction            ; C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/add_sub_8pc.tdf                   ;         ;
-+--------------------------------------+-----------------+----------------------------------------+---------------------------------------------------------------------------------------------------------------------------------+---------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                      ;
++--------------------------------------+-----------------+----------------------------------------+-------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path     ; Used in Netlist ; File Type                              ; File Name with Absolute Path                                                                    ; Library ;
++--------------------------------------+-----------------+----------------------------------------+-------------------------------------------------------------------------------------------------+---------+
+; rng.v                                ; yes             ; User Verilog HDL File                  ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v                                ;         ;
+; vga_adapter/vga_pll.v                ; yes             ; User Wizard-Generated File             ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v                ;         ;
+; vga_adapter/vga_controller.v         ; yes             ; User Verilog HDL File                  ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_controller.v         ;         ;
+; vga_adapter/vga_address_translator.v ; yes             ; User Verilog HDL File                  ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_address_translator.v ;         ;
+; vga_adapter/vga_adapter.v            ; yes             ; User Verilog HDL File                  ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v            ;         ;
+; VGA.v                                ; yes             ; User Verilog HDL File                  ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v                                ;         ;
+; altsyncram.tdf                       ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altsyncram.tdf                  ;         ;
+; stratix_ram_block.inc                ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/stratix_ram_block.inc           ;         ;
+; lpm_mux.inc                          ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/lpm_mux.inc                     ;         ;
+; lpm_decode.inc                       ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/lpm_decode.inc                  ;         ;
+; aglobal160.inc                       ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/aglobal160.inc                  ;         ;
+; a_rdenreg.inc                        ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/a_rdenreg.inc                   ;         ;
+; altrom.inc                           ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altrom.inc                      ;         ;
+; altram.inc                           ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altram.inc                      ;         ;
+; altdpram.inc                         ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altdpram.inc                    ;         ;
+; db/altsyncram_s0g1.tdf               ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf               ;         ;
+; black.mif                            ; yes             ; Auto-Found Memory Initialization File  ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/black.mif                            ;         ;
+; db/decode_5ua.tdf                    ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/decode_5ua.tdf                    ;         ;
+; db/decode_u9a.tdf                    ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/decode_u9a.tdf                    ;         ;
+; db/mux_gob.tdf                       ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/mux_gob.tdf                       ;         ;
+; altpll.tdf                           ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altpll.tdf                      ;         ;
+; stratix_pll.inc                      ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/stratix_pll.inc                 ;         ;
+; stratixii_pll.inc                    ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/stratixii_pll.inc               ;         ;
+; cycloneii_pll.inc                    ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/cycloneii_pll.inc               ;         ;
+; lpm_divide.tdf                       ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/lpm_divide.tdf                  ;         ;
+; abs_divider.inc                      ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/abs_divider.inc                 ;         ;
+; sign_div_unsign.inc                  ; yes             ; Megafunction                           ; /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/sign_div_unsign.inc             ;         ;
+; db/lpm_divide_ocm.tdf                ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/lpm_divide_ocm.tdf                ;         ;
+; db/sign_div_unsign_dnh.tdf           ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/sign_div_unsign_dnh.tdf           ;         ;
+; db/alt_u_div_eaf.tdf                 ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/alt_u_div_eaf.tdf                 ;         ;
+; db/add_sub_7pc.tdf                   ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/add_sub_7pc.tdf                   ;         ;
+; db/add_sub_8pc.tdf                   ; yes             ; Auto-Generated Megafunction            ; /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/add_sub_8pc.tdf                   ;         ;
++--------------------------------------+-----------------+----------------------------------------+-------------------------------------------------------------------------------------------------+---------+
 
 
 +--------------------------------------------------------------+
@@ -233,20 +228,20 @@ agreement for further details.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimated Total logic elements              ; 2,171          ;
+; Estimated Total logic elements              ; 2,168          ;
 ;                                             ;                ;
-; Total combinational functions               ; 2152           ;
+; Total combinational functions               ; 2148           ;
 ; Logic element usage by number of LUT inputs ;                ;
-;     -- 4 input functions                    ; 942            ;
+;     -- 4 input functions                    ; 940            ;
 ;     -- 3 input functions                    ; 870            ;
-;     -- <=2 input functions                  ; 340            ;
+;     -- <=2 input functions                  ; 338            ;
 ;                                             ;                ;
 ; Logic elements by mode                      ;                ;
-;     -- normal mode                          ; 1913           ;
-;     -- arithmetic mode                      ; 239            ;
+;     -- normal mode                          ; 1908           ;
+;     -- arithmetic mode                      ; 240            ;
 ;                                             ;                ;
-; Total registers                             ; 1145           ;
-;     -- Dedicated logic registers            ; 1145           ;
+; Total registers                             ; 1144           ;
+;     -- Dedicated logic registers            ; 1144           ;
 ;     -- I/O registers                        ; 0              ;
 ;                                             ;                ;
 ; I/O pins                                    ; 90             ;
@@ -258,43 +253,43 @@ agreement for further details.
 ;     -- PLLs                                 ; 1              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 1142           ;
-; Total fan-out                               ; 10805          ;
-; Average fan-out                             ; 3.08           ;
+; Maximum fan-out                             ; 1141           ;
+; Total fan-out                               ; 10808          ;
+; Average fan-out                             ; 3.09           ;
 +---------------------------------------------+----------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                             ;
-+---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; Compilation Hierarchy Node                              ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                ; Entity Name            ; Library Name ;
-+---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; |cursor                                                 ; 2152 (55)           ; 1145 (36)                 ; 230400      ; 0            ; 0       ; 0         ; 90   ; 0            ; |cursor                                                                                                            ; cursor                 ; work         ;
-;    |HexDecoder:hex3|                                    ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex3                                                                                            ; HexDecoder             ; work         ;
-;    |RNG:RNGmod|                                         ; 346 (42)            ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod                                                                                                 ; RNG                    ; work         ;
-;       |lpm_divide:Mod0|                                 ; 304 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0                                                                                 ; lpm_divide             ; work         ;
-;          |lpm_divide_ocm:auto_generated|                ; 304 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0|lpm_divide_ocm:auto_generated                                                   ; lpm_divide_ocm         ; work         ;
-;             |sign_div_unsign_dnh:divider|               ; 304 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0|lpm_divide_ocm:auto_generated|sign_div_unsign_dnh:divider                       ; sign_div_unsign_dnh    ; work         ;
-;                |alt_u_div_eaf:divider|                  ; 304 (304)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0|lpm_divide_ocm:auto_generated|sign_div_unsign_dnh:divider|alt_u_div_eaf:divider ; alt_u_div_eaf          ; work         ;
-;    |control:FSM|                                        ; 14 (14)             ; 8 (8)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|control:FSM                                                                                                ; control                ; work         ;
-;    |drawCard:DC|                                        ; 1591 (154)          ; 1029 (152)                ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC                                                                                                ; drawCard               ; work         ;
-;       |drawBlankCard:blank|                             ; 77 (77)             ; 38 (38)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC|drawBlankCard:blank                                                                            ; drawBlankCard          ; work         ;
-;       |drawNumSuit:num|                                 ; 538 (538)           ; 295 (295)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC|drawNumSuit:num                                                                                ; drawNumSuit            ; work         ;
-;       |drawNumSuit:suit|                                ; 822 (822)           ; 544 (544)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC|drawNumSuit:suit                                                                               ; drawNumSuit            ; work         ;
-;    |randomSeedGenerator:generator|                      ; 16 (0)              ; 16 (0)                    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|randomSeedGenerator:generator                                                                              ; randomSeedGenerator    ; work         ;
-;       |counter16Bit:timer|                              ; 16 (16)             ; 16 (16)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|randomSeedGenerator:generator|counter16Bit:timer                                                           ; counter16Bit           ; work         ;
-;    |vga_adapter:VGA|                                    ; 128 (0)             ; 34 (0)                    ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA                                                                                            ; vga_adapter            ; work         ;
-;       |altsyncram:VideoMemory|                          ; 42 (0)              ; 8 (0)                     ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory                                                                     ; altsyncram             ; work         ;
-;          |altsyncram_s0g1:auto_generated|               ; 42 (0)              ; 8 (8)                     ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated                                      ; altsyncram_s0g1        ; work         ;
-;             |decode_5ua:decode2|                        ; 8 (8)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_5ua:decode2                   ; decode_5ua             ; work         ;
-;             |decode_u9a:rden_decode_b|                  ; 10 (10)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_u9a:rden_decode_b             ; decode_u9a             ; work         ;
-;             |mux_gob:mux3|                              ; 24 (24)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|mux_gob:mux3                         ; mux_gob                ; work         ;
-;       |vga_address_translator:user_input_translator|    ; 18 (18)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_address_translator:user_input_translator                                               ; vga_address_translator ; work         ;
-;       |vga_controller:controller|                       ; 68 (48)             ; 26 (26)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_controller:controller                                                                  ; vga_controller         ; work         ;
-;          |vga_address_translator:controller_translator| ; 20 (20)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_controller:controller|vga_address_translator:controller_translator                     ; vga_address_translator ; work         ;
-;       |vga_pll:mypll|                                   ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_pll:mypll                                                                              ; vga_pll                ; work         ;
-;          |altpll:altpll_component|                      ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component                                                      ; altpll                 ; work         ;
-+---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                              ;
++---------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
+; Compilation Hierarchy Node                              ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                ; Entity Name            ; Library Name ;
++---------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
+; |cursor                                                 ; 2148 (49)         ; 1144 (33)    ; 230400      ; 0            ; 0       ; 0         ; 90   ; 0            ; |cursor                                                                                                            ; cursor                 ; work         ;
+;    |HexDecoder:hex3|                                    ; 3 (3)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex3                                                                                            ; HexDecoder             ; work         ;
+;    |RNG:RNGmod|                                         ; 346 (42)          ; 22 (22)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod                                                                                                 ; RNG                    ; work         ;
+;       |lpm_divide:Mod0|                                 ; 304 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0                                                                                 ; lpm_divide             ; work         ;
+;          |lpm_divide_ocm:auto_generated|                ; 304 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0|lpm_divide_ocm:auto_generated                                                   ; lpm_divide_ocm         ; work         ;
+;             |sign_div_unsign_dnh:divider|               ; 304 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0|lpm_divide_ocm:auto_generated|sign_div_unsign_dnh:divider                       ; sign_div_unsign_dnh    ; work         ;
+;                |alt_u_div_eaf:divider|                  ; 304 (304)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|RNG:RNGmod|lpm_divide:Mod0|lpm_divide_ocm:auto_generated|sign_div_unsign_dnh:divider|alt_u_div_eaf:divider ; alt_u_div_eaf          ; work         ;
+;    |control:FSM|                                        ; 14 (14)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|control:FSM                                                                                                ; control                ; work         ;
+;    |drawCard:DC|                                        ; 1591 (154)        ; 1029 (152)   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC                                                                                                ; drawCard               ; work         ;
+;       |drawBlankCard:blank|                             ; 77 (77)           ; 38 (38)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC|drawBlankCard:blank                                                                            ; drawBlankCard          ; work         ;
+;       |drawNumSuit:num|                                 ; 538 (538)         ; 295 (295)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC|drawNumSuit:num                                                                                ; drawNumSuit            ; work         ;
+;       |drawNumSuit:suit|                                ; 822 (822)         ; 544 (544)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|drawCard:DC|drawNumSuit:suit                                                                               ; drawNumSuit            ; work         ;
+;    |randomSeedGenerator:generator|                      ; 17 (1)            ; 18 (2)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|randomSeedGenerator:generator                                                                              ; randomSeedGenerator    ; work         ;
+;       |counter16Bit:timer|                              ; 16 (16)           ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|randomSeedGenerator:generator|counter16Bit:timer                                                           ; counter16Bit           ; work         ;
+;    |vga_adapter:VGA|                                    ; 128 (0)           ; 34 (0)       ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA                                                                                            ; vga_adapter            ; work         ;
+;       |altsyncram:VideoMemory|                          ; 42 (0)            ; 8 (0)        ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory                                                                     ; altsyncram             ; work         ;
+;          |altsyncram_s0g1:auto_generated|               ; 42 (0)            ; 8 (8)        ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated                                      ; altsyncram_s0g1        ; work         ;
+;             |decode_5ua:decode2|                        ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_5ua:decode2                   ; decode_5ua             ; work         ;
+;             |decode_u9a:rden_decode_b|                  ; 10 (10)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_u9a:rden_decode_b             ; decode_u9a             ; work         ;
+;             |mux_gob:mux3|                              ; 24 (24)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|mux_gob:mux3                         ; mux_gob                ; work         ;
+;       |vga_address_translator:user_input_translator|    ; 18 (18)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_address_translator:user_input_translator                                               ; vga_address_translator ; work         ;
+;       |vga_controller:controller|                       ; 68 (48)           ; 26 (26)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_controller:controller                                                                  ; vga_controller         ; work         ;
+;          |vga_address_translator:controller_translator| ; 20 (20)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_controller:controller|vga_address_translator:controller_translator                     ; vga_address_translator ; work         ;
+;       |vga_pll:mypll|                                   ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_pll:mypll                                                                              ; vga_pll                ; work         ;
+;          |altpll:altpll_component|                      ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component                                                      ; altpll                 ; work         ;
++---------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
@@ -308,43 +303,39 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 
 
 Encoding Type:  One-Hot
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |cursor|current_state                                                                                                                                                                                                                                                                                    ;
-+-----------------------------+--------------------------+--------------------+----------------------------+-----------------------+-----------------------+-------------------------+-----------------------+--------------------------+----------------------------+-----------------------+-----------------------------+
-; Name                        ; current_state.NEXT_INT_1 ; current_state.DRAW ; current_state.DRAW_P2_WAIT ; current_state.P2_WINS ; current_state.P1_WINS ; current_state.CALCULATE ; current_state.DRAW_P2 ; current_state.NEXT_INT_2 ; current_state.DRAW_P1_WAIT ; current_state.DRAW_P1 ; current_state.GENERATE_SEED ;
-+-----------------------------+--------------------------+--------------------+----------------------------+-----------------------+-----------------------+-------------------------+-----------------------+--------------------------+----------------------------+-----------------------+-----------------------------+
-; current_state.GENERATE_SEED ; 0                        ; 0                  ; 0                          ; 0                     ; 0                     ; 0                       ; 0                     ; 0                        ; 0                          ; 0                     ; 0                           ;
-; current_state.DRAW_P1       ; 0                        ; 0                  ; 0                          ; 0                     ; 0                     ; 0                       ; 0                     ; 0                        ; 0                          ; 1                     ; 1                           ;
-; current_state.DRAW_P1_WAIT  ; 0                        ; 0                  ; 0                          ; 0                     ; 0                     ; 0                       ; 0                     ; 0                        ; 1                          ; 0                     ; 1                           ;
-; current_state.NEXT_INT_2    ; 0                        ; 0                  ; 0                          ; 0                     ; 0                     ; 0                       ; 0                     ; 1                        ; 0                          ; 0                     ; 1                           ;
-; current_state.DRAW_P2       ; 0                        ; 0                  ; 0                          ; 0                     ; 0                     ; 0                       ; 1                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-; current_state.CALCULATE     ; 0                        ; 0                  ; 0                          ; 0                     ; 0                     ; 1                       ; 0                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-; current_state.P1_WINS       ; 0                        ; 0                  ; 0                          ; 0                     ; 1                     ; 0                       ; 0                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-; current_state.P2_WINS       ; 0                        ; 0                  ; 0                          ; 1                     ; 0                     ; 0                       ; 0                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-; current_state.DRAW_P2_WAIT  ; 0                        ; 0                  ; 1                          ; 0                     ; 0                     ; 0                       ; 0                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-; current_state.DRAW          ; 0                        ; 1                  ; 0                          ; 0                     ; 0                     ; 0                       ; 0                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-; current_state.NEXT_INT_1    ; 1                        ; 0                  ; 0                          ; 0                     ; 0                     ; 0                       ; 0                     ; 0                        ; 0                          ; 0                     ; 1                           ;
-+-----------------------------+--------------------------+--------------------+----------------------------+-----------------------+-----------------------+-------------------------+-----------------------+--------------------------+----------------------------+-----------------------+-----------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |cursor|current_state                                                                                                                                                                                                                                    ;
++-----------------------------+-------------------------+----------------------------+-----------------------+--------------------------+----------------------------+-----------------------+--------------------------+-----------------------------+--------------------+
+; Name                        ; current_state.CALCULATE ; current_state.DRAW_P2_WAIT ; current_state.DRAW_P2 ; current_state.NEXT_INT_2 ; current_state.DRAW_P1_WAIT ; current_state.DRAW_P1 ; current_state.NEXT_INT_1 ; current_state.GENERATE_SEED ; current_state.DRAW ;
++-----------------------------+-------------------------+----------------------------+-----------------------+--------------------------+----------------------------+-----------------------+--------------------------+-----------------------------+--------------------+
+; current_state.GENERATE_SEED ; 0                       ; 0                          ; 0                     ; 0                        ; 0                          ; 0                     ; 0                        ; 0                           ; 0                  ;
+; current_state.NEXT_INT_1    ; 0                       ; 0                          ; 0                     ; 0                        ; 0                          ; 0                     ; 1                        ; 1                           ; 0                  ;
+; current_state.DRAW_P1       ; 0                       ; 0                          ; 0                     ; 0                        ; 0                          ; 1                     ; 0                        ; 1                           ; 0                  ;
+; current_state.DRAW_P1_WAIT  ; 0                       ; 0                          ; 0                     ; 0                        ; 1                          ; 0                     ; 0                        ; 1                           ; 0                  ;
+; current_state.NEXT_INT_2    ; 0                       ; 0                          ; 0                     ; 1                        ; 0                          ; 0                     ; 0                        ; 1                           ; 0                  ;
+; current_state.DRAW_P2       ; 0                       ; 0                          ; 1                     ; 0                        ; 0                          ; 0                     ; 0                        ; 1                           ; 0                  ;
+; current_state.DRAW_P2_WAIT  ; 0                       ; 1                          ; 0                     ; 0                        ; 0                          ; 0                     ; 0                        ; 1                           ; 0                  ;
+; current_state.CALCULATE     ; 1                       ; 0                          ; 0                     ; 0                        ; 0                          ; 0                     ; 0                        ; 1                           ; 0                  ;
+; current_state.DRAW          ; 0                       ; 0                          ; 0                     ; 0                        ; 0                          ; 0                     ; 0                        ; 1                           ; 1                  ;
++-----------------------------+-------------------------+----------------------------+-----------------------+--------------------------+----------------------------+-----------------------+--------------------------+-----------------------------+--------------------+
 
 
 Encoding Type:  One-Hot
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |cursor|next_state                                                                                                                                                                                                                                                   ;
-+--------------------------+--------------------------+-----------------+-------------------------+--------------------+--------------------+----------------------+--------------------+-----------------------+-------------------------+--------------------+-----------------------+
-; Name                     ; next_state.GENERATE_SEED ; next_state.DRAW ; next_state.DRAW_P2_WAIT ; next_state.P2_WINS ; next_state.P1_WINS ; next_state.CALCULATE ; next_state.DRAW_P2 ; next_state.NEXT_INT_2 ; next_state.DRAW_P1_WAIT ; next_state.DRAW_P1 ; next_state.NEXT_INT_1 ;
-+--------------------------+--------------------------+-----------------+-------------------------+--------------------+--------------------+----------------------+--------------------+-----------------------+-------------------------+--------------------+-----------------------+
-; next_state.NEXT_INT_1    ; 0                        ; 0               ; 0                       ; 0                  ; 0                  ; 0                    ; 0                  ; 0                     ; 0                       ; 0                  ; 0                     ;
-; next_state.DRAW_P1       ; 0                        ; 0               ; 0                       ; 0                  ; 0                  ; 0                    ; 0                  ; 0                     ; 0                       ; 1                  ; 1                     ;
-; next_state.DRAW_P1_WAIT  ; 0                        ; 0               ; 0                       ; 0                  ; 0                  ; 0                    ; 0                  ; 0                     ; 1                       ; 0                  ; 1                     ;
-; next_state.NEXT_INT_2    ; 0                        ; 0               ; 0                       ; 0                  ; 0                  ; 0                    ; 0                  ; 1                     ; 0                       ; 0                  ; 1                     ;
-; next_state.DRAW_P2       ; 0                        ; 0               ; 0                       ; 0                  ; 0                  ; 0                    ; 1                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-; next_state.CALCULATE     ; 0                        ; 0               ; 0                       ; 0                  ; 0                  ; 1                    ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-; next_state.P1_WINS       ; 0                        ; 0               ; 0                       ; 0                  ; 1                  ; 0                    ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-; next_state.P2_WINS       ; 0                        ; 0               ; 0                       ; 1                  ; 0                  ; 0                    ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-; next_state.DRAW_P2_WAIT  ; 0                        ; 0               ; 1                       ; 0                  ; 0                  ; 0                    ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-; next_state.DRAW          ; 0                        ; 1               ; 0                       ; 0                  ; 0                  ; 0                    ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-; next_state.GENERATE_SEED ; 1                        ; 0               ; 0                       ; 0                  ; 0                  ; 0                    ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ;
-+--------------------------+--------------------------+-----------------+-------------------------+--------------------+--------------------+----------------------+--------------------+-----------------------+-------------------------+--------------------+-----------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |cursor|next_state                                                                                                                                                                                                         ;
++--------------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+--------------------+-----------------------+--------------------------+-----------------+
+; Name                     ; next_state.CALCULATE ; next_state.DRAW_P2_WAIT ; next_state.DRAW_P2 ; next_state.NEXT_INT_2 ; next_state.DRAW_P1_WAIT ; next_state.DRAW_P1 ; next_state.NEXT_INT_1 ; next_state.GENERATE_SEED ; next_state.DRAW ;
++--------------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+--------------------+-----------------------+--------------------------+-----------------+
+; next_state.GENERATE_SEED ; 0                    ; 0                       ; 0                  ; 0                     ; 0                       ; 0                  ; 0                     ; 0                        ; 0               ;
+; next_state.NEXT_INT_1    ; 0                    ; 0                       ; 0                  ; 0                     ; 0                       ; 0                  ; 1                     ; 1                        ; 0               ;
+; next_state.DRAW_P1       ; 0                    ; 0                       ; 0                  ; 0                     ; 0                       ; 1                  ; 0                     ; 1                        ; 0               ;
+; next_state.DRAW_P1_WAIT  ; 0                    ; 0                       ; 0                  ; 0                     ; 1                       ; 0                  ; 0                     ; 1                        ; 0               ;
+; next_state.NEXT_INT_2    ; 0                    ; 0                       ; 0                  ; 1                     ; 0                       ; 0                  ; 0                     ; 1                        ; 0               ;
+; next_state.DRAW_P2       ; 0                    ; 0                       ; 1                  ; 0                     ; 0                       ; 0                  ; 0                     ; 1                        ; 0               ;
+; next_state.DRAW_P2_WAIT  ; 0                    ; 1                       ; 0                  ; 0                     ; 0                       ; 0                  ; 0                     ; 1                        ; 0               ;
+; next_state.CALCULATE     ; 1                    ; 0                       ; 0                  ; 0                     ; 0                       ; 0                  ; 0                     ; 1                        ; 0               ;
+; next_state.DRAW          ; 0                    ; 0                       ; 0                  ; 0                     ; 0                       ; 0                  ; 0                     ; 1                        ; 1               ;
++--------------------------+----------------------+-------------------------+--------------------+-----------------------+-------------------------+--------------------+-----------------------+--------------------------+-----------------+
 
 
 Encoding Type:  One-Hot
@@ -388,9 +379,6 @@ Encoding Type:  One-Hot
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------+
 ; Register name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; Reason for Removal                                    ;
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------+
-; rng_counter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; Stuck at VCC due to stuck port data_in                ;
-; randomSeedGenerator:generator|last_cycle                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; Stuck at VCC due to stuck port data_in                ;
-; randomSeedGenerator:generator|start_cycle                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; Stuck at GND due to stuck port data_in                ;
 ; control:FSM|current_state[4]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Stuck at GND due to stuck port data_in                ;
 ; drawCard:DC|suitDataReg[662..689,705..740,750..767]                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; Stuck at VCC due to stuck port data_in                ;
 ; drawCard:DC|suitDataReg[654,655]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Stuck at GND due to stuck port data_in                ;
@@ -1091,20 +1079,18 @@ Encoding Type:  One-Hot
 ; drawCard:DC|drawNumSuit:num|xReg[5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; Merged with drawCard:DC|drawNumSuit:num|xReg[1]       ;
 ; drawCard:DC|drawNumSuit:num|xReg[3]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; Merged with drawCard:DC|drawNumSuit:num|xReg[2]       ;
 ; drawCard:DC|drawNumSuit:num|xReg[7]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; Merged with drawCard:DC|drawNumSuit:num|xReg[6]       ;
+; current_state~11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
+; current_state~12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
 ; current_state~13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
-; current_state~14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
 ; current_state~15                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
-; current_state~16                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
-; current_state~17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; Lost fanout                                           ;
-; next_state~3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
 ; next_state~4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
 ; next_state~5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
 ; next_state~6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
-; next_state~7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
+; next_state~8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
 ; drawCard:DC|drawNumSuit:suit|current_state~4                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
 ; drawCard:DC|drawNumSuit:num|current_state~4                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; Lost fanout                                           ;
 ; RNG:RNGmod|rand_int[0]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ; Merged with RNG:RNGmod|seed[0]                        ;
-; Total Number of Removed Registers = 2253                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;                                                       ;
+; Total Number of Removed Registers = 2248                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;                                                       ;
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------+
 
 
@@ -1119,8 +1105,6 @@ Encoding Type:  One-Hot
 ;               ;                           ; drawCard:DC|drawBlankCard:blank|xReg[0]                                     ;
 ; x_loc[3]      ; Stuck at VCC              ; drawCard:DC|drawNumSuit:suit|xReg[4], drawCard:DC|drawNumSuit:num|yReg[1],  ;
 ;               ; due to stuck port data_in ; drawCard:DC|drawNumSuit:num|xReg[4]                                         ;
-; rng_counter   ; Stuck at VCC              ; randomSeedGenerator:generator|start_cycle                                   ;
-;               ; due to stuck port data_in ;                                                                             ;
 +---------------+---------------------------+-----------------------------------------------------------------------------+
 
 
@@ -1129,8 +1113,8 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1145  ;
-; Number of registers using Synchronous Clear  ; 26    ;
+; Total registers                              ; 1144  ;
+; Number of registers using Synchronous Clear  ; 42    ;
 ; Number of registers using Synchronous Load   ; 18    ;
 ; Number of registers using Asynchronous Clear ; 20    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
@@ -1145,9 +1129,9 @@ Encoding Type:  One-Hot
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                    ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |cursor|drawCard:DC|drawBlankCard:blank|xReg[1]               ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |cursor|vga_adapter:VGA|vga_controller:controller|yCounter[5] ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |cursor|drawCard:DC|numReg[2]                                 ;
-; 5:1                ; 17 bits   ; 51 LEs        ; 34 LEs               ; 17 LEs                 ; Yes        ; |cursor|drawCard:DC|cOut[0]                                   ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |cursor|vga_adapter:VGA|vga_controller:controller|yCounter[3] ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |cursor|drawCard:DC|suitReg[0]                                ;
+; 5:1                ; 17 bits   ; 51 LEs        ; 34 LEs               ; 17 LEs                 ; Yes        ; |cursor|drawCard:DC|yOut[6]                                   ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cursor|drawCard:DC|drawNumSuit:suit|xOffset                  ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cursor|drawCard:DC|drawNumSuit:num|xOffset                   ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cursor|drawCard:DC|drawBlankCard:blank|xOffset               ;
@@ -1773,28 +1757,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 90                          ;
-; cycloneiii_ff         ; 1145                        ;
+; cycloneiii_ff         ; 1144                        ;
 ;     CLR               ; 20                          ;
 ;     ENA               ; 333                         ;
 ;     ENA SCLR SLD      ; 17                          ;
-;     SCLR              ; 9                           ;
+;     SCLR              ; 25                          ;
 ;     SLD               ; 1                           ;
-;     plain             ; 765                         ;
-; cycloneiii_lcell_comb ; 2156                        ;
-;     arith             ; 239                         ;
-;         2 data inputs ; 102                         ;
+;     plain             ; 748                         ;
+; cycloneiii_lcell_comb ; 2151                        ;
+;     arith             ; 240                         ;
+;         2 data inputs ; 103                         ;
 ;         3 data inputs ; 137                         ;
-;     normal            ; 1917                        ;
+;     normal            ; 1911                        ;
 ;         0 data inputs ; 15                          ;
-;         1 data inputs ; 17                          ;
-;         2 data inputs ; 210                         ;
+;         1 data inputs ; 15                          ;
+;         2 data inputs ; 208                         ;
 ;         3 data inputs ; 733                         ;
-;         4 data inputs ; 942                         ;
+;         4 data inputs ; 940                         ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 30                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 37.20                       ;
-; Average LUT depth     ; 6.85                        ;
+; Average LUT depth     ; 6.86                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1803,7 +1787,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:05     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -1812,47 +1796,46 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
-    Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Thu Apr 04 14:59:38 2019
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+    Info: Processing started: Thu Apr  4 18:41:41 2019
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cursor -c cursor
-Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 5 design units, including 5 entities, in source file rng.v
-    Info (12023): Found entity 1: rng_test File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 9
-    Info (12023): Found entity 2: randomSeedGenerator File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 61
-    Info (12023): Found entity 3: counter16Bit File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 91
-    Info (12023): Found entity 4: RNG File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 112
-    Info (12023): Found entity 5: xorShift File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 159
+    Info (12023): Found entity 1: rng_test File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 9
+    Info (12023): Found entity 2: randomSeedGenerator File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 61
+    Info (12023): Found entity 3: counter16Bit File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 91
+    Info (12023): Found entity 4: RNG File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 112
+    Info (12023): Found entity 5: xorShift File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 159
 Info (12021): Found 1 design units, including 1 entities, in source file vga_adapter/vga_pll.v
-    Info (12023): Found entity 1: vga_pll File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 36
+    Info (12023): Found entity 1: vga_pll File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 36
 Info (12021): Found 1 design units, including 1 entities, in source file vga_adapter/vga_controller.v
-    Info (12023): Found entity 1: vga_controller File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_controller.v Line: 9
+    Info (12023): Found entity 1: vga_controller File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_controller.v Line: 9
 Info (12021): Found 1 design units, including 1 entities, in source file vga_adapter/vga_address_translator.v
-    Info (12023): Found entity 1: vga_address_translator File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_address_translator.v Line: 4
+    Info (12023): Found entity 1: vga_address_translator File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_address_translator.v Line: 4
 Info (12021): Found 1 design units, including 1 entities, in source file vga_adapter/vga_adapter.v
-    Info (12023): Found entity 1: vga_adapter File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 78
-Info (12021): Found 1 design units, including 1 entities, in source file ps2_controller/ps2_controller.v
-    Info (12023): Found entity 1: PS2_Controller File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/PS2_Controller/PS2_Controller.v Line: 9
-Info (12021): Found 1 design units, including 1 entities, in source file ps2_controller/altera_up_ps2_data_in.v
-    Info (12023): Found entity 1: Altera_UP_PS2_Data_In File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/PS2_Controller/Altera_UP_PS2_Data_In.v Line: 10
-Info (12021): Found 1 design units, including 1 entities, in source file ps2_controller/altera_up_ps2_command_out.v
-    Info (12023): Found entity 1: Altera_UP_PS2_Command_Out File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/PS2_Controller/Altera_UP_PS2_Command_Out.v Line: 10
-Info (12021): Found 6 design units, including 6 entities, in source file vga.v
-    Info (12023): Found entity 1: cursor File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 3
-    Info (12023): Found entity 2: drawCard File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 318
-    Info (12023): Found entity 3: control File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 471
-    Info (12023): Found entity 4: drawBlankCard File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 551
-    Info (12023): Found entity 5: drawNumSuit File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 627
-    Info (12023): Found entity 6: HexDecoder File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 710
+    Info (12023): Found entity 1: vga_adapter File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 78
+Info (12021): Found 1 design units, including 1 entities, in source file PS2_Controller/PS2_Controller.v
+    Info (12023): Found entity 1: PS2_Controller File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/PS2_Controller/PS2_Controller.v Line: 9
+Info (12021): Found 1 design units, including 1 entities, in source file PS2_Controller/Altera_UP_PS2_Data_In.v
+    Info (12023): Found entity 1: Altera_UP_PS2_Data_In File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/PS2_Controller/Altera_UP_PS2_Data_In.v Line: 10
+Info (12021): Found 1 design units, including 1 entities, in source file PS2_Controller/Altera_UP_PS2_Command_Out.v
+    Info (12023): Found entity 1: Altera_UP_PS2_Command_Out File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/PS2_Controller/Altera_UP_PS2_Command_Out.v Line: 10
+Info (12021): Found 6 design units, including 6 entities, in source file VGA.v
+    Info (12023): Found entity 1: cursor File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 21
+    Info (12023): Found entity 2: drawCard File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 330
+    Info (12023): Found entity 3: control File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 483
+    Info (12023): Found entity 4: drawBlankCard File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 563
+    Info (12023): Found entity 5: drawNumSuit File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 639
+    Info (12023): Found entity 6: HexDecoder File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 722
 Warning (12019): Can't analyze file -- file output_files/draw_card.v is missing
 Info (12127): Elaborating entity "cursor" for the top level hierarchy
-Info (10264): Verilog HDL Case Statement information at VGA.v(127): all case item expressions in this case statement are onehot File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 127
-Warning (10034): Output port "LEDR[17..16]" at VGA.v(31) has no driver File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 31
-Info (12128): Elaborating entity "vga_adapter" for hierarchy "vga_adapter:VGA" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 194
-Info (12128): Elaborating entity "vga_address_translator" for hierarchy "vga_adapter:VGA|vga_address_translator:user_input_translator" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 192
-Info (12128): Elaborating entity "altsyncram" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
-Info (12130): Elaborated megafunction instantiation "vga_adapter:VGA|altsyncram:VideoMemory" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
-Info (12133): Instantiated megafunction "vga_adapter:VGA|altsyncram:VideoMemory" with the following parameter: File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
+Info (10264): Verilog HDL Case Statement information at VGA.v(139): all case item expressions in this case statement are onehot File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 139
+Warning (10034): Output port "LEDR[17..16]" at VGA.v(49) has no driver File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 49
+Info (12128): Elaborating entity "vga_adapter" for hierarchy "vga_adapter:VGA" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 206
+Info (12128): Elaborating entity "vga_address_translator" for hierarchy "vga_adapter:VGA|vga_address_translator:user_input_translator" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 192
+Info (12128): Elaborating entity "altsyncram" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
+Info (12130): Elaborated megafunction instantiation "vga_adapter:VGA|altsyncram:VideoMemory" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
+Info (12133): Instantiated megafunction "vga_adapter:VGA|altsyncram:VideoMemory" with the following parameter: File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
     Info (12134): Parameter "WIDTH_A" = "3"
     Info (12134): Parameter "WIDTH_B" = "3"
     Info (12134): Parameter "INTENDED_DEVICE_FAMILY" = "Cyclone II"
@@ -1869,21 +1852,21 @@ Info (12133): Instantiated megafunction "vga_adapter:VGA|altsyncram:VideoMemory"
     Info (12134): Parameter "POWER_UP_UNINITIALIZED" = "FALSE"
     Info (12134): Parameter "INIT_FILE" = "black.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_s0g1.tdf
-    Info (12023): Found entity 1: altsyncram_s0g1 File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 34
-Info (12128): Elaborating entity "altsyncram_s0g1" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated" File: c:/intelfpga_lite/16.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
+    Info (12023): Found entity 1: altsyncram_s0g1 File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 34
+Info (12128): Elaborating entity "altsyncram_s0g1" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated" File: /usr/local/cms/altera_lite/16.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_5ua.tdf
-    Info (12023): Found entity 1: decode_5ua File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/decode_5ua.tdf Line: 23
-Info (12128): Elaborating entity "decode_5ua" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_5ua:decode2" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 47
+    Info (12023): Found entity 1: decode_5ua File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/decode_5ua.tdf Line: 23
+Info (12128): Elaborating entity "decode_5ua" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_5ua:decode2" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 47
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_u9a.tdf
-    Info (12023): Found entity 1: decode_u9a File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/decode_u9a.tdf Line: 23
-Info (12128): Elaborating entity "decode_u9a" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_u9a:rden_decode_b" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 48
+    Info (12023): Found entity 1: decode_u9a File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/decode_u9a.tdf Line: 23
+Info (12128): Elaborating entity "decode_u9a" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|decode_u9a:rden_decode_b" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 48
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_gob.tdf
-    Info (12023): Found entity 1: mux_gob File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/mux_gob.tdf Line: 23
-Info (12128): Elaborating entity "mux_gob" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|mux_gob:mux3" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 50
-Info (12128): Elaborating entity "vga_pll" for hierarchy "vga_adapter:VGA|vga_pll:mypll" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 231
-Info (12128): Elaborating entity "altpll" for hierarchy "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 53
-Info (12130): Elaborated megafunction instantiation "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 53
-Info (12133): Instantiated megafunction "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" with the following parameter: File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 53
+    Info (12023): Found entity 1: mux_gob File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/mux_gob.tdf Line: 23
+Info (12128): Elaborating entity "mux_gob" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_s0g1:auto_generated|mux_gob:mux3" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/altsyncram_s0g1.tdf Line: 50
+Info (12128): Elaborating entity "vga_pll" for hierarchy "vga_adapter:VGA|vga_pll:mypll" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 231
+Info (12128): Elaborating entity "altpll" for hierarchy "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 53
+Info (12130): Elaborated megafunction instantiation "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 53
+Info (12133): Instantiated megafunction "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" with the following parameter: File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_pll.v Line: 53
     Info (12134): Parameter "operation_mode" = "NORMAL"
     Info (12134): Parameter "intended_device_family" = "Cyclone II"
     Info (12134): Parameter "lpm_type" = "altpll"
@@ -1895,87 +1878,86 @@ Info (12133): Instantiated megafunction "vga_adapter:VGA|vga_pll:mypll|altpll:al
     Info (12134): Parameter "clk0_divide_by" = "2"
     Info (12134): Parameter "clk0_multiply_by" = "1"
     Info (12134): Parameter "clk0_duty_cycle" = "50"
-Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_adapter:VGA|vga_controller:controller" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 252
-Info (12128): Elaborating entity "drawCard" for hierarchy "drawCard:DC" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 233
-Info (12128): Elaborating entity "drawBlankCard" for hierarchy "drawCard:DC|drawBlankCard:blank" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 421
-Info (12128): Elaborating entity "drawNumSuit" for hierarchy "drawCard:DC|drawNumSuit:num" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 434
-Info (12128): Elaborating entity "control" for hierarchy "control:FSM" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 253
-Info (12128): Elaborating entity "HexDecoder" for hierarchy "HexDecoder:hex3" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 274
-Info (12128): Elaborating entity "randomSeedGenerator" for hierarchy "randomSeedGenerator:generator" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 304
-Info (12128): Elaborating entity "counter16Bit" for hierarchy "randomSeedGenerator:generator|counter16Bit:timer" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 75
-Info (12128): Elaborating entity "RNG" for hierarchy "RNG:RNGmod" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 315
-Info (12128): Elaborating entity "xorShift" for hierarchy "RNG:RNGmod|xorShift:seed_updater" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 130
+Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_adapter:VGA|vga_controller:controller" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 252
+Info (12128): Elaborating entity "drawCard" for hierarchy "drawCard:DC" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 245
+Info (12128): Elaborating entity "drawBlankCard" for hierarchy "drawCard:DC|drawBlankCard:blank" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 433
+Info (12128): Elaborating entity "drawNumSuit" for hierarchy "drawCard:DC|drawNumSuit:num" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 446
+Info (12128): Elaborating entity "control" for hierarchy "control:FSM" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 265
+Info (12128): Elaborating entity "HexDecoder" for hierarchy "HexDecoder:hex3" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 286
+Info (12128): Elaborating entity "randomSeedGenerator" for hierarchy "randomSeedGenerator:generator" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 316
+Info (12128): Elaborating entity "counter16Bit" for hierarchy "randomSeedGenerator:generator|counter16Bit:timer" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 75
+Info (12128): Elaborating entity "RNG" for hierarchy "RNG:RNGmod" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 327
+Info (12128): Elaborating entity "xorShift" for hierarchy "RNG:RNGmod|xorShift:seed_updater" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 130
 Info (278001): Inferred 1 megafunctions from design logic
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "RNG:RNGmod|Mod0" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 147
-Info (12130): Elaborated megafunction instantiation "RNG:RNGmod|lpm_divide:Mod0" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 147
-Info (12133): Instantiated megafunction "RNG:RNGmod|lpm_divide:Mod0" with the following parameter: File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 147
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "RNG:RNGmod|Mod0" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 147
+Info (12130): Elaborated megafunction instantiation "RNG:RNGmod|lpm_divide:Mod0" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 147
+Info (12133): Instantiated megafunction "RNG:RNGmod|lpm_divide:Mod0" with the following parameter: File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/rng.v Line: 147
     Info (12134): Parameter "LPM_WIDTHN" = "16"
     Info (12134): Parameter "LPM_WIDTHD" = "16"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
 Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_ocm.tdf
-    Info (12023): Found entity 1: lpm_divide_ocm File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/lpm_divide_ocm.tdf Line: 25
+    Info (12023): Found entity 1: lpm_divide_ocm File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/lpm_divide_ocm.tdf Line: 25
 Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_dnh.tdf
-    Info (12023): Found entity 1: sign_div_unsign_dnh File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/sign_div_unsign_dnh.tdf Line: 25
+    Info (12023): Found entity 1: sign_div_unsign_dnh File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/sign_div_unsign_dnh.tdf Line: 25
 Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_eaf.tdf
-    Info (12023): Found entity 1: alt_u_div_eaf File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/alt_u_div_eaf.tdf Line: 27
+    Info (12023): Found entity 1: alt_u_div_eaf File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/alt_u_div_eaf.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_7pc.tdf
-    Info (12023): Found entity 1: add_sub_7pc File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/add_sub_7pc.tdf Line: 23
+    Info (12023): Found entity 1: add_sub_7pc File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/add_sub_7pc.tdf Line: 23
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_8pc.tdf
-    Info (12023): Found entity 1: add_sub_8pc File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/db/add_sub_8pc.tdf Line: 23
+    Info (12023): Found entity 1: add_sub_8pc File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/db/add_sub_8pc.tdf Line: 23
 Warning (12241): 3 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 39
-    Warning (13410): Pin "HEX7[0]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX7[1]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX7[2]" is stuck at VCC File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX7[3]" is stuck at VCC File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX7[4]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX7[5]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX7[6]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 44
-    Warning (13410): Pin "HEX6[1]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 45
-    Warning (13410): Pin "LEDR[16]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 31
-    Warning (13410): Pin "LEDR[17]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 31
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 57
+    Warning (13410): Pin "HEX7[0]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX7[1]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX7[2]" is stuck at VCC File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX7[3]" is stuck at VCC File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX7[4]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX7[5]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX7[6]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 62
+    Warning (13410): Pin "HEX6[1]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 63
+    Warning (13410): Pin "LEDR[16]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 49
+    Warning (13410): Pin "LEDR[17]" is stuck at GND File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 49
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 12 registers lost all their fanouts during netlist optimizations.
-Info (144001): Generated suppressed messages file C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/output_files/cursor.map.smsg
+Info (17049): 10 registers lost all their fanouts during netlist optimizations.
+Info (144001): Generated suppressed messages file /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/output_files/cursor.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 18 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "KEY[0]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 30
-    Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 30
-    Warning (15610): No output dependent on input pin "KEY[2]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 30
-    Warning (15610): No output dependent on input pin "KEY[3]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 30
-    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[9]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[10]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[11]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[13]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[14]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-    Warning (15610): No output dependent on input pin "SW[15]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-Info (21057): Implemented 2303 device resources after synthesis - the final resource count might be different
+Warning (21074): Design contains 17 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "KEY[0]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
+    Warning (15610): No output dependent on input pin "KEY[1]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
+    Warning (15610): No output dependent on input pin "KEY[2]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
+    Warning (15610): No output dependent on input pin "KEY[3]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
+    Warning (15610): No output dependent on input pin "SW[1]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[2]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[4]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[5]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[6]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[7]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[8]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[9]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[10]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[11]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[13]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[14]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+    Warning (15610): No output dependent on input pin "SW[15]" File: /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/VGA.v Line: 47
+Info (21057): Implemented 2300 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 23 input pins
     Info (21059): Implemented 67 output pins
-    Info (21061): Implemented 2182 logic cells
+    Info (21061): Implemented 2179 logic cells
     Info (21064): Implemented 30 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 47 warnings
-    Info: Peak virtual memory: 4802 megabytes
-    Info: Processing ended: Thu Apr 04 14:59:58 2019
-    Info: Elapsed time: 00:00:20
-    Info: Total CPU time (on all processors): 00:00:37
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 34 warnings
+    Info: Peak virtual memory: 1288 megabytes
+    Info: Processing ended: Thu Apr  4 18:41:55 2019
+    Info: Elapsed time: 00:00:14
+    Info: Total CPU time (on all processors): 00:00:24
 
 
 +------------------------------------------+
 ; Analysis & Synthesis Suppressed Messages ;
 +------------------------------------------+
-The suppressed messages can be found in C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/output_files/cursor.map.smsg.
+The suppressed messages can be found in /cmshome/gaylejoe/Desktop/B58Cards/Quartus Projects/cursor/output_files/cursor.map.smsg.
 
 
