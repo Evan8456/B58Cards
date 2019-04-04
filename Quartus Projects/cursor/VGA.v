@@ -90,7 +90,7 @@ module cursor(
 	assign resetN = SW[0];
 	assign vga_resetN = SW[16];
 	wire go;
-	assign go = SW[17];
+	assign go = SW[9];
 	reg vga_go;
 
 	reg [1:0] winner; // 0-no winner, 1-p1 wins, 2-p2 wins, 3-draw
@@ -106,18 +106,22 @@ module cursor(
 					NEXT_INT_1				= 5'd1,
 					DRAW_P1					= 5'd2,
 					DRAW_P1_WAIT			= 5'd3,
-					NEXT_INT_2				= 5'd4,
-					DRAW_P2					= 5'd5,
-					DRAW_P2_WAIT			= 5'd6,
-					CALCULATE				= 5'd7,
-					DRAW						= 5'd8;
+					WAIT_USER				= 5'd4,
+					WAIT_USER_2				= 5'd5,
+					NEXT_INT_2				= 5'd6,
+					DRAW_P2					= 5'd7,
+					DRAW_P2_WAIT			= 5'd8,
+					CALCULATE				= 5'd9,
+					DRAW						= 5'd10;
 	
 	always @(posedge CLOCK_50) begin
 		case(current_state)
 			GENERATE_SEED: 		next_state = go ? NEXT_INT_1 : GENERATE_SEED;
 			NEXT_INT_1: 			next_state = ~go ? DRAW_P1 : NEXT_INT_1;
 			DRAW_P1: 				next_state = DRAW_P1_WAIT;
-			DRAW_P1_WAIT:			next_state = vga_done ? NEXT_INT_2 : DRAW_P1_WAIT;
+			DRAW_P1_WAIT:			next_state = vga_done ? WAIT_USER : DRAW_P1_WAIT;
+			WAIT_USER:				next_state = go ? WAIT_USER_2 : WAIT_USER;
+			WAIT_USER_2:			next_state = ~go ? NEXT_INT_2 : WAIT_USER_2;
 			NEXT_INT_2: 			next_state = DRAW_P2;
 			DRAW_P2: 				next_state = DRAW_P2_WAIT;
 			DRAW_P2_WAIT:			next_state = vga_done ? CALCULATE : DRAW_P2_WAIT;
