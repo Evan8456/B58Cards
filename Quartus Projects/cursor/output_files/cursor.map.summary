@@ -1,12 +1,12 @@
-Analysis & Synthesis Status : Successful - Thu Apr 04 14:27:57 2019
+Analysis & Synthesis Status : Successful - Thu Apr 04 14:43:03 2019
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : cursor
 Top-level Entity Name : cursor
 Family : Cyclone IV E
-Total logic elements : 2,193
-    Total combinational functions : 2,183
-    Dedicated logic registers : 1,119
-Total registers : 1119
+Total logic elements : 2,216
+    Total combinational functions : 2,198
+    Dedicated logic registers : 1,128
+Total registers : 1128
 Total pins : 132
 Total virtual pins : 0
 Total memory bits : 230,400

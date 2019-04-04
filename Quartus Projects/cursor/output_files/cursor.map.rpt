@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cursor
-Thu Apr 04 14:27:57 2019
+Thu Apr 04 14:43:03 2019
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -69,15 +69,15 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Thu Apr 04 14:27:57 2019       ;
+; Analysis & Synthesis Status        ; Successful - Thu Apr 04 14:43:03 2019       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; cursor                                      ;
 ; Top-level Entity Name              ; cursor                                      ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 2,193                                       ;
-;     Total combinational functions  ; 2,183                                       ;
-;     Dedicated logic registers      ; 1,119                                       ;
-; Total registers                    ; 1119                                        ;
+; Total logic elements               ; 2,216                                       ;
+;     Total combinational functions  ; 2,198                                       ;
+;     Dedicated logic registers      ; 1,128                                       ;
+; Total registers                    ; 1128                                        ;
 ; Total pins                         ; 132                                         ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 230,400                                     ;
@@ -234,20 +234,20 @@ agreement for further details.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimated Total logic elements              ; 2,193          ;
+; Estimated Total logic elements              ; 2,216          ;
 ;                                             ;                ;
-; Total combinational functions               ; 2183           ;
+; Total combinational functions               ; 2198           ;
 ; Logic element usage by number of LUT inputs ;                ;
-;     -- 4 input functions                    ; 985            ;
-;     -- 3 input functions                    ; 875            ;
-;     -- <=2 input functions                  ; 323            ;
+;     -- 4 input functions                    ; 994            ;
+;     -- 3 input functions                    ; 878            ;
+;     -- <=2 input functions                  ; 326            ;
 ;                                             ;                ;
 ; Logic elements by mode                      ;                ;
-;     -- normal mode                          ; 1944           ;
+;     -- normal mode                          ; 1959           ;
 ;     -- arithmetic mode                      ; 239            ;
 ;                                             ;                ;
-; Total registers                             ; 1119           ;
-;     -- Dedicated logic registers            ; 1119           ;
+; Total registers                             ; 1128           ;
+;     -- Dedicated logic registers            ; 1128           ;
 ;     -- I/O registers                        ; 0              ;
 ;                                             ;                ;
 ; I/O pins                                    ; 132            ;
@@ -259,9 +259,9 @@ agreement for further details.
 ;     -- PLLs                                 ; 1              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 1116           ;
-; Total fan-out                               ; 10987          ;
-; Average fan-out                             ; 3.05           ;
+; Maximum fan-out                             ; 1125           ;
+; Total fan-out                               ; 11068          ;
+; Average fan-out                             ; 3.06           ;
 +---------------------------------------------+----------------+
 
 
@@ -270,10 +270,11 @@ agreement for further details.
 +---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
 ; Compilation Hierarchy Node                              ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                ; Entity Name            ; Library Name ;
 +---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; |cursor                                                 ; 2183 (44)           ; 1119 (12)                 ; 230400      ; 0            ; 0       ; 0         ; 132  ; 0            ; |cursor                                                                                                            ; cursor                 ; work         ;
+; |cursor                                                 ; 2198 (54)           ; 1128 (21)                 ; 230400      ; 0            ; 0       ; 0         ; 132  ; 0            ; |cursor                                                                                                            ; cursor                 ; work         ;
 ;    |HexDecoder:hex0|                                    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex0                                                                                            ; HexDecoder             ; work         ;
 ;    |HexDecoder:hex1|                                    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex1                                                                                            ; HexDecoder             ; work         ;
-;    |HexDecoder:hex2|                                    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex2                                                                                            ; HexDecoder             ; work         ;
+;    |HexDecoder:hex2|                                    ; 9 (9)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex2                                                                                            ; HexDecoder             ; work         ;
+;    |HexDecoder:hex3|                                    ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hex3                                                                                            ; HexDecoder             ; work         ;
 ;    |HexDecoder:hexX1|                                   ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hexX1                                                                                           ; HexDecoder             ; work         ;
 ;    |HexDecoder:hexX2|                                   ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hexX2                                                                                           ; HexDecoder             ; work         ;
 ;    |HexDecoder:hexY1|                                   ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |cursor|HexDecoder:hexY1                                                                                           ; HexDecoder             ; work         ;
@@ -520,16 +521,16 @@ Encoding Type:  One-Hot
 ; drawCard:DC|drawNumSuit:num|cOut[1,2]                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ; Merged with drawCard:DC|drawNumSuit:num|cOut[0]       ;
 ; drawCard:DC|drawBlankCard:blank|cOut[1,2]                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; Merged with drawCard:DC|drawBlankCard:blank|cOut[0]   ;
 ; drawCard:DC|drawNumSuit:num|yReg[0]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; Merged with drawCard:DC|drawNumSuit:num|xReg[0]       ;
-; drawCard:DC|drawBlankCard:blank|xReg[7]                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ; Merged with drawCard:DC|drawBlankCard:blank|xReg[6]   ;
+; drawCard:DC|drawBlankCard:blank|yReg[1,2,6]                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; Merged with drawCard:DC|drawBlankCard:blank|xReg[3]   ;
 ; drawCard:DC|drawBlankCard:blank|xReg[5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ; Merged with drawCard:DC|drawBlankCard:blank|xReg[0]   ;
 ; drawCard:DC|drawBlankCard:blank|yReg[0,3..5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with drawCard:DC|drawBlankCard:blank|xReg[0]   ;
-; drawCard:DC|drawBlankCard:blank|yReg[1,2,6]                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; Merged with drawCard:DC|drawBlankCard:blank|xReg[3]   ;
 ; drawCard:DC|drawNumSuit:num|dataReg[766,767]                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with drawCard:DC|drawNumSuit:num|dataReg[765]  ;
-; x_loc[7]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; Merged with x_loc[6]                                  ;
+; drawCard:DC|drawBlankCard:blank|xReg[7]                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ; Merged with drawCard:DC|drawBlankCard:blank|xReg[6]   ;
+; y_loc[1,2,6]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with x_loc[3]                                  ;
 ; x_loc[5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; Merged with x_loc[0]                                  ;
 ; y_loc[0,3..5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; Merged with x_loc[0]                                  ;
-; y_loc[1,2,6]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with x_loc[3]                                  ;
 ; drawCard:DC|drawNumSuit:num|dataReg[763,764]                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with drawCard:DC|drawNumSuit:num|dataReg[762]  ;
+; x_loc[7]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; Merged with x_loc[6]                                  ;
 ; drawCard:DC|drawNumSuit:num|dataReg[760,761]                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with drawCard:DC|drawNumSuit:num|dataReg[759]  ;
 ; drawCard:DC|drawNumSuit:suit|dataReg[760]                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; Merged with drawCard:DC|drawNumSuit:suit|dataReg[759] ;
 ; drawCard:DC|drawNumSuit:num|dataReg[757,758]                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Merged with drawCard:DC|drawNumSuit:num|dataReg[756]  ;
@@ -1052,7 +1053,6 @@ Encoding Type:  One-Hot
 ; drawCard:DC|drawNumSuit:num|yReg[1,4,5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ; Stuck at GND due to stuck port data_in                ;
 ; drawCard:DC|drawNumSuit:num|xReg[0,4]                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ; Stuck at GND due to stuck port data_in                ;
 ; drawCard:DC|drawBlankCard:blank|xReg[0]                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ; Stuck at GND due to stuck port data_in                ;
-; winner[1]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; Merged with winner[0]                                 ;
 ; drawCard:DC|drawNumSuit:suit|yReg[2..4,6]                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; Merged with drawCard:DC|drawNumSuit:suit|yReg[0]      ;
 ; drawCard:DC|drawNumSuit:suit|xReg[5]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ; Merged with drawCard:DC|drawNumSuit:suit|xReg[1]      ;
 ; drawCard:DC|drawNumSuit:suit|xReg[3]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ; Merged with drawCard:DC|drawNumSuit:suit|xReg[2]      ;
@@ -1067,7 +1067,7 @@ Encoding Type:  One-Hot
 ; drawCard:DC|drawNumSuit:suit|current_state~4                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Lost fanout                                           ;
 ; drawCard:DC|drawNumSuit:num|current_state~4                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; Lost fanout                                           ;
 ; RNG:RNGmod|seed[0]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ; Merged with RNG:RNGmod|rand_int[0]                    ;
-; Total Number of Removed Registers = 2249                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;                                                       ;
+; Total Number of Removed Registers = 2248                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;                                                       ;
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------+
 
 
@@ -1092,12 +1092,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1119  ;
-; Number of registers using Synchronous Clear  ; 26    ;
+; Total registers                              ; 1128  ;
+; Number of registers using Synchronous Clear  ; 27    ;
 ; Number of registers using Synchronous Load   ; 18    ;
 ; Number of registers using Asynchronous Clear ; 20    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 343   ;
+; Number of registers using Clock Enable       ; 351   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -1108,10 +1108,10 @@ Encoding Type:  One-Hot
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                    ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |cursor|drawCard:DC|drawBlankCard:blank|xReg[1]               ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |cursor|vga_adapter:VGA|vga_controller:controller|yCounter[4] ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |cursor|drawCard:DC|suitReg[1]                                ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |cursor|x_loc[6]                                              ;
-; 5:1                ; 17 bits   ; 51 LEs        ; 34 LEs               ; 17 LEs                 ; Yes        ; |cursor|drawCard:DC|xOut[6]                                   ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |cursor|vga_adapter:VGA|vga_controller:controller|yCounter[6] ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |cursor|drawCard:DC|numReg[2]                                 ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |cursor|x_loc[1]                                              ;
+; 5:1                ; 17 bits   ; 51 LEs        ; 34 LEs               ; 17 LEs                 ; Yes        ; |cursor|drawCard:DC|yOut[1]                                   ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cursor|drawCard:DC|drawNumSuit:suit|xOffset                  ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cursor|drawCard:DC|drawNumSuit:num|xOffset                   ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |cursor|drawCard:DC|drawBlankCard:blank|xOffset               ;
@@ -1764,28 +1764,29 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 132                         ;
-; cycloneiii_ff         ; 1119                        ;
+; cycloneiii_ff         ; 1128                        ;
 ;     CLR               ; 20                          ;
-;     ENA               ; 326                         ;
+;     ENA               ; 333                         ;
+;     ENA SCLR          ; 1                           ;
 ;     ENA SCLR SLD      ; 17                          ;
 ;     SCLR              ; 9                           ;
 ;     SLD               ; 1                           ;
-;     plain             ; 746                         ;
-; cycloneiii_lcell_comb ; 2192                        ;
+;     plain             ; 747                         ;
+; cycloneiii_lcell_comb ; 2207                        ;
 ;     arith             ; 239                         ;
 ;         2 data inputs ; 102                         ;
 ;         3 data inputs ; 137                         ;
-;     normal            ; 1953                        ;
+;     normal            ; 1968                        ;
 ;         0 data inputs ; 15                          ;
 ;         1 data inputs ; 22                          ;
-;         2 data inputs ; 193                         ;
-;         3 data inputs ; 738                         ;
-;         4 data inputs ; 985                         ;
+;         2 data inputs ; 196                         ;
+;         3 data inputs ; 741                         ;
+;         4 data inputs ; 994                         ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 30                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 37.20                       ;
-; Average LUT depth     ; 6.83                        ;
+; Average LUT depth     ; 6.80                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1804,7 +1805,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Thu Apr 04 14:27:36 2019
+    Info: Processing started: Thu Apr 04 14:42:43 2019
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cursor -c cursor
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
@@ -1830,19 +1831,15 @@ Info (12021): Found 1 design units, including 1 entities, in source file ps2_con
     Info (12023): Found entity 1: Altera_UP_PS2_Command_Out File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/PS2_Controller/Altera_UP_PS2_Command_Out.v Line: 10
 Info (12021): Found 6 design units, including 6 entities, in source file vga.v
     Info (12023): Found entity 1: cursor File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 3
-    Info (12023): Found entity 2: drawCard File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 310
-    Info (12023): Found entity 3: control File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 463
-    Info (12023): Found entity 4: drawBlankCard File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 543
-    Info (12023): Found entity 5: drawNumSuit File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 619
-    Info (12023): Found entity 6: HexDecoder File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 702
+    Info (12023): Found entity 2: drawCard File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 316
+    Info (12023): Found entity 3: control File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 469
+    Info (12023): Found entity 4: drawBlankCard File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 549
+    Info (12023): Found entity 5: drawNumSuit File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 625
+    Info (12023): Found entity 6: HexDecoder File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 708
 Warning (12019): Can't analyze file -- file output_files/draw_card.v is missing
 Info (12127): Elaborating entity "cursor" for the top level hierarchy
-Warning (10858): Verilog HDL warning at VGA.v(79): object p1_card used but never assigned File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 79
-Warning (10858): Verilog HDL warning at VGA.v(80): object p2_card used but never assigned File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 80
-Warning (10030): Net "p1_card[3..0]" at VGA.v(79) has no driver or initial value, using a default initial value '0' File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 79
-Warning (10030): Net "p2_card[3..0]" at VGA.v(80) has no driver or initial value, using a default initial value '0' File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 80
 Warning (10034): Output port "LEDR[17..16]" at VGA.v(31) has no driver File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 31
-Info (12128): Elaborating entity "vga_adapter" for hierarchy "vga_adapter:VGA" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 188
+Info (12128): Elaborating entity "vga_adapter" for hierarchy "vga_adapter:VGA" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 194
 Info (12128): Elaborating entity "vga_address_translator" for hierarchy "vga_adapter:VGA|vga_address_translator:user_input_translator" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 192
 Info (12128): Elaborating entity "altsyncram" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
 Info (12130): Elaborated megafunction instantiation "vga_adapter:VGA|altsyncram:VideoMemory" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 213
@@ -1890,14 +1887,14 @@ Info (12133): Instantiated megafunction "vga_adapter:VGA|vga_pll:mypll|altpll:al
     Info (12134): Parameter "clk0_multiply_by" = "1"
     Info (12134): Parameter "clk0_duty_cycle" = "50"
 Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_adapter:VGA|vga_controller:controller" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/vga_adapter/vga_adapter.v Line: 252
-Info (12128): Elaborating entity "drawCard" for hierarchy "drawCard:DC" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 227
-Info (12128): Elaborating entity "drawBlankCard" for hierarchy "drawCard:DC|drawBlankCard:blank" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 413
-Info (12128): Elaborating entity "drawNumSuit" for hierarchy "drawCard:DC|drawNumSuit:num" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 426
-Info (12128): Elaborating entity "control" for hierarchy "control:FSM" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 247
-Info (12128): Elaborating entity "HexDecoder" for hierarchy "HexDecoder:hexX1" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 251
-Info (12128): Elaborating entity "randomSeedGenerator" for hierarchy "randomSeedGenerator:generator" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 296
+Info (12128): Elaborating entity "drawCard" for hierarchy "drawCard:DC" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 233
+Info (12128): Elaborating entity "drawBlankCard" for hierarchy "drawCard:DC|drawBlankCard:blank" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 419
+Info (12128): Elaborating entity "drawNumSuit" for hierarchy "drawCard:DC|drawNumSuit:num" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 432
+Info (12128): Elaborating entity "control" for hierarchy "control:FSM" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 253
+Info (12128): Elaborating entity "HexDecoder" for hierarchy "HexDecoder:hexX1" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 257
+Info (12128): Elaborating entity "randomSeedGenerator" for hierarchy "randomSeedGenerator:generator" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 302
 Info (12128): Elaborating entity "counter16Bit" for hierarchy "randomSeedGenerator:generator|counter16Bit:timer" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 75
-Info (12128): Elaborating entity "RNG" for hierarchy "RNG:RNGmod" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 307
+Info (12128): Elaborating entity "RNG" for hierarchy "RNG:RNGmod" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 313
 Info (12128): Elaborating entity "xorShift" for hierarchy "RNG:RNGmod|xorShift:seed_updater" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 130
 Info (278001): Inferred 1 megafunctions from design logic
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "RNG:RNGmod|Mod0" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/rng.v Line: 147
@@ -1920,10 +1917,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/add_
 Warning (12241): 6 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 39
-    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
     Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
-    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
-    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 48
     Warning (13410): Pin "LEDR[16]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 31
     Warning (13410): Pin "LEDR[17]" is stuck at GND File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 31
 Info (286030): Timing-Driven Synthesis is running
@@ -1950,17 +1944,17 @@ Warning (21074): Design contains 18 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[13]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
     Warning (15610): No output dependent on input pin "SW[14]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
     Warning (15610): No output dependent on input pin "SW[15]" File: C:/Users/Joey/Desktop/System/2-2019 Winter/CSCB58/Project/B58Cards/Quartus Projects/cursor/VGA.v Line: 29
-Info (21057): Implemented 2367 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 2390 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 23 input pins
     Info (21059): Implemented 109 output pins
-    Info (21061): Implemented 2204 logic cells
+    Info (21061): Implemented 2227 logic cells
     Info (21064): Implemented 30 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 47 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 40 warnings
     Info: Peak virtual memory: 4802 megabytes
-    Info: Processing ended: Thu Apr 04 14:27:57 2019
-    Info: Elapsed time: 00:00:21
-    Info: Total CPU time (on all processors): 00:00:39
+    Info: Processing ended: Thu Apr 04 14:43:03 2019
+    Info: Elapsed time: 00:00:20
+    Info: Total CPU time (on all processors): 00:00:37
 
 
 +------------------------------------------+

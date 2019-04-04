@@ -248,6 +248,18 @@
 					"strict" : false
 				},
 				{
+					"name" : "HEX3[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HEX3[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HEX3[3]",
+					"strict" : false
+				},
+				{
 					"name" : "HEX3[4]",
 					"strict" : false
 				},
@@ -420,11 +432,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[3]",
+					"name" : "SW[17]",
 					"strict" : false
 				},
 				{
-					"name" : "SW[17]",
+					"name" : "SW[3]",
 					"strict" : false
 				}
 			]

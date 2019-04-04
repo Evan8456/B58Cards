@@ -135,11 +135,17 @@ module cursor(
 				x_loc <= player_x_loc;
 				y_loc <= player_y_loc;
 			end
+			DRAW_P1_WAIT: begin
+				p1_card <= {suit, number};
+			end
 			NEXT_INT_2: next_int <= 1'b1;
 			DRAW_P2: begin
 				vga_go <= 1'b1;
 				x_loc <= com_x_loc;
 				y_loc <= com_y_loc;
+			end
+			DRAW_P2_WAIT: begin
+				p2_card <= {suit, number};
 			end
 			CALCULATE: begin
 				// check winner
@@ -246,11 +252,11 @@ module cursor(
 		.next_state()
 	);
 	
-	HexDecoder hexX1(.IN(x[7:4]),
+	HexDecoder hexX1(.IN(p1_card[3:0]),
 					.OUT(HEX7[6:0])
 	);
 	 
-	HexDecoder hexX2(.IN(x[3:0]),
+	HexDecoder hexX2(.IN(p2_card[3:0]),
 					.OUT(HEX6[6:0])
 	);
 	 
