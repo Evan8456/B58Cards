@@ -17,8 +17,11 @@ module cursor(
     HEX7,
     HEX6,
     HEX5,
-   	HEX4,
-    	HEX3,
+	 HEX4,
+    HEX3,
+    HEX2,
+    HEX1,
+    HEX0,
     	LEDR
 	);
 
@@ -43,6 +46,21 @@ module cursor(
 	output [6:0] HEX5;
 	output [6:0] HEX4;
 	output [6:0] HEX3;
+	output [6:0] HEX2;
+	output [6:0] HEX1;
+	output [6:0] HEX0;
+	
+	wire [7:0] player_x_loc; // x location for drawing player card
+	wire [7:0] player_y_loc; // y location for drawing player card
+	wire [7:0] com_x_loc; // x location for drawing com card
+	wire [7:0] com_y_loc; // y location for drawing com card
+	assign player_x_loc = 8'd30;
+	assign player_y_loc = 8'd70;
+	assign com_x_loc = 8'd200;
+	assign com_y_loc = 8'd70;
+	
+	reg [7:0] x_loc;
+	reg [7:0] y_loc;
 	
 	// Create the colour, x, y and writeEn wires that are inputs to the controller.
 	wire [2:0] colour;
@@ -51,7 +69,102 @@ module cursor(
 	wire plot;
    wire resetN;
 	assign resetN = SW[16];
+	wire go;
 	assign go = SW[17];
+	reg vga_go;
+	
+	reg [1:0] winner; // 0-no winner, 1-p1 wins, 2-p2 wins, 3-draw
+	wire vga_done;
+	
+	reg [5:0] p1_card;
+	reg [5:0] p2_card;
+	
+	reg [4:0] current_state, next_state;
+	
+	localparam
+					GENERATE_SEED			= 5'd15,
+					NEXT_INT_1				= 5'd1,
+					DRAW_P1					= 5'd2,
+					DRAW_P1_WAIT			= 5'd3,
+					NEXT_INT_2				= 5'd4,
+					DRAW_P2					= 5'd5,
+					CALCULATE				= 5'd6,
+					P1_WINS					= 5'd7,
+					P2_WINS					= 5'd8,
+					DRAW_P2_WAIT			= 5'd9,
+					DRAW						= 5'd10;
+	
+	always @(posedge CLOCK_50) begin
+		case(current_state)
+			GENERATE_SEED: 		next_state = go ? NEXT_INT_1 : GENERATE_SEED;
+			NEXT_INT_1: 			next_state = ~go ? DRAW_P1 : NEXT_INT_1;
+			DRAW_P1: 				next_state = DRAW_P1_WAIT;
+			DRAW_P1_WAIT:			next_state = vga_done ? NEXT_INT_2 : DRAW_P1_WAIT;
+			NEXT_INT_2: 			next_state = DRAW_P2;
+			DRAW_P2: 				next_state = DRAW_P2_WAIT;
+			DRAW_P2_WAIT:			next_state = vga_done ? CALCULATE : DRAW_P2_WAIT;
+			CALCULATE:				begin
+											if(winner == 2'd0)
+												next_state = CALCULATE;
+											else if(winner == 2'd1)
+												next_state = P1_WINS;
+											else if(winner == 2'd2)
+												next_state = P2_WINS;
+											else
+												next_state = DRAW;
+										end
+			P1_WINS:					next_state = go ? NEXT_INT_1 : P1_WINS;
+			P2_WINS:					next_state = go ? NEXT_INT_1 : P2_WINS;
+			DRAW:						next_state = go ? NEXT_INT_1 : DRAW;
+			default: next_state = GENERATE_SEED;
+		endcase
+	end
+	
+	always @(posedge CLOCK_50) begin
+		rng_counter <= 1'b1;
+		next_int <= 1'b0;
+		vga_go <= 1'b0;
+		case(current_state)
+			GENERATE_SEED: begin
+				//rng_counter <= 1'b1;
+				winner <= 1'b0;
+			end
+			NEXT_INT_1: next_int <= 1'b1;
+			DRAW_P1: begin
+				vga_go <= 1'b1;
+				x_loc <= player_x_loc;
+				y_loc <= player_y_loc;
+			end
+			NEXT_INT_2: next_int <= 1'b1;
+			DRAW_P2: begin
+				vga_go <= 1'b1;
+				x_loc <= com_x_loc;
+				y_loc <= com_y_loc;
+			end
+			CALCULATE: begin
+				// check winner
+				if(p1_card[3:0] < p2_card[3:0])
+					winner <= 2'd2;
+				else if(p1_card[3:0] > p2_card[3:0])
+					winner <= 2'd1;
+				else
+					winner <= 2'd3;
+			end
+			//P1_WINS: begin
+				
+			//end
+			default: begin end
+		endcase
+	end
+
+    // current_state registers
+    always @(posedge CLOCK_50) begin
+		if(!resetN)
+			current_state <= GENERATE_SEED;
+		else
+			current_state <= next_state;
+	end
+			
 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
@@ -86,12 +199,15 @@ module cursor(
 	wire loadNumSuit, drawBlank, drawNum, drawSuit;
 	wire blankDone, numDone, suitDone;
 	
+	assign vga_done = temp_vga_done || SW[3];
+	
+	wire temp_vga_done;
 	drawCard DC(
 		.resetN(resetN),
 		.clock(CLOCK_50),
 
-		.xIn(SW[14:7]),                // 8 bit x location input
-		.yIn(SW[17:15]),                // 7 bit y location input
+		.xIn(x_loc),                // 8 bit x location input
+		.yIn(y_loc),                // 7 bit y location input
 
 		.loadNumSuit(loadNumSuit),	 // FSM signals
 		.drawBlank(drawBlank),
@@ -107,18 +223,18 @@ module cursor(
 	
 		.blankDone(blankDone),
 		.numDone(numDone),
-		.suitDone(suitDone)
+		.suitDone(temp_vga_done)
 	);
 		
 	
 	control FSM(
 		.resetN(resetN),            // Resets the states
 		.clock(CLOCK_50),           // FSM clock
-		.go(go),                    // Begins FSM cycle
+		.go(vga_go),                    // Begins FSM cycle
 	 
 		.blankDone(blankDone),
 		.numDone(numDone),
-		.suitDone(suitDone),
+		.suitDone(vga_done),
 
 		.loadNumSuit(loadNumSuit),
 		.drawBlank(drawBlank),
@@ -126,8 +242,8 @@ module cursor(
 		.drawSuit(drawSuit),
 		.plot(plot),
 		
-		.current_state(LEDR[17:13]),
-		.next_state(LEDR[12:8])
+		.current_state(),
+		.next_state()
 	);
 	
 	HexDecoder hexX1(.IN(x[7:4]),
@@ -145,31 +261,47 @@ module cursor(
 	HexDecoder hexY2(.IN(y[3:0]),
 					.OUT(HEX4[6:0])
 	);
-	 
-	HexDecoder hexColour(.IN(colour[2:0]),
-					.OUT(HEX3[6:0])
+	
+	HexDecoder hex3(
+		.IN(winner),
+		.OUT(HEX3[6:0])
+	);
+	HexDecoder hex2(
+		.IN(current_state),
+		.OUT(HEX2[6:0])
+	);
+	HexDecoder hex1(
+		.IN(next_state),
+		.OUT(HEX1[6:0])
+	);
+	HexDecoder hex0(
+		.IN(rand_int[3:0]),
+		.OUT(HEX0[6:0])
 	);
 
-	wire [3:0] number = rand_int >> 2;
+	wire [3:0] number = rand_int[5:2];
 	wire [1:0] suit = rand_int[1:0];
 	// rng and RAM wires
 	wire [15:0] generatorSeed;
 	wire [15:0] currentSeed;
+	assign LEDR[15:0] = SW[12] ? currentSeed : generatorSeed; // 0 is generatorSeed, 1 is currentSeed
 	wire [15:0] rand_int;
+	reg rng_counter;
+	reg next_int;
 
 	randomSeedGenerator generator(
-		.clock(clock),
+		.clock(CLOCK_50),
 		.enable_count(rng_counter),
 		.seed(generatorSeed)
 	);
 	// Decrease max with deck size
 	RNG RNGmod(
-		.clock(clock),
+		.clock(CLOCK_50),
 		.LoadSeed(generatorSeed),
-		.Load_n(load_seed),
-		.min_n(16'd1),
-		.max_n(16'd52),
-		.next_int(SW[0]),
+		.Load_n(1'b1),//load_seed
+		.min_n(16'd4),
+		.max_n(16'd56),
+		.next_int(next_int),
 		.rand_int(rand_int),
 		.seed(currentSeed)
 	);
@@ -297,7 +429,7 @@ module drawCard(
 		.resetN(resetN),
 		.clock(clock),
 		.start(drawSuit),
-		.x(xIn + 3'd5),
+		.x(xIn + 3'd4),
 		.y(yIn + 5'd23),
 		.data(suitDataReg),
 		.xOut(suitOutX),

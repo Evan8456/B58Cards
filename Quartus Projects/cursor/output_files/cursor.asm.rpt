@@ -1,5 +1,5 @@
 Assembler report for cursor
-Wed Apr 03 17:02:19 2019
+Thu Apr 04 14:28:32 2019
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -38,7 +38,7 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed Apr 03 17:02:19 2019 ;
+; Assembler Status      ; Successful - Thu Apr 04 14:28:32 2019 ;
 ; Revision Name         ; cursor                                ;
 ; Top-level Entity Name ; cursor                                ;
 ; Family                ; Cyclone IV E                          ;
@@ -68,8 +68,8 @@ agreement for further details.
 ; Option         ; Setting                                                                                                                     ;
 +----------------+-----------------------------------------------------------------------------------------------------------------------------+
 ; Device         ; EP4CE115F29C7                                                                                                               ;
-; JTAG usercode  ; 0x005ED0A5                                                                                                                  ;
-; Checksum       ; 0x005ED0A5                                                                                                                  ;
+; JTAG usercode  ; 0x006BA071                                                                                                                  ;
+; Checksum       ; 0x006BA071                                                                                                                  ;
 +----------------+-----------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -79,7 +79,7 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Wed Apr 03 17:02:15 2019
+    Info: Processing started: Thu Apr 04 14:28:28 2019
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off cursor -c cursor
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115031): Writing out detailed assembly data for power analysis
@@ -91,9 +91,9 @@ Warning (292000): FLEXlm software error: Invalid license file syntax. Feature:  
 Warning (292000): FLEXlm software error: Invalid license file syntax. Feature:       quartus_seu_mitigation License path:  C:\altera\14.1\licenses\license.dat; FlexNet Licensing error:-2,40027 For further information, refer to the FlexNet Licensing documentation, available at "www.flexerasoftware.com"..
 Warning (292000): FLEXlm software error: Invalid license file syntax. Feature:       quartus_seu_mitigation License path:  C:\altera\14.1\licenses\license.dat; FlexNet Licensing error:-2,40027 For further information, refer to the FlexNet Licensing documentation, available at "www.flexerasoftware.com"..
 Info: Quartus Prime Assembler was successful. 0 errors, 19 warnings
-    Info: Peak virtual memory: 4707 megabytes
-    Info: Processing ended: Wed Apr 03 17:02:19 2019
-    Info: Elapsed time: 00:00:04
+    Info: Peak virtual memory: 4715 megabytes
+    Info: Processing ended: Thu Apr 04 14:28:33 2019
+    Info: Elapsed time: 00:00:05
     Info: Total CPU time (on all processors): 00:00:04
 
 

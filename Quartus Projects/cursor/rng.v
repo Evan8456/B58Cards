@@ -6,7 +6,7 @@ SW[12] seed display - 0 is generatorSeed, 1 is currentSeed
 LEDR[15:0] current seed
 HEX3, HEX2, HEX1, HEX0 rand_int
 */
-module project(SW, CLOCK_50, LEDR, HEX0, HEX1, HEX2, HEX3);
+module rng_test(SW, CLOCK_50, LEDR, HEX0, HEX1, HEX2, HEX3);
 	input [17:0] SW;
 	input CLOCK_50;
 	output [17:0] LEDR;
@@ -74,7 +74,7 @@ module randomSeedGenerator(clock, enable_count, seed);
 		.q(seed)
 	);
 	// It works
-	always@(clock) begin
+	always@(posedge clock) begin
 		// default values
 		start_cycle <= 0;
 		//end_cycle <= 0;
@@ -136,6 +136,8 @@ module RNG(clock, LoadSeed, Load_n, min_n, max_n, next_int, rand_int, seed);
 		// if posedge of next_int
 		if(next_int==1 && last_cycle==0)
 			seed = next_seed;
+		if(seed == 16'b0)
+			seed = LoadSeed;
 			
 		// calculate rand_int
 		if(min_n>=max_n)
