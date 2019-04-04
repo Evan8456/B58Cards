@@ -73,7 +73,7 @@ What is your plan for the third week?
 	  - more if we have extra time
 
 What is your backup plan if things don?t work out as planned?
-   - Focus on completing at least war and black jack
+   - Focus on completing at least war
 
 Weekly Reports
 --------------
@@ -89,14 +89,13 @@ We created more FSM's in order to draw card numbers (2-10). The ram management w
 Week 3:
 We created a way to control ram operations and be able to manipulate and access data in memory with ease. We also created a way to store how to draw cards, and the FSM to draw the cards (with suit and number), so we can now display what a player is holding on the screen. We created all the nessessary files to generate all the suits and all ranks(A-9, J,Q,K) in both black and red. Also worked on logic of War.
 
+Week 4:
+We created the logic for the war game. Cards of a given value and suit are now able to be drawn on the VGA to a given x, and y value. We also created a way to draw cards in a sequence. A way to control all the ram operations has been added, a controller for the ram operations is able to take in operation arguments and a select input. Using the random number generator, we are able to draw cards of a random suit and random value. A way to compare cards has also been added, so we are able to determine the winner of a round of war. The game is now fully functional and we can play a proper game of war.
 References
 ----------
 https://en.wikipedia.org/wiki/Xorshift
-Make sure to document what you added on top of the existing work, especially if you work with a previous project. What is it that YOU added?>
-
 
 
 Repo & Video
 ------------
-<At the end of the project, provide links to your code repository and presentation video (and passwords if not public>
-
+https://github.com/CLAKE709/B58Cards
